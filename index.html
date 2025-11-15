@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dayananda Sagar University | DSU - Bengaluru, India</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="apple-touch-icon" href="images/favicon.png">
+    
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Top Header Bar -->
+    <div class="top-header">
+        <div class="container">
+            <div class="top-header-left">
+                <div class="logo-section">
+                    <a href="#" class="logo-link">
+                        <img src="images/Screenshot%202025-11-16%20050340.png" alt="Dayananda Sagar University Logo" class="logo-img">
+                    </a>
+                    <div class="university-name-text">
+                        <div class="university-name-line1">DAYANANDA SAGAR</div>
+                        <div class="university-name-line2">UNIVERSITY</div>
+                    </div>
+                </div>
+            </div>
+            <div class="top-header-center">
+                <span>ACADEMIC CA</span>
+            </div>
+            <div class="top-header-right">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search..." class="search-input">
+                    <button class="search-btn">Search</button>
+                </div>
+                <a href="#" class="nri-btn">NRI/FOREIGN ADMISSIONS - APPLY HERE</a>
+                <select class="language-select">
+                    <option>English</option>
+                    <option>हिंदी</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Secondary Navigation Bar -->
+    <div class="secondary-nav">
+        <div class="container">
+            <a href="#careers" class="secondary-nav-link" data-page="careers">CAREERS</a>
+            <a href="#virtual-tour" class="secondary-nav-link" data-page="virtual-tour">Virtual Tour</a>
+            <a href="#examination" class="secondary-nav-link active" data-page="examination">Examination</a>
+            <a href="#news-events" class="secondary-nav-link" data-page="news-events">News & Events</a>
+            <a href="#newsletter" class="secondary-nav-link" data-page="newsletter">Newsletter</a>
+            <a href="#alumni" class="secondary-nav-link" data-page="alumni">Alumni</a>
+            <a href="#blog" class="secondary-nav-link" data-page="blog">Blog</a>
+            <a href="#erp-login" class="secondary-nav-link" data-page="erp-login">ERP Login</a>
+            <a href="#e-brochure" class="secondary-nav-link" data-page="e-brochure">e-Brochure</a>
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <nav class="main-nav">
+        <div class="container">
+            <div class="nav-item-wrapper">
+                <a href="#" class="nav-link active" data-menu="home">HOME</a>
+            </div>
+            <div class="nav-item-wrapper has-dropdown">
+                <a href="#" class="nav-link" data-menu="university">UNIVERSITY</a>
+                <div class="dropdown-menu" data-dropdown="university"></div>
+            </div>
+            <div class="nav-item-wrapper has-dropdown">
+                <a href="#" class="nav-link" data-menu="academics">ACADEMICS</a>
+                <div class="dropdown-menu" data-dropdown="academics"></div>
+            </div>
+            <div class="nav-item-wrapper has-dropdown">
+                <a href="#" class="nav-link" data-menu="admissions">ADMISSIONS</a>
+                <div class="dropdown-menu" data-dropdown="admissions"></div>
+            </div>
+            <div class="nav-item-wrapper has-dropdown">
+                <a href="#" class="nav-link" data-menu="international">INTERNATIONAL</a>
+                <div class="dropdown-menu" data-dropdown="international"></div>
+            </div>
+            <div class="nav-item-wrapper has-dropdown">
+                <a href="#" class="nav-link" data-menu="research">RESEARCH</a>
+                <div class="dropdown-menu" data-dropdown="research"></div>
+            </div>
+            <div class="nav-item-wrapper has-dropdown">
+                <a href="#" class="nav-link" data-menu="innovation">INNOVATION</a>
+                <div class="dropdown-menu" data-dropdown="innovation"></div>
+            </div>
+            <div class="nav-item-wrapper has-dropdown">
+                <a href="#" class="nav-link" data-menu="placement">PLACEMENT</a>
+                <div class="dropdown-menu" data-dropdown="placement"></div>
+            </div>
+            <div class="nav-item-wrapper has-dropdown">
+                <a href="#" class="nav-link" data-menu="naac">NAAC</a>
+                <div class="dropdown-menu" data-dropdown="naac"></div>
+            </div>
+            <div class="nav-item-wrapper has-dropdown">
+                <a href="#" class="nav-link" data-menu="library">LIBRARY</a>
+                <div class="dropdown-menu" data-dropdown="library"></div>
+            </div>
+            <div class="nav-item-wrapper has-dropdown">
+                <a href="#" class="nav-link" data-menu="hostel">HOSTEL @ HAROHALLI</a>
+                <div class="dropdown-menu" data-dropdown="hostel"></div>
+            </div>
+            <div class="nav-item-wrapper has-dropdown">
+                <a href="#" class="nav-link" data-menu="disclosure">PUBLIC SELF-DISCLOSURE</a>
+                <div class="dropdown-menu" data-dropdown="disclosure"></div>
+            </div>
+            <div class="nav-item-wrapper">
+                <a href="#" class="nav-link" data-menu="contact">CONTACT</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar Navigation -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <aside class="sidebar-nav" id="sidebarNav">
+        <div class="sidebar-header">
+            <h3 id="sidebarTitle">about university</h3>
+            <button class="sidebar-close" id="sidebarClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <nav class="sidebar-menu" id="sidebarMenu">
+            <!-- Menu items will be populated by JavaScript -->
+        </nav>
+    </aside>
+
+    <!-- Main Content Wrapper -->
+    <div class="main-content-wrapper" id="mainContent">
+
+    <!-- NAAC Accreditation Banner -->
+    <div class="naac-banner">
+        <div class="container">
+            <div class="naac-logo">
+                <span class="a-plus">A+</span>
+                <span>GRADE ACCREDITED BY</span>
+            </div>
+            <img src="images/naac-logo.png" alt="NAAC" class="naac-img" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'60\'%3E%3Crect width=\'100\' height=\'60\' fill=\'%23fff\'/%3E%3Ctext x=\'50\' y=\'35\' font-size=\'12\' fill=\'%23003366\' text-anchor=\'middle\'%3ENAAC%3C/text%3E%3C/svg%3E'">
+            <div class="awards-scroll">
+                <span>Leading & Most Trusted Management College of the Year 2021</span>
+                <span>Emerging Engineering Institute Research Capabilities 2022</span>
+                <span>BEST EMERGING UNIVERSITY 2021</span>
+                <span>B SCHOOL A+++ SURVEY - 2021 CATEGORY</span>
+                <span>STATE RANK 4 SOUTH ZONE RANK 4</span>
+                <span>AAA Ranking 2021</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section - B.Tech Admissions -->
+    <section class="hero-section" style="background-image: url('images/hero-bg.jpg'); background-size: cover; background-position: center;">
+        <div class="container hero-container">
+            <div class="hero-left">
+                <h1 class="hero-title">B.Tech Admissions 2026 - 27</h1>
+                <div class="scholarship-box">
+                    Prestigious Merit Scholarship Based on JEE Scores
+                </div>
+                <button class="apply-btn-large">Apply Now <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="hero-right">
+                <div class="hero-student-image">
+                    <img src="images/hero-student.png" alt="Student" class="student-img" onerror="this.style.display='none'">
+                </div>
+                <p class="entrance-text">B.Tech Admissions for 2026 - 27 are based on the key scores of below Entrance Exams</p>
+                <div class="entrance-exams">
+                    <div class="exam-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>IIT JEE</span>
+                    </div>
+                    <div class="exam-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>COMED-K</span>
+                    </div>
+                    <div class="exam-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>UNI-GAUGE</span>
+                    </div>
+                    <div class="exam-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>OTHER EXAMS</span>
+                    </div>
+                </div>
+                <div class="transformative-text">
+                    Your First Step Towards Transformative Engineering!
+                </div>
+            </div>
+        </div>
+        <div class="hero-bg-overlay"></div>
+    </section>
+
+    <!-- Campus Gallery Section -->
+    <section class="campus-gallery-section">
+        <div class="container">
+            <div class="section-title-wrapper">
+                <h2 class="section-title">Campus Life</h2>
+                <p class="section-subtitle">Experience the grandeur of our world-class campus</p>
+            </div>
+            <div class="campus-gallery-grid">
+                <div class="campus-card featured-card">
+                    <div class="card-image-wrapper">
+                        <img src="images/image.png" alt="School of Engineering" class="campus-img">
+                        <div class="card-overlay">
+                            <div class="overlay-content">
+                                <h3>School of Engineering</h3>
+                                <p>State-of-the-art facilities with classical architecture</p>
+                                <button class="explore-btn">Explore <i class="fas fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-glow"></div>
+                </div>
+                
+                <div class="campus-card">
+                    <div class="card-image-wrapper">
+                        <img src="images/image2.png" alt="Campus Buildings" class="campus-img">
+                        <div class="card-overlay">
+                            <div class="overlay-content">
+                                <h3>Main Campus</h3>
+                                <p>Beautiful architecture surrounded by lush gardens</p>
+                                <button class="explore-btn">Explore <i class="fas fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-glow"></div>
+                </div>
+                
+                <div class="campus-card">
+                    <div class="card-image-wrapper">
+                        <img src="images/image3.png" alt="Campus at Night" class="campus-img">
+                        <div class="card-overlay">
+                            <div class="overlay-content">
+                                <h3>Campus at Night</h3>
+                                <p>Illuminated architecture creating a majestic atmosphere</p>
+                                <button class="explore-btn">Explore <i class="fas fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-glow"></div>
+                </div>
+                
+                <div class="campus-card">
+                    <div class="card-image-wrapper">
+                        <img src="images/image4.png" alt="Aerial View" class="campus-img">
+                        <div class="card-overlay">
+                            <div class="overlay-content">
+                                <h3>Aerial View</h3>
+                                <p>Symmetrical design with formal gardens</p>
+                                <button class="explore-btn">Explore <i class="fas fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-glow"></div>
+                </div>
+                
+                <div class="campus-card">
+                    <div class="card-image-wrapper">
+                        <img src="images/image2.png" alt="Health Sciences" class="campus-img">
+                        <div class="card-overlay">
+                            <div class="overlay-content">
+                                <h3>Health Sciences</h3>
+                                <p>Advanced medical facilities and research centers</p>
+                                <button class="explore-btn">Explore <i class="fas fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-glow"></div>
+                </div>
+                
+                <div class="campus-card">
+                    <div class="card-image-wrapper">
+                        <img src="images/image4.png" alt="Formal Gardens" class="campus-img">
+                        <div class="card-overlay">
+                            <div class="overlay-content">
+                                <h3>Formal Gardens</h3>
+                                <p>Meticulously landscaped gardens and pathways</p>
+                                <button class="explore-btn">Explore <i class="fas fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-glow"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Academics Grid -->
+    <section class="academics-section">
+        <div class="container">
+            <div class="academics-grid">
+                <div class="academic-card">
+                    <h3>ENGINEERING</h3>
+                </div>
+                <div class="academic-card">
+                    <h3>COMPUTER APPLICATIONS</h3>
+                </div>
+                <div class="academic-card">
+                    <h3>SCHOOL OF LAW</h3>
+                </div>
+                <div class="academic-card">
+                    <h3>APPLIED SCIENCES</h3>
+                </div>
+                <div class="academic-card">
+                    <h3>COMMERCE & MANAGEMENT</h3>
+                </div>
+                <div class="academic-card">
+                    <h3>EXECUTIVE EDUCATION</h3>
+                </div>
+                <div class="academic-card">
+                    <h3>ARTS, DESIGN AND HUMANITIES</h3>
+                </div>
+                <div class="academic-card">
+                    <h3>DESIGN & DIGITAL TRANSMEDIA</h3>
+                </div>
+                <div class="academic-card">
+                    <h3>HEALTH SCIENCES</h3>
+                </div>
+                <div class="academic-card">
+                    <h3>MBBS</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Announcements Section -->
+    <section class="announcements-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>ANNOUNCEMENTS</h2>
+                <div class="carousel-controls">
+                    <button class="carousel-btn"><i class="fas fa-chevron-left"></i></button>
+                    <button class="carousel-btn"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            <div class="announcements-grid">
+                <div class="announcement-card ai-card">
+                    <div class="master-badge">Master</div>
+                    <h3>Business Applications of Artificial Intelligence</h3>
+                    <p class="get-prepared">GET PREPARED FOR</p>
+                    <div class="cert-logos">
+                        <span>AWS ML</span>
+                        <span>AI ENGINEER</span>
+                        <span>Google Cloud</span>
+                    </div>
+                    <p class="cert-text">(Become a certified Machine Learning Engineer)</p>
+                    <button class="announcement-btn">Apply Now</button>
+                    <div class="announcement-desc">
+                        <p><strong>BUSINESS APPLICATIONS OF</strong></p>
+                        <p>The only program that provides a unique 'Reverse Engineer Pedagogy' that teaches...</p>
+                    </div>
+                </div>
+                <div class="announcement-card mba-card">
+                    <h4>The School of Commerce & Management Studies</h4>
+                    <p class="pg-programs">PG PROGRAMS</p>
+                    <div class="welcomes-banner">WELCOMES</div>
+                    <p class="mba-text">the Full time MBA Students from</p>
+                    <h3 class="dsat-text">DSAT & PGCET</h3>
+                    <div class="announcement-desc">
+                        <p><strong>PGCET & DSAT</strong></p>
+                        <p>School of commerce and Management stud Welcomes the full time MBA students from...</p>
+                    </div>
+                </div>
+                <div class="announcement-card video-card">
+                    <h4>DSU VIDEO</h4>
+                    <div class="video-thumbnail">
+                        <img src="images/video-thumbnail-1.jpg" alt="Life at DSU" class="video-thumb-img" onerror="this.style.display='none'">
+                        <i class="fas fa-play-circle"></i>
+                        <p>Life at DSU Main...</p>
+                        <img src="images/youtube-logo.png" alt="YouTube" class="youtube-logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'20\'%3E%3Ctext x=\'50\' y=\'15\' font-size=\'10\' fill=\'%23f00\' text-anchor=\'middle\'%3EYoutube%3C/text%3E%3C/svg%3E'">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News, Differentiator, Leadership Section -->
+    <section class="content-section">
+        <div class="container">
+            <div class="three-column-grid">
+                <!-- News and Events -->
+                <div class="news-column">
+                    <h2>NEWS AND EVENTS</h2>
+                    <ul class="news-list">
+                        <li>
+                            <span class="bullet"></span>
+                            Five Days FDP on "Entangle 25: A Hands-on Workshop on Quantum Computing and its Emerging Paradigms"
+                        </li>
+                        <li>
+                            <span class="bullet"></span>
+                            Message from Vice Chairman
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- DSU Differentiator -->
+                <div class="differentiator-column">
+                    <div class="covid-banner">COVID - 19 <i class="fas fa-biohazard"></i></div>
+                    <h2>DSU DIFFERENTIATOR</h2>
+                    <div class="differentiator-items">
+                        <div class="diff-item active">
+                            <h4>Curriculum</h4>
+                            <p>Our curriculum is developed with our philosophy to quality education. Its salient features are that there is coherence in learning, it synthesizes...</p>
+                        </div>
+                        <div class="diff-item">
+                            <h4>Board of Studies</h4>
+                        </div>
+                        <div class="diff-item">
+                            <h4>Teaching Learning Process</h4>
+                        </div>
+                        <div class="diff-item">
+                            <h4>Industry Driven Academics on Campus</h4>
+                        </div>
+                        <div class="diff-item">
+                            <h4>Research</h4>
+                        </div>
+                        <div class="diff-item">
+                            <h4>Faculty</h4>
+                        </div>
+                        <div class="diff-item">
+                            <h4>Entrepreneurship</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Leadership -->
+                <div class="leadership-column">
+                    <h2>LEADERSHIP</h2>
+                    <div class="leader-profile">
+                        <div class="leader-image">
+                            <img src="images/founding-father.jpg" alt="Late Shri R Dayananda Sagar" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'120\' height=\'120\'%3E%3Ccircle cx=\'60\' cy=\'60\' r=\'55\' fill=\'%23e0f2fe\'/%3E%3Ctext x=\'60\' y=\'70\' font-size=\'20\' fill=\'%23003366\' text-anchor=\'middle\'%3EL%3C/text%3E%3C/svg%3E'">
+                        </div>
+                        <h3>LATE SHRI R DAYANANDA SAGAR</h3>
+                        <p class="leader-title">Founding Father</p>
+                        <hr>
+                        <p>Our founding father, late Sri R Dayananda Sagar, was a graduate in Arts & Commerce from India & a barrister-at-law from England.</p>
+                    </div>
+                    <div class="carousel-dots">
+                        <span class="dot active"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Awards Section -->
+    <section class="awards-section">
+        <div class="container">
+            <div class="awards-scroll-container">
+                <div class="award-item">
+                    <strong>KSURF ICARE RATINGS</strong>
+                    <div class="stars">★★★★</div>
+                    <span>Teaching Excellence</span>
+                    <span>Research Excellence</span>
+                </div>
+                <div class="award-item">
+                    <strong>EDUCATIONAL EXCELLENCE AWARDS & CONFERENCE 2021</strong>
+                    <span>Leading & Most Trusted Management College of the Year 2021</span>
+                </div>
+                <div class="award-item rank-item">
+                    <strong>Emerging Engineering Institute</strong>
+                    <span>Placement 2022</span>
+                    <span>Research Capabilities</span>
+                    <div class="rank-badge">DSU has Rank No. 1 2022</div>
+                </div>
+                <div class="award-item">
+                    <strong>TIMES BUSINESS AWARDS</strong>
+                    <span>BEST EMERGING UNIVERSITY 2021</span>
+                </div>
+                <div class="award-item">
+                    <strong>siliconindia RANKED B SCHOOL A+++</strong>
+                    <span>SURVEY - 2021 CATEGORY</span>
+                </div>
+                <div class="award-item">
+                    <strong>IIRF - 2023</strong>
+                    <span>NATIONAL RANK-10</span>
+                    <span>STATE RANK 4</span>
+                    <span>SOUTH ZONE RANK 4</span>
+                </div>
+                <div class="award-item">
+                    <strong>CAREERS 360</strong>
+                    <span>AAA Ranking 2021</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Column 1 -->
+                <div class="footer-column">
+                    <h4>The University</h4>
+                    <ul>
+                        <li><a href="#">Vision & Mission</a></li>
+                        <li><a href="#">News & Events</a></li>
+                        <li><a href="#">Research</a></li>
+                        <li><a href="#">Innovation Labs</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+
+                    <h4 class="footer-heading">IMPORTANT INFORMATION</h4>
+                    <ul>
+                        <li><a href="#">Internal Quality Assurance Cell (IQAC)</a></li>
+                        <li><a href="#">DSU University ACT</a></li>
+                        <li><a href="#">Disclosure: Section 4 (1) (b) of RTI Act 2005</a></li>
+                        <li>CET Code (B.Tech) - E240</li>
+                        <li>Comed-K Code - E182</li>
+                        <li>PGCET Code(M.Tech) - T970</li>
+                        <li>PGCET Code(MBA) - B365MB</li>
+                        <li>PGCET Code(MCA) - C520MC</li>
+                    </ul>
+
+                    <h4 class="footer-heading">HOSTEL @ DSU MAIN CAMPUS</h4>
+                    <ul>
+                        <li><a href="#">Hostel Handbook</a></li>
+                    </ul>
+
+                    <h4 class="footer-heading">INTERNATIONAL ADMISSIONS</h4>
+                </div>
+
+                <!-- Column 2 -->
+                <div class="footer-column">
+                    <h4>Schools and Departments</h4>
+                    <ul>
+                        <li><a href="#">School of Engineering</a></li>
+                        <li><a href="#">School of Computer Applications</a></li>
+                        <li><a href="#">School of Commerce & Management</a></li>
+                        <li><a href="#">School of Basic & Applied Sciences</a></li>
+                        <li><a href="#">School of Health Sciences</a></li>
+                        <li><a href="#">School of Arts, Design And Humanities</a></li>
+                        <li><a href="#">School of Design and Digital Transmedia</a></li>
+                        <li><a href="#">School of Law</a></li>
+                        <li><a href="#">Online Degree Programs</a></li>
+                        <li><a href="#" class="cdsimer-link">Dr. Chandramma Dayananda Sagar Institute of Medical Education & Research Centre</a></li>
+                    </ul>
+
+                    <h4 class="footer-heading">PROGRAMS BROCHURE</h4>
+                    <ul>
+                        <li><a href="#">City Innovation Campus Brochure</a></li>
+                        <li><a href="#">Main Campus Brochure</a></li>
+                        <li><a href="#">SoE Brochure</a></li>
+                        <li><a href="#">B.Sc - Data Science Brochure</a></li>
+                        <li><a href="#">M.Sc - Data Science Brochure</a></li>
+                        <li><a href="#">Mechanical Engineering Brochure</a></li>
+                        <li><a href="#">Aerospace Engineering Brochure</a></li>
+                        <li><a href="#">ECE Brochure</a></li>
+                        <li><a href="#">M.Tech Brochure</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3 -->
+                <div class="footer-column">
+                    <h4>Admissions Information</h4>
+                    <ul>
+                        <li><a href="#">Admissions details</a></li>
+                        <li><a href="#">DSAT Admissions - Apply Online</a></li>
+                        <li><a href="#">Direct Admissions - Apply Online</a></li>
+                        <li><a href="#">Course Eligibility & Fee Structure</a></li>
+                    </ul>
+
+                    <h4 class="footer-heading">ADMISSIONS HELPLINE</h4>
+                    <ul>
+                        <li>Phone: 080 46461800 / +91 6366885507</li>
+                        <li>E-mail: admissions@dsu.edu.in</li>
+                    </ul>
+
+                    <h4 class="footer-heading">NRI / FOREIGN ADMISSIONS HELPLINE</h4>
+                    <ul>
+                        <li>Phone: +91 9606022152 / +91 9606022150 / +91 9606022149</li>
+                    </ul>
+
+                    <h4 class="footer-heading">REGION-WISE PRESENCE OF DSU</h4>
+                    <ul>
+                        <li>East Region: 8240216553</li>
+                        <li>West Region: 9741488001</li>
+                        <li>North Region: 7488983636</li>
+                        <li>South Region: 9962835358</li>
+                    </ul>
+                </div>
+
+                <!-- Column 4 -->
+                <div class="footer-column">
+                    <h4>DSU Main Campus</h4>
+                    <p>Devarakaggalahalli, Harohalli, Kanakapura Road, Bengaluru South Dt. - 562 112</p>
+                    <p>E-mail: admissions@dsu.edu.in</p>
+
+                    <h4>DSU City Innovation Campus</h4>
+                    <p><strong>Administrative & Main Admission office,</strong></p>
+                    <p>Kudlu Gate, Hosur Road, Bengaluru - 560 114</p>
+                    <p><strong>Admissions Helpline:</strong> 080 46461800 / 080 49092800 / +91 7760964277 / 8296316737 / 6366885507</p>
+                    <p>E-mail: admissions@dsu.edu.in | dsat@dsu.edu.in</p>
+
+                    <h4>Other Offices</h4>
+                    <ul>
+                        <li>Office of Registrar: 080 4909 2910 / 11</li>
+                        <li>Office of Dean (Engineering): +91 80 4909 2986 / 32 / 33</li>
+                        <li>Dean - MBA: 080 4909 2931</li>
+                        <li>Enquiry EMBA: 080 4909 2930</li>
+                        <li>Research Cell: 080 4909 2912</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    </div>
+    <!-- End Main Content Wrapper -->
+
+    <!-- Floating Sidebar -->
+    <div class="floating-sidebar">
+        <a href="#" class="floating-apply">APPLY NOW</a>
+        <a href="tel:+918046461800" class="floating-icon phone-icon"><i class="fas fa-phone"></i></a>
+        <a href="https://wa.me/916366885507" class="floating-icon whatsapp-icon"><i class="fab fa-whatsapp"></i></a>
+        <a href="#" class="floating-icon globe-icon"><i class="fas fa-globe"></i></a>
+        <button class="scroll-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
