@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP Login - Dayananda Sagar University</title>
+    
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="erp-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- ERP Login Page -->
+    <div class="erp-login-container">
+        <div class="erp-login-wrapper">
+            <div class="erp-login-header">
+                <div class="erp-logo">
+                    <img src="images/Screenshot%202025-11-16%20050340.png" alt="DSU Logo" class="erp-logo-img" onerror="this.style.display='none'">
+                    <h1>DSU ERP System</h1>
+                </div>
+                <p class="erp-subtitle">Student Portal Login</p>
+            </div>
+
+            <div class="erp-login-form-container">
+                <form class="erp-login-form" id="erpLoginForm">
+                    <div class="erp-form-group">
+                        <label for="username">Username / Student ID</label>
+                        <div class="erp-input-wrapper">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="username" name="username" placeholder="Enter your username or student ID" required>
+                        </div>
+                    </div>
+
+                    <div class="erp-form-group">
+                        <label for="password">Password</label>
+                        <div class="erp-input-wrapper">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                            <button type="button" class="erp-password-toggle" id="passwordToggle">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="erp-form-options">
+                        <label class="erp-checkbox">
+                            <input type="checkbox" name="remember">
+                            <span>Remember me</span>
+                        </label>
+                        <a href="#" class="erp-forgot-link">Forgot Password?</a>
+                    </div>
+
+                    <button type="submit" class="erp-login-btn">
+                        <span>Login</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+
+                    <div class="erp-demo-credentials">
+                        <p><strong>Demo Credentials:</strong></p>
+                        <p>Username: student123</p>
+                        <p>Password: demo123</p>
+                    </div>
+                </form>
+            </div>
+
+            <div class="erp-login-footer">
+                <a href="index.html" class="erp-back-link">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back to Home</span>
+                </a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon" id="themeIcon"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="erp-script.js"></script>
+</body>
+</html>
+

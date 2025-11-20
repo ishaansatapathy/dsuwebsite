@@ -37,6 +37,9 @@
                     <button class="search-btn">Search</button>
                 </div>
                 <a href="#" class="nri-btn">NRI/FOREIGN ADMISSIONS - APPLY HERE</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon" id="themeIcon"></i>
+                </button>
                 <select class="language-select">
                     <option>English</option>
                     <option>हिंदी</option>
@@ -140,7 +143,7 @@
                 <span class="a-plus">A+</span>
                 <span>GRADE ACCREDITED BY</span>
             </div>
-            <img src="images/naac-logo.png" alt="NAAC" class="naac-img" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'60\'%3E%3Crect width=\'100\' height=\'60\' fill=\'%23fff\'/%3E%3Ctext x=\'50\' y=\'35\' font-size=\'12\' fill=\'%23003366\' text-anchor=\'middle\'%3ENAAC%3C/text%3E%3C/svg%3E'">
+            <img src="images/naac-logo.png" alt="NAAC" class="naac-img" id="naacLogoImg" onerror="updateNAACLogoSVG()">
             <div class="awards-scroll">
                 <span>Leading & Most Trusted Management College of the Year 2021</span>
                 <span>Emerging Engineering Institute Research Capabilities 2022</span>
@@ -292,35 +295,55 @@
     <section class="academics-section">
         <div class="container">
             <div class="academics-grid">
-                <div class="academic-card">
+                <div class="academic-card" onclick="showAcademicDetails('Engineering')">
                     <h3>ENGINEERING</h3>
+                    <p style="margin-top: 12px; font-size: 14px; opacity: 0.8;">B.Tech, M.Tech Programs in CSE, ECE, Mechanical, Civil, Electrical & more</p>
+                    <p style="margin-top: 8px; font-size: 12px; color: var(--primary-orange);">12 Programs | 2000+ Students</p>
                 </div>
-                <div class="academic-card">
+                <div class="academic-card" onclick="showAcademicDetails('Computer Applications')">
                     <h3>COMPUTER APPLICATIONS</h3>
+                    <p style="margin-top: 12px; font-size: 14px; opacity: 0.8;">BCA, MCA programs with industry-aligned curriculum</p>
+                    <p style="margin-top: 8px; font-size: 12px; color: var(--primary-orange);">4 Programs | 800+ Students</p>
                 </div>
-                <div class="academic-card">
+                <div class="academic-card" onclick="showAcademicDetails('Law')">
                     <h3>SCHOOL OF LAW</h3>
+                    <p style="margin-top: 12px; font-size: 14px; opacity: 0.8;">BA LLB, BBA LLB, LLM programs with moot court facilities</p>
+                    <p style="margin-top: 8px; font-size: 12px; color: var(--primary-orange);">6 Programs | 600+ Students</p>
                 </div>
-                <div class="academic-card">
+                <div class="academic-card" onclick="showAcademicDetails('Applied Sciences')">
                     <h3>APPLIED SCIENCES</h3>
+                    <p style="margin-top: 12px; font-size: 14px; opacity: 0.8;">B.Sc, M.Sc in Physics, Chemistry, Mathematics, Biotechnology</p>
+                    <p style="margin-top: 8px; font-size: 12px; color: var(--primary-orange);">8 Programs | 500+ Students</p>
                 </div>
-                <div class="academic-card">
+                <div class="academic-card" onclick="showAcademicDetails('Commerce & Management')">
                     <h3>COMMERCE & MANAGEMENT</h3>
+                    <p style="margin-top: 12px; font-size: 14px; opacity: 0.8;">B.Com, M.Com, MBA, BBA programs with industry exposure</p>
+                    <p style="margin-top: 8px; font-size: 12px; color: var(--primary-orange);">10 Programs | 1500+ Students</p>
                 </div>
-                <div class="academic-card">
+                <div class="academic-card" onclick="showAcademicDetails('Executive Education')">
                     <h3>EXECUTIVE EDUCATION</h3>
+                    <p style="margin-top: 12px; font-size: 14px; opacity: 0.8;">Executive MBA, Certificate programs for working professionals</p>
+                    <p style="margin-top: 8px; font-size: 12px; color: var(--primary-orange);">5 Programs | 300+ Students</p>
                 </div>
-                <div class="academic-card">
+                <div class="academic-card" onclick="showAcademicDetails('Arts, Design and Humanities')">
                     <h3>ARTS, DESIGN AND HUMANITIES</h3>
+                    <p style="margin-top: 12px; font-size: 14px; opacity: 0.8;">BA, MA programs in English, Psychology, Sociology, History</p>
+                    <p style="margin-top: 8px; font-size: 12px; color: var(--primary-orange);">7 Programs | 400+ Students</p>
                 </div>
-                <div class="academic-card">
+                <div class="academic-card" onclick="showAcademicDetails('Design & Digital Transmedia')">
                     <h3>DESIGN & DIGITAL TRANSMEDIA</h3>
+                    <p style="margin-top: 12px; font-size: 14px; opacity: 0.8;">B.Des, M.Des in Graphic Design, Animation, Digital Media</p>
+                    <p style="margin-top: 8px; font-size: 12px; color: var(--primary-orange);">6 Programs | 350+ Students</p>
                 </div>
-                <div class="academic-card">
+                <div class="academic-card" onclick="showAcademicDetails('Health Sciences')">
                     <h3>HEALTH SCIENCES</h3>
+                    <p style="margin-top: 12px; font-size: 14px; opacity: 0.8;">B.Pharm, M.Pharm, Nursing, Physiotherapy programs</p>
+                    <p style="margin-top: 8px; font-size: 12px; color: var(--primary-orange);">9 Programs | 700+ Students</p>
                 </div>
-                <div class="academic-card">
+                <div class="academic-card" onclick="showAcademicDetails('MBBS')">
                     <h3>MBBS</h3>
+                    <p style="margin-top: 12px; font-size: 14px; opacity: 0.8;">Bachelor of Medicine and Bachelor of Surgery program</p>
+                    <p style="margin-top: 8px; font-size: 12px; color: var(--primary-orange);">1 Program | 150 Students/Year</p>
                 </div>
             </div>
         </div>
@@ -336,7 +359,7 @@
                     <button class="carousel-btn"><i class="fas fa-chevron-right"></i></button>
                 </div>
             </div>
-            <div class="announcements-grid">
+            <div class="announcements-grid" id="announcementsGrid">
                 <div class="announcement-card ai-card">
                     <div class="master-badge">Master</div>
                     <h3>Business Applications of Artificial Intelligence</h3>
@@ -350,7 +373,7 @@
                     <button class="announcement-btn">Apply Now</button>
                     <div class="announcement-desc">
                         <p><strong>BUSINESS APPLICATIONS OF</strong></p>
-                        <p>The only program that provides a unique 'Reverse Engineer Pedagogy' that teaches...</p>
+                        <p>The only program that provides a unique 'Reverse Engineer Pedagogy' that teaches real-world AI applications through hands-on projects and industry case studies.</p>
                     </div>
                 </div>
                 <div class="announcement-card mba-card">
@@ -361,15 +384,51 @@
                     <h3 class="dsat-text">DSAT & PGCET</h3>
                     <div class="announcement-desc">
                         <p><strong>PGCET & DSAT</strong></p>
-                        <p>School of commerce and Management stud Welcomes the full time MBA students from...</p>
+                        <p>School of commerce and Management studies Welcomes the full time MBA students from DSAT and PGCET. Admissions open for 2025-26 batch.</p>
                     </div>
                 </div>
                 <div class="announcement-card video-card">
                     <h4>DSU VIDEO</h4>
-                    <div class="video-thumbnail">
+                    <div class="video-thumbnail" onclick="playVideo('Life at DSU')">
                         <img src="images/video-thumbnail-1.jpg" alt="Life at DSU" class="video-thumb-img" onerror="this.style.display='none'">
                         <i class="fas fa-play-circle"></i>
                         <p>Life at DSU Main...</p>
+                        <img src="images/youtube-logo.png" alt="YouTube" class="youtube-logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'20\'%3E%3Ctext x=\'50\' y=\'15\' font-size=\'10\' fill=\'%23f00\' text-anchor=\'middle\'%3EYoutube%3C/text%3E%3C/svg%3E'">
+                    </div>
+                </div>
+                <div class="announcement-card ai-card" style="display: none;">
+                    <div class="master-badge">New</div>
+                    <h3>Cybersecurity Certification Program</h3>
+                    <p class="get-prepared">GET CERTIFIED IN</p>
+                    <div class="cert-logos">
+                        <span>CEH</span>
+                        <span>CISSP</span>
+                        <span>CCNA</span>
+                    </div>
+                    <p class="cert-text">(Become a certified Cybersecurity Expert)</p>
+                    <button class="announcement-btn">Apply Now</button>
+                    <div class="announcement-desc">
+                        <p><strong>CYBERSECURITY PROGRAM</strong></p>
+                        <p>Comprehensive program covering ethical hacking, network security, and digital forensics. Industry-recognized certifications included.</p>
+                    </div>
+                </div>
+                <div class="announcement-card mba-card" style="display: none;">
+                    <h4>Executive MBA Program</h4>
+                    <p class="pg-programs">EXECUTIVE PROGRAMS</p>
+                    <div class="welcomes-banner">ENROLL NOW</div>
+                    <p class="mba-text">Weekend Classes for Working Professionals</p>
+                    <h3 class="dsat-text">2025 BATCH</h3>
+                    <div class="announcement-desc">
+                        <p><strong>EXECUTIVE MBA</strong></p>
+                        <p>Flexible weekend schedule designed for working professionals. Industry-focused curriculum with real-world case studies.</p>
+                    </div>
+                </div>
+                <div class="announcement-card video-card" style="display: none;">
+                    <h4>CAMPUS TOUR</h4>
+                    <div class="video-thumbnail" onclick="playVideo('Campus Tour')">
+                        <img src="images/video-thumbnail-2.jpg" alt="Campus Tour" class="video-thumb-img" onerror="this.style.display='none'">
+                        <i class="fas fa-play-circle"></i>
+                        <p>Virtual Campus Tour...</p>
                         <img src="images/youtube-logo.png" alt="YouTube" class="youtube-logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'20\'%3E%3Ctext x=\'50\' y=\'15\' font-size=\'10\' fill=\'%23f00\' text-anchor=\'middle\'%3EYoutube%3C/text%3E%3C/svg%3E'">
                     </div>
                 </div>
@@ -387,11 +446,43 @@
                     <ul class="news-list">
                         <li>
                             <span class="bullet"></span>
-                            Five Days FDP on "Entangle 25: A Hands-on Workshop on Quantum Computing and its Emerging Paradigms"
+                            Five Days FDP on "Entangle 25: A Hands-on Workshop on Quantum Computing and its Emerging Paradigms" - Dec 10, 2024
                         </li>
                         <li>
                             <span class="bullet"></span>
-                            Message from Vice Chairman
+                            Message from Vice Chairman - Dec 8, 2024
+                        </li>
+                        <li>
+                            <span class="bullet"></span>
+                            DSU Students Win National Hackathon 2024 - Dec 5, 2024
+                        </li>
+                        <li>
+                            <span class="bullet"></span>
+                            International Conference on AI & Machine Learning - Dec 3, 2024
+                        </li>
+                        <li>
+                            <span class="bullet"></span>
+                            New Research Center Inauguration - Nov 28, 2024
+                        </li>
+                        <li>
+                            <span class="bullet"></span>
+                            Industry-Academia Collaboration with Tech Giants - Nov 25, 2024
+                        </li>
+                        <li>
+                            <span class="bullet"></span>
+                            Annual Sports Meet 2024 Results - Nov 20, 2024
+                        </li>
+                        <li>
+                            <span class="bullet"></span>
+                            Guest Lecture by Industry Expert on Cloud Computing - Nov 18, 2024
+                        </li>
+                        <li>
+                            <span class="bullet"></span>
+                            Scholarship Distribution Ceremony - Nov 15, 2024
+                        </li>
+                        <li>
+                            <span class="bullet"></span>
+                            Campus Placement Drive - 200+ Companies Participated - Nov 12, 2024
                         </li>
                     </ul>
                 </div>
@@ -403,25 +494,31 @@
                     <div class="differentiator-items">
                         <div class="diff-item active">
                             <h4>Curriculum</h4>
-                            <p>Our curriculum is developed with our philosophy to quality education. Its salient features are that there is coherence in learning, it synthesizes...</p>
+                            <p>Our curriculum is developed with our philosophy to quality education. Its salient features are that there is coherence in learning, it synthesizes theoretical knowledge with practical application, and ensures industry relevance through regular updates.</p>
                         </div>
                         <div class="diff-item">
                             <h4>Board of Studies</h4>
+                            <p>Comprising industry experts, academicians, and alumni, our Board of Studies ensures curriculum remains current and aligned with industry needs. Regular reviews and updates keep programs competitive and relevant.</p>
                         </div>
                         <div class="diff-item">
                             <h4>Teaching Learning Process</h4>
+                            <p>We employ innovative pedagogical methods including project-based learning, case studies, and hands-on workshops. Our flipped classroom approach and digital learning platforms enhance student engagement and understanding.</p>
                         </div>
                         <div class="diff-item">
                             <h4>Industry Driven Academics on Campus</h4>
+                            <p>Leading companies have set up innovation labs and research centers on campus. Students work on real-world projects, gaining practical experience while contributing to industry solutions.</p>
                         </div>
                         <div class="diff-item">
                             <h4>Research</h4>
+                            <p>With state-of-the-art research facilities and funding from national and international agencies, our faculty and students contribute to cutting-edge research across multiple disciplines.</p>
                         </div>
                         <div class="diff-item">
                             <h4>Faculty</h4>
+                            <p>Our faculty comprises experienced professors, industry practitioners, and researchers with international exposure. Regular faculty development programs ensure teaching excellence.</p>
                         </div>
                         <div class="diff-item">
                             <h4>Entrepreneurship</h4>
+                            <p>Our entrepreneurship cell and incubation center support student startups with mentorship, funding, and infrastructure. Many successful startups have emerged from our campus.</p>
                         </div>
                     </div>
                 </div>
@@ -429,19 +526,19 @@
                 <!-- Leadership -->
                 <div class="leadership-column">
                     <h2>LEADERSHIP</h2>
-                    <div class="leader-profile">
+                    <div class="leader-profile" id="leaderProfile">
                         <div class="leader-image">
-                            <img src="images/founding-father.jpg" alt="Late Shri R Dayananda Sagar" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'120\' height=\'120\'%3E%3Ccircle cx=\'60\' cy=\'60\' r=\'55\' fill=\'%23e0f2fe\'/%3E%3Ctext x=\'60\' y=\'70\' font-size=\'20\' fill=\'%23003366\' text-anchor=\'middle\'%3EL%3C/text%3E%3C/svg%3E'">
+                            <img src="images/founding-father.jpg" alt="Late Shri R Dayananda Sagar" id="leaderImage" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'120\' height=\'120\'%3E%3Ccircle cx=\'60\' cy=\'60\' r=\'55\' fill=\'%23e0f2fe\'/%3E%3Ctext x=\'60\' y=\'70\' font-size=\'20\' fill=\'%23003366\' text-anchor=\'middle\'%3EL%3C/text%3E%3C/svg%3E'">
                         </div>
-                        <h3>LATE SHRI R DAYANANDA SAGAR</h3>
-                        <p class="leader-title">Founding Father</p>
+                        <h3 id="leaderName">LATE SHRI R DAYANANDA SAGAR</h3>
+                        <p class="leader-title" id="leaderTitle">Founding Father</p>
                         <hr>
-                        <p>Our founding father, late Sri R Dayananda Sagar, was a graduate in Arts & Commerce from India & a barrister-at-law from England.</p>
+                        <p id="leaderDescription">Our founding father, late Sri R Dayananda Sagar, was a graduate in Arts & Commerce from India & a barrister-at-law from England. He established the institution with a vision to provide quality education to all.</p>
                     </div>
                     <div class="carousel-dots">
-                        <span class="dot active"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
+                        <span class="dot active" data-leader="0"></span>
+                        <span class="dot" data-leader="1"></span>
+                        <span class="dot" data-leader="2"></span>
                     </div>
                 </div>
             </div>
@@ -621,6 +718,239 @@
         <button class="scroll-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
             <i class="fas fa-arrow-up"></i>
         </button>
+    </div>
+
+    <!-- ERP Section (Hidden by default) -->
+    <div id="erpSection" style="display: none;">
+        <!-- ERP Login Page -->
+        <div id="erpLoginPage" class="erp-page">
+            <div class="erp-container">
+                <div class="erp-header">
+                    <button class="erp-back-btn" onclick="hideERPSection()">
+                        <i class="fas fa-arrow-left"></i> Back to Website
+                    </button>
+                    <h1 class="erp-title">DSU ERP Portal</h1>
+                    <div class="theme-toggle-erp">
+                        <button class="theme-toggle" id="themeToggleERP" aria-label="Toggle theme">
+                            <i class="fas fa-moon" id="themeIconERP"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="erp-login-card">
+                    <div class="erp-logo-section">
+                        <img src="images/Screenshot%202025-11-16%20050340.png" alt="DSU Logo" class="erp-logo">
+                        <h2>Student Login</h2>
+                        <p>Enter your credentials to access your dashboard</p>
+                    </div>
+                    
+                    <form class="erp-login-form" id="erpLoginForm" onsubmit="handleERPLogin(event)">
+                        <div class="form-group">
+                            <label>Student ID / Email</label>
+                            <input type="text" name="username" placeholder="Enter your Student ID or Email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" name="password" placeholder="Enter your password" required>
+                            <a href="#" class="forgot-link">Forgot Password?</a>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="remember">
+                                <span>Remember me</span>
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="erp-login-btn">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </button>
+                    </form>
+                    
+                    <div class="erp-footer-links">
+                        <a href="#">Faculty Login</a>
+                        <span>|</span>
+                        <a href="#">Admin Login</a>
+                        <span>|</span>
+                        <a href="#">Help & Support</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Student Dashboard -->
+        <div id="erpDashboard" class="erp-page" style="display: none;">
+            <div class="erp-dashboard-container">
+                <!-- Dashboard Header -->
+                <div class="dashboard-header">
+                    <div class="dashboard-header-left">
+                        <button class="erp-back-btn" onclick="showERPLogin()">
+                            <i class="fas fa-arrow-left"></i> Logout
+                        </button>
+                        <h1>Student Dashboard</h1>
+                    </div>
+                    <div class="dashboard-header-right">
+                        <div class="student-info">
+                            <div class="student-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="student-details">
+                                <span class="student-name" id="studentName">John Doe</span>
+                                <span class="student-id" id="studentId">DSU2024001</span>
+                            </div>
+                        </div>
+                        <button class="theme-toggle" id="themeToggleDashboard" aria-label="Toggle theme">
+                            <i class="fas fa-moon" id="themeIconDashboard"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Dashboard Stats -->
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: rgba(96, 165, 250, 0.1);">
+                            <i class="fas fa-book" style="color: #60A5FA;"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalCourses">6</h3>
+                            <p>Active Courses</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: rgba(34, 197, 94, 0.1);">
+                            <i class="fas fa-chart-line" style="color: #22C55E;"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="currentCGPA">8.5</h3>
+                            <p>Current CGPA</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: rgba(251, 191, 36, 0.1);">
+                            <i class="fas fa-calendar-check" style="color: #FBBF24;"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="attendancePercent">85%</h3>
+                            <p>Attendance</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: rgba(239, 68, 68, 0.1);">
+                            <i class="fas fa-exclamation-triangle" style="color: #EF4444;"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="pendingAssignments">3</h3>
+                            <p>Pending Assignments</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Dashboard Content -->
+                <div class="dashboard-content">
+                    <!-- Left Column -->
+                    <div class="dashboard-left">
+                        <!-- Marks Section -->
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h2><i class="fas fa-graduation-cap"></i> Academic Performance</h2>
+                                <select class="semester-select" id="semesterSelect" onchange="updateMarks()">
+                                    <option value="1">Semester 1</option>
+                                    <option value="2">Semester 2</option>
+                                    <option value="3">Semester 3</option>
+                                    <option value="4" selected>Semester 4</option>
+                                </select>
+                            </div>
+                            <div class="marks-table-container">
+                                <table class="marks-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Subject</th>
+                                            <th>Internal</th>
+                                            <th>External</th>
+                                            <th>Total</th>
+                                            <th>Grade</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="marksTableBody">
+                                        <!-- Marks will be populated by JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <!-- Attendance Section -->
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h2><i class="fas fa-calendar-alt"></i> Attendance</h2>
+                            </div>
+                            <div class="attendance-list" id="attendanceList">
+                                <!-- Attendance will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Column -->
+                    <div class="dashboard-right">
+                        <!-- Quick Links -->
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h2><i class="fas fa-link"></i> Quick Links</h2>
+                            </div>
+                            <div class="quick-links">
+                                <a href="#" class="quick-link-item">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>Assignments</span>
+                                </a>
+                                <a href="#" class="quick-link-item">
+                                    <i class="fas fa-calendar"></i>
+                                    <span>Time Table</span>
+                                </a>
+                                <a href="#" class="quick-link-item">
+                                    <i class="fas fa-book"></i>
+                                    <span>Study Materials</span>
+                                </a>
+                                <a href="#" class="quick-link-item">
+                                    <i class="fas fa-money-bill"></i>
+                                    <span>Fee Payment</span>
+                                </a>
+                                <a href="#" class="quick-link-item">
+                                    <i class="fas fa-id-card"></i>
+                                    <span>ID Card</span>
+                                </a>
+                                <a href="#" class="quick-link-item">
+                                    <i class="fas fa-building"></i>
+                                    <span>Hostel</span>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <!-- Recent Activities -->
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h2><i class="fas fa-bell"></i> Recent Activities</h2>
+                            </div>
+                            <div class="activities-list" id="activitiesList">
+                                <!-- Activities will be populated by JavaScript -->
+                            </div>
+                        </div>
+                        
+                        <!-- Upcoming Events -->
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h2><i class="fas fa-calendar-day"></i> Upcoming Events</h2>
+                            </div>
+                            <div class="events-list" id="eventsList">
+                                <!-- Events will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>

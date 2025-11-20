@@ -1,7 +1,7 @@
 /* Modern Black & Orange Theme - DSU Website Clone */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap');
 
-/* CSS Variables for Modern Theme */
+/* CSS Variables for Modern Theme - Dark Theme (Default) */
 :root {
     --primary-black: #000000;
     --primary-orange: #FF6600;
@@ -21,11 +21,38 @@
     --shadow-orange: 0 4px 20px rgba(255, 102, 0, 0.4);
 }
 
+/* Light Theme Variables - Modern Clean Design */
+[data-theme="light"] {
+    --primary-black: #FFFFFF;
+    --primary-orange: #60A5FA;
+    --orange-light: #93C5FD;
+    --orange-dark: #3B82F6;
+    --black-light: #FAFBFC;
+    --black-dark: #F8FAFC;
+    --gray-dark: #F1F5F9;
+    --gray-medium: #E2E8F0;
+    --gray-light: #CBD5E1;
+    --white: #475569;
+    --bg-gradient: linear-gradient(135deg, #FFFFFF 0%, #FAFBFC 50%, #F8FAFC 100%);
+    --orange-gradient: linear-gradient(135deg, #60A5FA 0%, #93C5FD 50%, #BFDBFE 100%);
+    --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04), 0 1px 1px rgba(15, 23, 42, 0.03);
+    --shadow-md: 0 2px 4px rgba(15, 23, 42, 0.05), 0 1px 2px rgba(15, 23, 42, 0.04);
+    --shadow-lg: 0 4px 8px rgba(15, 23, 42, 0.06), 0 2px 4px rgba(15, 23, 42, 0.05);
+    --shadow-orange: 0 2px 8px rgba(96, 165, 250, 0.12), 0 1px 3px rgba(96, 165, 250, 0.08);
+}
+
 /* Reset and Base Styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+/* Smooth transitions for theme changes */
+*,
+*::before,
+*::after {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 body {
@@ -34,6 +61,7 @@ body {
     line-height: 1.7;
     background-color: var(--primary-black);
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .container {
@@ -184,6 +212,33 @@ body {
 .nri-btn:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-orange);
+}
+
+.theme-toggle {
+    padding: 10px 14px;
+    border: 1px solid var(--gray-medium);
+    border-radius: 8px;
+    background: var(--gray-dark);
+    color: var(--white);
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    height: 40px;
+}
+
+.theme-toggle:hover {
+    background: var(--primary-orange);
+    border-color: var(--primary-orange);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-orange);
+}
+
+.theme-toggle:active {
+    transform: translateY(0);
 }
 
 .language-select {
@@ -538,15 +593,22 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
-    color: var(--primary-orange);
+    color: #FF6600;
     font-weight: 800;
+    transition: color 0.3s ease;
+}
+
+.naac-logo span:not(.a-plus) {
+    color: #FF6600;
+    transition: color 0.3s ease;
 }
 
 .a-plus {
     font-size: 48px;
-    color: var(--primary-orange);
+    color: #FF6600;
     font-weight: 900;
     text-shadow: 0 0 20px rgba(255, 102, 0, 0.5);
+    transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
 .naac-img {
@@ -1941,6 +2003,368 @@ body {
     color: var(--white);
     transform: translateY(-2px);
     box-shadow: var(--shadow-orange);
+}
+
+/* Light Theme Specific Overrides */
+[data-theme="light"] .hero-section::before {
+    background: radial-gradient(circle at 30% 50%, rgba(96, 165, 250, 0.05) 0%, transparent 50%);
+}
+
+[data-theme="light"] .hero-section::after {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.9) 100%);
+}
+
+[data-theme="light"] .hero-title {
+    background: linear-gradient(135deg, #475569 0%, #60A5FA 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+[data-theme="light"] .scholarship-box {
+    background: rgba(96, 165, 250, 0.08);
+    color: #60A5FA;
+    border: 1px solid rgba(96, 165, 250, 0.15);
+    backdrop-filter: blur(10px);
+}
+
+[data-theme="light"] .transformative-text {
+    background: rgba(96, 165, 250, 0.06);
+    color: #60A5FA;
+    border: 1px solid rgba(96, 165, 250, 0.12);
+}
+
+[data-theme="light"] .campus-gallery-section::before {
+    background: radial-gradient(circle at 50% 50%, rgba(96, 165, 250, 0.02) 0%, transparent 70%);
+}
+
+[data-theme="light"] .section-title {
+    background: linear-gradient(135deg, #475569 0%, #60A5FA 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+[data-theme="light"] .campus-card {
+    box-shadow: 0 2px 4px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.03);
+    border: 1px solid rgba(241, 245, 249, 0.9);
+}
+
+[data-theme="light"] .campus-card:hover {
+    box-shadow: 0 4px 8px rgba(15, 23, 42, 0.06), 0 2px 4px rgba(15, 23, 42, 0.05);
+    border-color: rgba(96, 165, 250, 0.25);
+}
+
+[data-theme="light"] .overlay-content {
+    background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.7) 50%, transparent 100%);
+}
+
+[data-theme="light"] .overlay-content h3 {
+    color: #93C5FD;
+}
+
+[data-theme="light"] .card-glow {
+    background: radial-gradient(circle, rgba(96, 165, 250, 0.2) 0%, transparent 70%);
+}
+
+[data-theme="light"] .campus-card::before {
+    border: 2px solid #60A5FA;
+}
+
+[data-theme="light"] .campus-card.featured-card::after {
+    background: linear-gradient(135deg, #60A5FA 0%, #93C5FD 50%, #BFDBFE 100%);
+}
+
+[data-theme="light"] .explore-btn {
+    background: rgba(255, 255, 255, 0.95);
+    color: #60A5FA;
+    border: 1px solid rgba(96, 165, 250, 0.25);
+}
+
+[data-theme="light"] .explore-btn:hover {
+    background: #60A5FA;
+    color: #FFFFFF;
+    border-color: #60A5FA;
+}
+
+[data-theme="light"] .academic-card {
+    background: #FFFFFF;
+    border: 1px solid #F1F5F9;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 1px 1px rgba(15, 23, 42, 0.03);
+}
+
+[data-theme="light"] .academic-card:hover {
+    border-color: #60A5FA;
+    box-shadow: 0 2px 8px rgba(96, 165, 250, 0.12), 0 1px 3px rgba(96, 165, 250, 0.08);
+}
+
+[data-theme="light"] .academic-card::before {
+    background: linear-gradient(135deg, rgba(96, 165, 250, 0.08) 0%, rgba(147, 197, 253, 0.04) 100%);
+}
+
+[data-theme="light"] .diff-item {
+    background: #FFFFFF;
+    border: 1px solid #F1F5F9;
+}
+
+[data-theme="light"] .diff-item:hover {
+    background: rgba(96, 165, 250, 0.04);
+    border-color: #60A5FA;
+}
+
+[data-theme="light"] .diff-item.active {
+    background: rgba(96, 165, 250, 0.08);
+    border-color: #60A5FA;
+}
+
+[data-theme="light"] .bullet {
+    background: linear-gradient(135deg, #60A5FA 0%, #93C5FD 100%);
+    box-shadow: 0 0 8px rgba(96, 165, 250, 0.3);
+}
+
+[data-theme="light"] .covid-banner {
+    background: linear-gradient(135deg, #60A5FA 0%, #93C5FD 100%);
+    color: #FFFFFF;
+}
+
+[data-theme="light"] .content-section {
+    background: #FAFBFC;
+}
+
+[data-theme="light"] .announcements-section {
+    background: #FFFFFF;
+}
+
+[data-theme="light"] .announcement-card {
+    background: #FFFFFF;
+    border: 1px solid #F1F5F9;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+[data-theme="light"] .announcement-card:hover {
+    box-shadow: 0 2px 8px rgba(96, 165, 250, 0.12), 0 1px 3px rgba(96, 165, 250, 0.08);
+    border-color: #60A5FA;
+}
+
+[data-theme="light"] .footer {
+    background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+    color: #F1F5F9;
+}
+
+[data-theme="light"] .footer a {
+    color: #CBD5E1;
+}
+
+[data-theme="light"] .footer a:hover {
+    color: #60A5FA;
+}
+
+[data-theme="light"] .top-header {
+    border-bottom: 1px solid #E2E8F0;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+}
+
+[data-theme="light"] .secondary-nav {
+    background: #F8FAFC;
+    border-bottom: 1px solid #E2E8F0;
+}
+
+[data-theme="light"] .main-nav {
+    background: #FFFFFF;
+    border-bottom: 2px solid #E2E8F0;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+}
+
+[data-theme="light"] .naac-banner {
+    background: linear-gradient(135deg, #FFFFFF 0%, #FAFBFC 100%);
+    border-bottom: 3px solid #60A5FA;
+}
+
+[data-theme="light"] .naac-logo {
+    color: #60A5FA !important;
+}
+
+[data-theme="light"] .naac-logo span:not(.a-plus) {
+    color: #60A5FA !important;
+}
+
+[data-theme="light"] .a-plus {
+    color: #60A5FA !important;
+    text-shadow: 0 0 20px rgba(96, 165, 250, 0.25);
+}
+
+[data-theme="light"] .search-input {
+    background: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    color: #0F172A;
+}
+
+[data-theme="light"] .search-input:focus {
+    border-color: #60A5FA;
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.08);
+}
+
+[data-theme="light"] .language-select {
+    background: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    color: #0F172A;
+}
+
+[data-theme="light"] .theme-toggle {
+    background: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    color: #0F172A;
+}
+
+[data-theme="light"] .theme-toggle:hover {
+    background: #60A5FA;
+    border-color: #60A5FA;
+    color: #FFFFFF;
+}
+
+[data-theme="light"] .sidebar-nav {
+    background: #FFFFFF;
+    border-right: 2px solid #E2E8F0;
+    box-shadow: 4px 0 12px rgba(15, 23, 42, 0.1);
+}
+
+[data-theme="light"] .sidebar-menu-item {
+    color: #0F172A;
+    border-bottom: 1px solid #E2E8F0;
+}
+
+[data-theme="light"] .sidebar-menu-item:hover,
+[data-theme="light"] .sidebar-menu-item.active {
+    background: rgba(96, 165, 250, 0.06);
+    color: #60A5FA;
+}
+
+[data-theme="light"] .dropdown-menu {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    box-shadow: 0 10px 15px rgba(15, 23, 42, 0.1), 0 4px 6px rgba(15, 23, 42, 0.08);
+}
+
+[data-theme="light"] .dropdown-item {
+    color: #0F172A;
+}
+
+[data-theme="light"] .dropdown-item:hover {
+    background: rgba(96, 165, 250, 0.06);
+    color: #60A5FA;
+}
+
+[data-theme="light"] .carousel-btn {
+    background: #FFFFFF;
+    border: 2px solid #60A5FA;
+    color: #60A5FA;
+}
+
+[data-theme="light"] .carousel-btn:hover {
+    background: #60A5FA;
+    color: #FFFFFF;
+}
+
+[data-theme="light"] .awards-scroll span {
+    background: rgba(96, 165, 250, 0.06);
+    border: 1px solid rgba(96, 165, 250, 0.12);
+    color: #475569;
+}
+
+[data-theme="light"] .apply-btn-large:hover {
+    box-shadow: 0 4px 16px rgba(96, 165, 250, 0.2);
+}
+
+[data-theme="light"] .student-img {
+    border: 3px solid #60A5FA;
+    box-shadow: 0 4px 8px rgba(15, 23, 42, 0.06), 0 2px 4px rgba(15, 23, 42, 0.05);
+}
+
+[data-theme="light"] .exam-item {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    color: #0F172A;
+    border: 1px solid #E2E8F0;
+}
+
+[data-theme="light"] .exam-item:hover {
+    background: rgba(96, 165, 250, 0.08);
+    border-color: #60A5FA;
+}
+
+[data-theme="light"] .exam-item i {
+    color: #60A5FA;
+}
+
+[data-theme="light"] .floating-apply {
+    background: linear-gradient(135deg, #60A5FA 0%, #93C5FD 100%);
+    color: #FFFFFF;
+    box-shadow: 0 2px 8px rgba(96, 165, 250, 0.2);
+}
+
+[data-theme="light"] .floating-apply:hover {
+    box-shadow: 0 4px 12px rgba(96, 165, 250, 0.25);
+}
+
+[data-theme="light"] .floating-icon {
+    background: #FFFFFF;
+    border: 1px solid #F1F5F9;
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06);
+}
+
+[data-theme="light"] .floating-icon:hover {
+    background: #60A5FA;
+    border-color: #60A5FA;
+    color: #FFFFFF;
+}
+
+[data-theme="light"] .scroll-top {
+    background: #60A5FA;
+    color: #FFFFFF;
+    box-shadow: 0 2px 8px rgba(96, 165, 250, 0.2);
+}
+
+[data-theme="light"] .scroll-top:hover {
+    background: #3B82F6;
+    box-shadow: 0 4px 12px rgba(96, 165, 250, 0.25);
+}
+
+/* Dynamic Content Sections */
+.dynamic-content-section,
+.contact-section {
+    padding: 80px 0;
+    background: var(--primary-black);
+    min-height: 60vh;
+}
+
+.content-card {
+    transition: all 0.3s ease;
+}
+
+.content-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--primary-orange) !important;
+    box-shadow: var(--shadow-orange);
+}
+
+.content-card:hover i {
+    transform: scale(1.1);
+}
+
+/* Light Theme for Dynamic Content */
+[data-theme="light"] .dynamic-content-section,
+[data-theme="light"] .contact-section {
+    background: #FFFFFF;
+}
+
+[data-theme="light"] .content-card {
+    background: #F8FAFC !important;
+    border-color: #F1F5F9 !important;
+}
+
+[data-theme="light"] .content-card:hover {
+    border-color: #60A5FA !important;
+    box-shadow: 0 4px 14px rgba(96, 165, 250, 0.15), 0 2px 4px rgba(96, 165, 250, 0.1);
 }
 
 /* Responsive Design */

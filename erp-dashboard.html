@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - DSU ERP</title>
+    
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="erp-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- ERP Dashboard -->
+    <div class="erp-dashboard">
+        <!-- Sidebar -->
+        <aside class="erp-sidebar">
+            <div class="erp-sidebar-header">
+                <div class="erp-user-profile">
+                    <div class="erp-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="erp-user-info">
+                        <h3 id="studentName">John Doe</h3>
+                        <p id="studentId">STU2024001</p>
+                        <p id="studentCourse">B.Tech CSE - 3rd Year</p>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="erp-sidebar-nav">
+                <a href="#dashboard" class="erp-nav-item active" data-section="dashboard">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#marks" class="erp-nav-item" data-section="marks">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Marks & Grades</span>
+                </a>
+                <a href="#attendance" class="erp-nav-item" data-section="attendance">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Attendance</span>
+                </a>
+                <a href="#courses" class="erp-nav-item" data-section="courses">
+                    <i class="fas fa-book"></i>
+                    <span>My Courses</span>
+                </a>
+                <a href="#assignments" class="erp-nav-item" data-section="assignments">
+                    <i class="fas fa-tasks"></i>
+                    <span>Assignments</span>
+                </a>
+                <a href="#exams" class="erp-nav-item" data-section="exams">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Exams</span>
+                </a>
+                <a href="#fees" class="erp-nav-item" data-section="fees">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span>Fee Payment</span>
+                </a>
+                <a href="#library" class="erp-nav-item" data-section="library">
+                    <i class="fas fa-book-open"></i>
+                    <span>Library</span>
+                </a>
+                <a href="#profile" class="erp-nav-item" data-section="profile">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Profile</span>
+                </a>
+            </nav>
+
+            <div class="erp-sidebar-footer">
+                <a href="erp-login.html" class="erp-logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="erp-main-content">
+            <!-- Top Bar -->
+            <header class="erp-topbar">
+                <div class="erp-topbar-left">
+                    <h2 id="currentSectionTitle">Dashboard</h2>
+                </div>
+                <div class="erp-topbar-right">
+                    <button class="erp-notification-btn" id="notificationBtn">
+                        <i class="fas fa-bell"></i>
+                        <span class="erp-notification-badge">3</span>
+                    </button>
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="erp-content-area">
+                <!-- Dashboard Section -->
+                <section id="dashboard-section" class="erp-section active">
+                    <div class="erp-stats-grid">
+                        <div class="erp-stat-card">
+                            <div class="erp-stat-icon" style="background: rgba(37, 99, 235, 0.1);">
+                                <i class="fas fa-percentage" style="color: #2563EB;"></i>
+                            </div>
+                            <div class="erp-stat-content">
+                                <h3>CGPA</h3>
+                                <p class="erp-stat-value">8.75</p>
+                                <span class="erp-stat-change positive">+0.15 this semester</span>
+                            </div>
+                        </div>
+
+                        <div class="erp-stat-card">
+                            <div class="erp-stat-icon" style="background: rgba(16, 185, 129, 0.1);">
+                                <i class="fas fa-calendar-check" style="color: #10B981;"></i>
+                            </div>
+                            <div class="erp-stat-content">
+                                <h3>Attendance</h3>
+                                <p class="erp-stat-value">87%</p>
+                                <span class="erp-stat-change positive">Good</span>
+                            </div>
+                        </div>
+
+                        <div class="erp-stat-card">
+                            <div class="erp-stat-icon" style="background: rgba(245, 158, 11, 0.1);">
+                                <i class="fas fa-tasks" style="color: #F59E0B;"></i>
+                            </div>
+                            <div class="erp-stat-content">
+                                <h3>Assignments</h3>
+                                <p class="erp-stat-value">5</p>
+                                <span class="erp-stat-change warning">2 pending</span>
+                            </div>
+                        </div>
+
+                        <div class="erp-stat-card">
+                            <div class="erp-stat-icon" style="background: rgba(239, 68, 68, 0.1);">
+                                <i class="fas fa-exclamation-circle" style="color: #EF4444;"></i>
+                            </div>
+                            <div class="erp-stat-content">
+                                <h3>Exams</h3>
+                                <p class="erp-stat-value">3</p>
+                                <span class="erp-stat-change warning">Upcoming</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="erp-dashboard-grid">
+                        <div class="erp-card erp-recent-activity">
+                            <h3>Recent Activity</h3>
+                            <div class="erp-activity-list">
+                                <div class="erp-activity-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <div>
+                                        <p><strong>Assignment Submitted</strong></p>
+                                        <span>Data Structures - 2 hours ago</span>
+                                    </div>
+                                </div>
+                                <div class="erp-activity-item">
+                                    <i class="fas fa-file-alt"></i>
+                                    <div>
+                                        <p><strong>New Assignment Posted</strong></p>
+                                        <span>Database Management - 5 hours ago</span>
+                                    </div>
+                                </div>
+                                <div class="erp-activity-item">
+                                    <i class="fas fa-calendar"></i>
+                                    <div>
+                                        <p><strong>Exam Schedule Updated</strong></p>
+                                        <span>Mid Semester Exams - 1 day ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="erp-card erp-upcoming-events">
+                            <h3>Upcoming Events</h3>
+                            <div class="erp-events-list">
+                                <div class="erp-event-item">
+                                    <div class="erp-event-date">
+                                        <span class="erp-event-day">15</span>
+                                        <span class="erp-event-month">Dec</span>
+                                    </div>
+                                    <div class="erp-event-details">
+                                        <p><strong>Mid Semester Exam</strong></p>
+                                        <span>Computer Networks</span>
+                                    </div>
+                                </div>
+                                <div class="erp-event-item">
+                                    <div class="erp-event-date">
+                                        <span class="erp-event-day">20</span>
+                                        <span class="erp-event-month">Dec</span>
+                                    </div>
+                                    <div class="erp-event-details">
+                                        <p><strong>Assignment Deadline</strong></p>
+                                        <span>Software Engineering</span>
+                                    </div>
+                                </div>
+                                <div class="erp-event-item">
+                                    <div class="erp-event-date">
+                                        <span class="erp-event-day">25</span>
+                                        <span class="erp-event-month">Dec</span>
+                                    </div>
+                                    <div class="erp-event-details">
+                                        <p><strong>Project Submission</strong></p>
+                                        <span>Web Development</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Marks Section -->
+                <section id="marks-section" class="erp-section">
+                    <div class="erp-card">
+                        <div class="erp-card-header">
+                            <h3>Marks & Grades</h3>
+                            <select class="erp-semester-select">
+                                <option>Semester 1</option>
+                                <option>Semester 2</option>
+                                <option selected>Semester 3</option>
+                                <option>Semester 4</option>
+                                <option>Semester 5</option>
+                                <option>Semester 6</option>
+                            </select>
+                        </div>
+                        <div class="erp-marks-table-container">
+                            <table class="erp-marks-table">
+                                <thead>
+                                    <tr>
+                                        <th>Subject Code</th>
+                                        <th>Subject Name</th>
+                                        <th>Credits</th>
+                                        <th>Internal</th>
+                                        <th>External</th>
+                                        <th>Total</th>
+                                        <th>Grade</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>CS301</td>
+                                        <td>Data Structures</td>
+                                        <td>4</td>
+                                        <td>45</td>
+                                        <td>52</td>
+                                        <td>97</td>
+                                        <td><span class="erp-grade A">A</span></td>
+                                        <td><span class="erp-status passed">Pass</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>CS302</td>
+                                        <td>Database Management</td>
+                                        <td>4</td>
+                                        <td>42</td>
+                                        <td>48</td>
+                                        <td>90</td>
+                                        <td><span class="erp-grade A">A</span></td>
+                                        <td><span class="erp-status passed">Pass</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>CS303</td>
+                                        <td>Computer Networks</td>
+                                        <td>3</td>
+                                        <td>38</td>
+                                        <td>45</td>
+                                        <td>83</td>
+                                        <td><span class="erp-grade B">B</span></td>
+                                        <td><span class="erp-status passed">Pass</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>CS304</td>
+                                        <td>Software Engineering</td>
+                                        <td>3</td>
+                                        <td>40</td>
+                                        <td>50</td>
+                                        <td>90</td>
+                                        <td><span class="erp-grade A">A</span></td>
+                                        <td><span class="erp-status passed">Pass</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>CS305</td>
+                                        <td>Web Development</td>
+                                        <td>3</td>
+                                        <td>44</td>
+                                        <td>51</td>
+                                        <td>95</td>
+                                        <td><span class="erp-grade A">A</span></td>
+                                        <td><span class="erp-status passed">Pass</span></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="2"><strong>Total Credits: 17</strong></td>
+                                        <td colspan="6"><strong>CGPA: 8.75</strong></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Attendance Section -->
+                <section id="attendance-section" class="erp-section">
+                    <div class="erp-card">
+                        <div class="erp-card-header">
+                            <h3>Attendance Overview</h3>
+                            <div class="erp-attendance-summary">
+                                <div class="erp-attendance-stat">
+                                    <span class="erp-attendance-label">Overall</span>
+                                    <span class="erp-attendance-value">87%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="erp-attendance-table-container">
+                            <table class="erp-attendance-table">
+                                <thead>
+                                    <tr>
+                                        <th>Subject</th>
+                                        <th>Total Classes</th>
+                                        <th>Present</th>
+                                        <th>Absent</th>
+                                        <th>Percentage</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Data Structures</td>
+                                        <td>45</td>
+                                        <td>40</td>
+                                        <td>5</td>
+                                        <td>88.9%</td>
+                                        <td><span class="erp-status good">Good</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Database Management</td>
+                                        <td>42</td>
+                                        <td>38</td>
+                                        <td>4</td>
+                                        <td>90.5%</td>
+                                        <td><span class="erp-status good">Good</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Computer Networks</td>
+                                        <td>40</td>
+                                        <td>33</td>
+                                        <td>7</td>
+                                        <td>82.5%</td>
+                                        <td><span class="erp-status warning">Warning</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Software Engineering</td>
+                                        <td>38</td>
+                                        <td>35</td>
+                                        <td>3</td>
+                                        <td>92.1%</td>
+                                        <td><span class="erp-status good">Good</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Web Development</td>
+                                        <td>35</td>
+                                        <td>32</td>
+                                        <td>3</td>
+                                        <td>91.4%</td>
+                                        <td><span class="erp-status good">Good</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Courses Section -->
+                <section id="courses-section" class="erp-section">
+                    <div class="erp-courses-grid">
+                        <div class="erp-course-card">
+                            <div class="erp-course-header">
+                                <h4>Data Structures</h4>
+                                <span class="erp-course-code">CS301</span>
+                            </div>
+                            <div class="erp-course-info">
+                                <p><i class="fas fa-user"></i> Prof. Ramesh Kumar</p>
+                                <p><i class="fas fa-clock"></i> Mon, Wed, Fri - 9:00 AM</p>
+                                <p><i class="fas fa-map-marker-alt"></i> Block A - Room 201</p>
+                            </div>
+                            <div class="erp-course-progress">
+                                <div class="erp-progress-bar">
+                                    <div class="erp-progress-fill" style="width: 75%"></div>
+                                </div>
+                                <span>75% Complete</span>
+                            </div>
+                        </div>
+
+                        <div class="erp-course-card">
+                            <div class="erp-course-header">
+                                <h4>Database Management</h4>
+                                <span class="erp-course-code">CS302</span>
+                            </div>
+                            <div class="erp-course-info">
+                                <p><i class="fas fa-user"></i> Prof. Priya Sharma</p>
+                                <p><i class="fas fa-clock"></i> Tue, Thu - 10:30 AM</p>
+                                <p><i class="fas fa-map-marker-alt"></i> Block B - Room 305</p>
+                            </div>
+                            <div class="erp-course-progress">
+                                <div class="erp-progress-bar">
+                                    <div class="erp-progress-fill" style="width: 80%"></div>
+                                </div>
+                                <span>80% Complete</span>
+                            </div>
+                        </div>
+
+                        <div class="erp-course-card">
+                            <div class="erp-course-header">
+                                <h4>Computer Networks</h4>
+                                <span class="erp-course-code">CS303</span>
+                            </div>
+                            <div class="erp-course-info">
+                                <p><i class="fas fa-user"></i> Prof. Amit Patel</p>
+                                <p><i class="fas fa-clock"></i> Mon, Wed - 2:00 PM</p>
+                                <p><i class="fas fa-map-marker-alt"></i> Block C - Room 102</p>
+                            </div>
+                            <div class="erp-course-progress">
+                                <div class="erp-progress-bar">
+                                    <div class="erp-progress-fill" style="width: 70%"></div>
+                                </div>
+                                <span>70% Complete</span>
+                            </div>
+                        </div>
+
+                        <div class="erp-course-card">
+                            <div class="erp-course-header">
+                                <h4>Software Engineering</h4>
+                                <span class="erp-course-code">CS304</span>
+                            </div>
+                            <div class="erp-course-info">
+                                <p><i class="fas fa-user"></i> Prof. Sunita Reddy</p>
+                                <p><i class="fas fa-clock"></i> Tue, Thu, Fri - 11:00 AM</p>
+                                <p><i class="fas fa-map-marker-alt"></i> Block A - Room 205</p>
+                            </div>
+                            <div class="erp-course-progress">
+                                <div class="erp-progress-bar">
+                                    <div class="erp-progress-fill" style="width: 85%"></div>
+                                </div>
+                                <span>85% Complete</span>
+                            </div>
+                        </div>
+
+                        <div class="erp-course-card">
+                            <div class="erp-course-header">
+                                <h4>Web Development</h4>
+                                <span class="erp-course-code">CS305</span>
+                            </div>
+                            <div class="erp-course-info">
+                                <p><i class="fas fa-user"></i> Prof. Vikram Singh</p>
+                                <p><i class="fas fa-clock"></i> Mon, Wed - 3:30 PM</p>
+                                <p><i class="fas fa-map-marker-alt"></i> Block B - Room 401</p>
+                            </div>
+                            <div class="erp-course-progress">
+                                <div class="erp-progress-bar">
+                                    <div class="erp-progress-fill" style="width: 90%"></div>
+                                </div>
+                                <span>90% Complete</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Assignments Section -->
+                <section id="assignments-section" class="erp-section">
+                    <div class="erp-card">
+                        <div class="erp-card-header">
+                            <h3>Assignments</h3>
+                            <div class="erp-filter-tabs">
+                                <button class="erp-tab-btn active" data-filter="all">All</button>
+                                <button class="erp-tab-btn" data-filter="pending">Pending</button>
+                                <button class="erp-tab-btn" data-filter="submitted">Submitted</button>
+                            </div>
+                        </div>
+                        <div class="erp-assignments-list">
+                            <div class="erp-assignment-item pending">
+                                <div class="erp-assignment-icon">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                                <div class="erp-assignment-details">
+                                    <h4>Database Design Project</h4>
+                                    <p>Database Management - CS302</p>
+                                    <span class="erp-assignment-deadline">
+                                        <i class="fas fa-calendar"></i> Due: Dec 20, 2024
+                                    </span>
+                                </div>
+                                <div class="erp-assignment-actions">
+                                    <span class="erp-status-badge warning">Pending</span>
+                                    <button class="erp-action-btn">Submit</button>
+                                </div>
+                            </div>
+
+                            <div class="erp-assignment-item pending">
+                                <div class="erp-assignment-icon">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <div class="erp-assignment-details">
+                                    <h4>Web Application Development</h4>
+                                    <p>Web Development - CS305</p>
+                                    <span class="erp-assignment-deadline">
+                                        <i class="fas fa-calendar"></i> Due: Dec 18, 2024
+                                    </span>
+                                </div>
+                                <div class="erp-assignment-actions">
+                                    <span class="erp-status-badge warning">Pending</span>
+                                    <button class="erp-action-btn">Submit</button>
+                                </div>
+                            </div>
+
+                            <div class="erp-assignment-item submitted">
+                                <div class="erp-assignment-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="erp-assignment-details">
+                                    <h4>Binary Tree Implementation</h4>
+                                    <p>Data Structures - CS301</p>
+                                    <span class="erp-assignment-deadline">
+                                        <i class="fas fa-calendar"></i> Submitted: Dec 10, 2024
+                                    </span>
+                                </div>
+                                <div class="erp-assignment-actions">
+                                    <span class="erp-status-badge success">Submitted</span>
+                                    <button class="erp-action-btn">View</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Exams Section -->
+                <section id="exams-section" class="erp-section">
+                    <div class="erp-exams-grid">
+                        <div class="erp-exam-card upcoming">
+                            <div class="erp-exam-header">
+                                <h4>Mid Semester Exam</h4>
+                                <span class="erp-exam-date">Dec 15, 2024</span>
+                            </div>
+                            <div class="erp-exam-details">
+                                <p><strong>Subject:</strong> Computer Networks</p>
+                                <p><strong>Code:</strong> CS303</p>
+                                <p><strong>Time:</strong> 10:00 AM - 1:00 PM</p>
+                                <p><strong>Venue:</strong> Block C - Hall 201</p>
+                            </div>
+                            <div class="erp-exam-status">
+                                <span class="erp-status-badge warning">Upcoming</span>
+                            </div>
+                        </div>
+
+                        <div class="erp-exam-card upcoming">
+                            <div class="erp-exam-header">
+                                <h4>End Semester Exam</h4>
+                                <span class="erp-exam-date">Jan 5, 2025</span>
+                            </div>
+                            <div class="erp-exam-details">
+                                <p><strong>Subject:</strong> Data Structures</p>
+                                <p><strong>Code:</strong> CS301</p>
+                                <p><strong>Time:</strong> 2:00 PM - 5:00 PM</p>
+                                <p><strong>Venue:</strong> Block A - Hall 301</p>
+                            </div>
+                            <div class="erp-exam-status">
+                                <span class="erp-status-badge warning">Upcoming</span>
+                            </div>
+                        </div>
+
+                        <div class="erp-exam-card completed">
+                            <div class="erp-exam-header">
+                                <h4>Quiz Test</h4>
+                                <span class="erp-exam-date">Nov 28, 2024</span>
+                            </div>
+                            <div class="erp-exam-details">
+                                <p><strong>Subject:</strong> Software Engineering</p>
+                                <p><strong>Code:</strong> CS304</p>
+                                <p><strong>Marks:</strong> 85/100</p>
+                                <p><strong>Grade:</strong> A</p>
+                            </div>
+                            <div class="erp-exam-status">
+                                <span class="erp-status-badge success">Completed</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Fees Section -->
+                <section id="fees-section" class="erp-section">
+                    <div class="erp-card">
+                        <div class="erp-card-header">
+                            <h3>Fee Payment</h3>
+                        </div>
+                        <div class="erp-fees-summary">
+                            <div class="erp-fee-item">
+                                <div class="erp-fee-details">
+                                    <h4>Tuition Fee - Semester 3</h4>
+                                    <p>Due Date: Dec 30, 2024</p>
+                                </div>
+                                <div class="erp-fee-amount">
+                                    <span class="erp-amount">₹75,000</span>
+                                    <span class="erp-status-badge warning">Pending</span>
+                                </div>
+                                <button class="erp-pay-btn">Pay Now</button>
+                            </div>
+
+                            <div class="erp-fee-item">
+                                <div class="erp-fee-details">
+                                    <h4>Library Fee</h4>
+                                    <p>Paid on: Nov 15, 2024</p>
+                                </div>
+                                <div class="erp-fee-amount">
+                                    <span class="erp-amount">₹2,000</span>
+                                    <span class="erp-status-badge success">Paid</span>
+                                </div>
+                            </div>
+
+                            <div class="erp-fee-item">
+                                <div class="erp-fee-details">
+                                    <h4>Examination Fee</h4>
+                                    <p>Paid on: Nov 20, 2024</p>
+                                </div>
+                                <div class="erp-fee-amount">
+                                    <span class="erp-amount">₹1,500</span>
+                                    <span class="erp-status-badge success">Paid</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Library Section -->
+                <section id="library-section" class="erp-section">
+                    <div class="erp-card">
+                        <div class="erp-card-header">
+                            <h3>Library</h3>
+                            <button class="erp-action-btn">Browse Books</button>
+                        </div>
+                        <div class="erp-library-content">
+                            <div class="erp-library-section">
+                                <h4>Issued Books</h4>
+                                <div class="erp-books-list">
+                                    <div class="erp-book-item">
+                                        <div class="erp-book-icon">
+                                            <i class="fas fa-book"></i>
+                                        </div>
+                                        <div class="erp-book-details">
+                                            <h5>Introduction to Algorithms</h5>
+                                            <p>By Thomas H. Cormen</p>
+                                            <span>Issued: Nov 10, 2024 | Due: Dec 10, 2024</span>
+                                        </div>
+                                        <button class="erp-action-btn">Renew</button>
+                                    </div>
+                                    <div class="erp-book-item">
+                                        <div class="erp-book-icon">
+                                            <i class="fas fa-book"></i>
+                                        </div>
+                                        <div class="erp-book-details">
+                                            <h5>Database System Concepts</h5>
+                                            <p>By Abraham Silberschatz</p>
+                                            <span>Issued: Nov 15, 2024 | Due: Dec 15, 2024</span>
+                                        </div>
+                                        <button class="erp-action-btn">Renew</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Profile Section -->
+                <section id="profile-section" class="erp-section">
+                    <div class="erp-profile-container">
+                        <div class="erp-card">
+                            <div class="erp-profile-header">
+                                <div class="erp-profile-avatar-large">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="erp-profile-info">
+                                    <h3>John Doe</h3>
+                                    <p>STU2024001</p>
+                                    <p>B.Tech Computer Science Engineering</p>
+                                </div>
+                            </div>
+                            <div class="erp-profile-details">
+                                <div class="erp-profile-row">
+                                    <span class="erp-profile-label">Email</span>
+                                    <span class="erp-profile-value">john.doe@dsu.edu.in</span>
+                                </div>
+                                <div class="erp-profile-row">
+                                    <span class="erp-profile-label">Phone</span>
+                                    <span class="erp-profile-value">+91 98765 43210</span>
+                                </div>
+                                <div class="erp-profile-row">
+                                    <span class="erp-profile-label">Date of Birth</span>
+                                    <span class="erp-profile-value">Jan 15, 2003</span>
+                                </div>
+                                <div class="erp-profile-row">
+                                    <span class="erp-profile-label">Address</span>
+                                    <span class="erp-profile-value">123 Main Street, Bangalore, Karnataka</span>
+                                </div>
+                                <div class="erp-profile-row">
+                                    <span class="erp-profile-label">Academic Year</span>
+                                    <span class="erp-profile-value">2024-2025</span>
+                                </div>
+                                <div class="erp-profile-row">
+                                    <span class="erp-profile-label">Semester</span>
+                                    <span class="erp-profile-value">3rd Semester</span>
+                                </div>
+                            </div>
+                            <button class="erp-action-btn" style="width: 100%; margin-top: 24px;">Edit Profile</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="erp-script.js"></script>
+</body>
+</html>
+

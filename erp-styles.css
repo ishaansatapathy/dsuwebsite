@@ -1,0 +1,1240 @@
+/* ERP System Styles */
+
+/* ERP Login Page */
+.erp-login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-gradient);
+    padding: 24px;
+}
+
+.erp-login-wrapper {
+    width: 100%;
+    max-width: 450px;
+    background: var(--primary-black);
+    border-radius: 20px;
+    padding: 48px 40px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--gray-dark);
+}
+
+.erp-login-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.erp-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.erp-logo-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: contain;
+}
+
+.erp-login-header h1 {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--white);
+    margin: 0;
+}
+
+.erp-subtitle {
+    color: var(--gray-light);
+    font-size: 16px;
+    margin: 0;
+}
+
+.erp-login-form-container {
+    margin-bottom: 32px;
+}
+
+.erp-form-group {
+    margin-bottom: 24px;
+}
+
+.erp-form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--white);
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.erp-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.erp-input-wrapper i {
+    position: absolute;
+    left: 16px;
+    color: var(--gray-light);
+    z-index: 1;
+}
+
+.erp-input-wrapper input {
+    width: 100%;
+    padding: 14px 16px 14px 48px;
+    background: var(--gray-dark);
+    border: 1px solid var(--gray-medium);
+    border-radius: 10px;
+    color: var(--white);
+    font-size: 15px;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.erp-input-wrapper input:focus {
+    border-color: var(--primary-orange);
+    background: var(--black-light);
+    box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.1);
+}
+
+.erp-password-toggle {
+    position: absolute;
+    right: 16px;
+    background: none;
+    border: none;
+    color: var(--gray-light);
+    cursor: pointer;
+    padding: 8px;
+    transition: color 0.3s ease;
+}
+
+.erp-password-toggle:hover {
+    color: var(--primary-orange);
+}
+
+.erp-form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.erp-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--white);
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.erp-checkbox input {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.erp-forgot-link {
+    color: var(--primary-orange);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.erp-forgot-link:hover {
+    color: var(--orange-light);
+}
+
+.erp-login-btn {
+    width: 100%;
+    padding: 16px;
+    background: var(--orange-gradient);
+    color: var(--white);
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.erp-login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-orange);
+}
+
+.erp-demo-credentials {
+    margin-top: 24px;
+    padding: 16px;
+    background: rgba(255, 102, 0, 0.1);
+    border: 1px solid var(--primary-orange);
+    border-radius: 10px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--white);
+}
+
+.erp-demo-credentials p {
+    margin: 4px 0;
+}
+
+.erp-login-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 24px;
+    border-top: 1px solid var(--gray-dark);
+}
+
+.erp-back-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--white);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.erp-back-link:hover {
+    color: var(--primary-orange);
+}
+
+/* ERP Dashboard */
+.erp-dashboard {
+    display: flex;
+    min-height: 100vh;
+    background: var(--bg-gradient);
+}
+
+/* ERP Sidebar */
+.erp-sidebar {
+    width: 280px;
+    background: var(--primary-black);
+    border-right: 1px solid var(--gray-dark);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.erp-sidebar-header {
+    padding: 24px;
+    border-bottom: 1px solid var(--gray-dark);
+}
+
+.erp-user-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.erp-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--orange-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    font-size: 32px;
+    color: var(--white);
+}
+
+.erp-user-info h3 {
+    color: var(--white);
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+}
+
+.erp-user-info p {
+    color: var(--gray-light);
+    font-size: 13px;
+    margin: 4px 0;
+}
+
+.erp-sidebar-nav {
+    flex: 1;
+    padding: 16px 0;
+}
+
+.erp-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 24px;
+    color: var(--gray-light);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+}
+
+.erp-nav-item i {
+    width: 20px;
+    font-size: 18px;
+}
+
+.erp-nav-item:hover,
+.erp-nav-item.active {
+    background: rgba(255, 102, 0, 0.1);
+    color: var(--primary-orange);
+    border-left-color: var(--primary-orange);
+}
+
+.erp-sidebar-footer {
+    padding: 16px;
+    border-top: 1px solid var(--gray-dark);
+}
+
+.erp-logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 24px;
+    color: var(--white);
+    text-decoration: none;
+    background: rgba(239, 68, 68, 0.1);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.erp-logout-btn:hover {
+    background: rgba(239, 68, 68, 0.2);
+    color: #EF4444;
+}
+
+/* ERP Main Content */
+.erp-main-content {
+    flex: 1;
+    margin-left: 280px;
+    display: flex;
+    flex-direction: column;
+}
+
+.erp-topbar {
+    background: var(--primary-black);
+    padding: 20px 32px;
+    border-bottom: 1px solid var(--gray-dark);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.erp-topbar-left h2 {
+    color: var(--white);
+    font-size: 24px;
+    font-weight: 800;
+    margin: 0;
+}
+
+.erp-topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.erp-notification-btn {
+    position: relative;
+    background: var(--gray-dark);
+    border: none;
+    color: var(--white);
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.erp-notification-btn:hover {
+    background: var(--primary-orange);
+}
+
+.erp-notification-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: #EF4444;
+    color: var(--white);
+    font-size: 10px;
+    font-weight: 700;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.erp-content-area {
+    flex: 1;
+    padding: 32px;
+    overflow-y: auto;
+}
+
+.erp-section {
+    display: none;
+}
+
+.erp-section.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+/* ERP Cards */
+.erp-card {
+    background: var(--primary-black);
+    border: 1px solid var(--gray-dark);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow-sm);
+}
+
+.erp-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--gray-dark);
+}
+
+.erp-card-header h3 {
+    color: var(--white);
+    font-size: 20px;
+    font-weight: 800;
+    margin: 0;
+}
+
+/* Stats Grid */
+.erp-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.erp-stat-card {
+    background: var(--primary-black);
+    border: 1px solid var(--gray-dark);
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: all 0.3s ease;
+}
+
+.erp-stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-orange);
+}
+
+.erp-stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.erp-stat-content h3 {
+    color: var(--gray-light);
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.erp-stat-value {
+    color: var(--white);
+    font-size: 32px;
+    font-weight: 900;
+    margin: 0;
+    line-height: 1;
+}
+
+.erp-stat-change {
+    display: block;
+    font-size: 12px;
+    margin-top: 8px;
+}
+
+.erp-stat-change.positive {
+    color: #10B981;
+}
+
+.erp-stat-change.warning {
+    color: #F59E0B;
+}
+
+/* Dashboard Grid */
+.erp-dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 24px;
+}
+
+.erp-activity-list,
+.erp-events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.erp-activity-item,
+.erp-event-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    background: var(--gray-dark);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.erp-activity-item:hover,
+.erp-event-item:hover {
+    background: var(--black-light);
+    transform: translateX(4px);
+}
+
+.erp-activity-item i {
+    color: var(--primary-orange);
+    font-size: 20px;
+}
+
+.erp-activity-item p {
+    color: var(--white);
+    margin: 0 0 4px 0;
+    font-weight: 600;
+}
+
+.erp-activity-item span {
+    color: var(--gray-light);
+    font-size: 13px;
+}
+
+.erp-event-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background: var(--orange-gradient);
+    border-radius: 12px;
+    color: var(--white);
+    font-weight: 700;
+}
+
+.erp-event-day {
+    font-size: 24px;
+    line-height: 1;
+}
+
+.erp-event-month {
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.erp-event-details p {
+    color: var(--white);
+    margin: 0 0 4px 0;
+    font-weight: 600;
+}
+
+.erp-event-details span {
+    color: var(--gray-light);
+    font-size: 13px;
+}
+
+/* Marks Table */
+.erp-marks-table-container {
+    overflow-x: auto;
+}
+
+.erp-marks-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.erp-marks-table th,
+.erp-marks-table td {
+    padding: 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--gray-dark);
+}
+
+.erp-marks-table th {
+    color: var(--white);
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: var(--gray-dark);
+}
+
+.erp-marks-table td {
+    color: var(--gray-light);
+    font-size: 14px;
+}
+
+.erp-marks-table tbody tr:hover {
+    background: var(--gray-dark);
+}
+
+.erp-grade {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.erp-grade.A {
+    background: rgba(16, 185, 129, 0.2);
+    color: #10B981;
+}
+
+.erp-grade.B {
+    background: rgba(59, 130, 246, 0.2);
+    color: #3B82F6;
+}
+
+.erp-status {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.erp-status.passed,
+.erp-status.good,
+.erp-status.success {
+    background: rgba(16, 185, 129, 0.2);
+    color: #10B981;
+}
+
+.erp-status.warning {
+    background: rgba(245, 158, 11, 0.2);
+    color: #F59E0B;
+}
+
+/* Attendance */
+.erp-attendance-summary {
+    display: flex;
+    gap: 24px;
+}
+
+.erp-attendance-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px 24px;
+    background: var(--gray-dark);
+    border-radius: 12px;
+}
+
+.erp-attendance-label {
+    color: var(--gray-light);
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.erp-attendance-value {
+    color: var(--white);
+    font-size: 32px;
+    font-weight: 900;
+}
+
+/* Courses Grid */
+.erp-courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.erp-course-card {
+    background: var(--primary-black);
+    border: 1px solid var(--gray-dark);
+    border-radius: 16px;
+    padding: 24px;
+    transition: all 0.3s ease;
+}
+
+.erp-course-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-orange);
+}
+
+.erp-course-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 16px;
+}
+
+.erp-course-header h4 {
+    color: var(--white);
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.erp-course-code {
+    color: var(--primary-orange);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 8px;
+    background: rgba(255, 102, 0, 0.1);
+    border-radius: 6px;
+}
+
+.erp-course-info {
+    margin-bottom: 16px;
+}
+
+.erp-course-info p {
+    color: var(--gray-light);
+    font-size: 13px;
+    margin: 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.erp-course-info i {
+    color: var(--primary-orange);
+    width: 16px;
+}
+
+.erp-course-progress {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.erp-progress-bar {
+    width: 100%;
+    height: 8px;
+    background: var(--gray-dark);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.erp-progress-fill {
+    height: 100%;
+    background: var(--orange-gradient);
+    transition: width 0.3s ease;
+}
+
+.erp-course-progress span {
+    color: var(--gray-light);
+    font-size: 12px;
+}
+
+/* Assignments */
+.erp-filter-tabs {
+    display: flex;
+    gap: 8px;
+}
+
+.erp-tab-btn {
+    padding: 8px 16px;
+    background: var(--gray-dark);
+    border: 1px solid var(--gray-medium);
+    border-radius: 8px;
+    color: var(--white);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.erp-tab-btn.active,
+.erp-tab-btn:hover {
+    background: var(--primary-orange);
+    border-color: var(--primary-orange);
+}
+
+.erp-assignments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.erp-assignment-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background: var(--gray-dark);
+    border-radius: 12px;
+    border-left: 4px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.erp-assignment-item.pending {
+    border-left-color: #F59E0B;
+}
+
+.erp-assignment-item.submitted {
+    border-left-color: #10B981;
+}
+
+.erp-assignment-item:hover {
+    background: var(--black-light);
+    transform: translateX(4px);
+}
+
+.erp-assignment-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    background: var(--orange-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-size: 20px;
+}
+
+.erp-assignment-details {
+    flex: 1;
+}
+
+.erp-assignment-details h4 {
+    color: var(--white);
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 4px 0;
+}
+
+.erp-assignment-details p {
+    color: var(--gray-light);
+    font-size: 13px;
+    margin: 0 0 8px 0;
+}
+
+.erp-assignment-deadline {
+    color: var(--gray-light);
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.erp-assignment-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.erp-status-badge {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.erp-status-badge.warning {
+    background: rgba(245, 158, 11, 0.2);
+    color: #F59E0B;
+}
+
+.erp-status-badge.success {
+    background: rgba(16, 185, 129, 0.2);
+    color: #10B981;
+}
+
+.erp-action-btn {
+    padding: 10px 20px;
+    background: var(--orange-gradient);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.erp-action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-orange);
+}
+
+/* Exams Grid */
+.erp-exams-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.erp-exam-card {
+    background: var(--primary-black);
+    border: 1px solid var(--gray-dark);
+    border-radius: 16px;
+    padding: 24px;
+    transition: all 0.3s ease;
+}
+
+.erp-exam-card.upcoming {
+    border-left: 4px solid #F59E0B;
+}
+
+.erp-exam-card.completed {
+    border-left: 4px solid #10B981;
+    opacity: 0.8;
+}
+
+.erp-exam-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.erp-exam-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--gray-dark);
+}
+
+.erp-exam-header h4 {
+    color: var(--white);
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.erp-exam-date {
+    color: var(--primary-orange);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.erp-exam-details p {
+    color: var(--gray-light);
+    font-size: 14px;
+    margin: 8px 0;
+}
+
+.erp-exam-details strong {
+    color: var(--white);
+}
+
+.erp-exam-status {
+    margin-top: 16px;
+}
+
+/* Fees */
+.erp-fees-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.erp-fee-item {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 20px;
+    background: var(--gray-dark);
+    border-radius: 12px;
+    border-left: 4px solid var(--primary-orange);
+}
+
+.erp-fee-details {
+    flex: 1;
+}
+
+.erp-fee-details h4 {
+    color: var(--white);
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 4px 0;
+}
+
+.erp-fee-details p {
+    color: var(--gray-light);
+    font-size: 13px;
+    margin: 0;
+}
+
+.erp-fee-amount {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.erp-amount {
+    color: var(--white);
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.erp-pay-btn {
+    padding: 12px 24px;
+    background: var(--orange-gradient);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.erp-pay-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-orange);
+}
+
+/* Library */
+.erp-library-content {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.erp-library-section h4 {
+    color: var(--white);
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.erp-books-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.erp-book-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background: var(--gray-dark);
+    border-radius: 12px;
+}
+
+.erp-book-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    background: var(--orange-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-size: 20px;
+}
+
+.erp-book-details {
+    flex: 1;
+}
+
+.erp-book-details h5 {
+    color: var(--white);
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 4px 0;
+}
+
+.erp-book-details p {
+    color: var(--gray-light);
+    font-size: 13px;
+    margin: 0 0 4px 0;
+}
+
+.erp-book-details span {
+    color: var(--gray-light);
+    font-size: 12px;
+}
+
+/* Profile */
+.erp-profile-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.erp-profile-header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--gray-dark);
+}
+
+.erp-profile-avatar-large {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: var(--orange-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    color: var(--white);
+}
+
+.erp-profile-info h3 {
+    color: var(--white);
+    font-size: 24px;
+    font-weight: 800;
+    margin: 0 0 8px 0;
+}
+
+.erp-profile-info p {
+    color: var(--gray-light);
+    font-size: 14px;
+    margin: 4px 0;
+}
+
+.erp-profile-details {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.erp-profile-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    background: var(--gray-dark);
+    border-radius: 10px;
+}
+
+.erp-profile-label {
+    color: var(--gray-light);
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.erp-profile-value {
+    color: var(--white);
+    font-size: 14px;
+}
+
+.erp-semester-select {
+    padding: 8px 16px;
+    background: var(--gray-dark);
+    border: 1px solid var(--gray-medium);
+    border-radius: 8px;
+    color: var(--white);
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* Light Theme Overrides for ERP */
+[data-theme="light"] .erp-login-wrapper,
+[data-theme="light"] .erp-sidebar,
+[data-theme="light"] .erp-topbar,
+[data-theme="light"] .erp-card,
+[data-theme="light"] .erp-course-card,
+[data-theme="light"] .erp-exam-card {
+    background: #FFFFFF;
+    border-color: #F1F5F9;
+}
+
+[data-theme="light"] .erp-input-wrapper input,
+[data-theme="light"] .erp-semester-select {
+    background: #FFFFFF;
+    border-color: #CBD5E1;
+    color: #0F172A;
+}
+
+[data-theme="light"] .erp-input-wrapper input:focus {
+    border-color: #60A5FA;
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+}
+
+[data-theme="light"] .erp-marks-table th {
+    background: #F8FAFC;
+    color: #0F172A;
+}
+
+[data-theme="light"] .erp-marks-table td {
+    color: #475569;
+}
+
+[data-theme="light"] .erp-activity-item,
+[data-theme="light"] .erp-event-item,
+[data-theme="light"] .erp-assignment-item,
+[data-theme="light"] .erp-fee-item,
+[data-theme="light"] .erp-book-item,
+[data-theme="light"] .erp-profile-row {
+    background: #F8FAFC;
+}
+
+[data-theme="light"] .erp-activity-item:hover,
+[data-theme="light"] .erp-event-item:hover,
+[data-theme="light"] .erp-assignment-item:hover {
+    background: #F1F5F9;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .erp-sidebar {
+        width: 100%;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    .erp-sidebar.active {
+        transform: translateX(0);
+    }
+
+    .erp-main-content {
+        margin-left: 0;
+    }
+
+    .erp-dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .erp-stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .erp-courses-grid,
+    .erp-exams-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
