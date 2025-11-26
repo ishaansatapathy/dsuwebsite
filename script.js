@@ -27,9 +27,10 @@ const menuData = {
     academics: {
         title: "ACADEMICS",
         items: [
-            { text: "SCHOOLS", link: "#schools" },
-            { text: "UNDERGRADUATE PROGRAMMES", link: "#undergraduate" },
-            { text: "POSTGRADUATE PROGRAMMES", link: "#postgraduate" },
+            { text: "SCHOOLS", link: "#engineering-section" },
+            { text: "ENGINEERING", link: "#engineering-section" },
+            { text: "UNDERGRADUATE PROGRAMMES", link: "#engineering-section" },
+            { text: "POSTGRADUATE PROGRAMMES", link: "#engineering-section" },
             { text: "EXECUTIVE EDUCATION", link: "#executive" },
             { text: "ONLINE EDUCATION", link: "#online" }
         ]
@@ -37,43 +38,43 @@ const menuData = {
     admissions: {
         title: "admissions",
         items: [
-            { text: "ADMISSIONS DETAILS", link: "#admissions-details" },
-            { text: "DSAT ADMISSIONS", link: "#dsat" },
-            { text: "DIRECT ADMISSIONS", link: "#direct" },
-            { text: "COURSE ELIGIBILITY & FEE STRUCTURE", link: "#fees" },
-            { text: "NRI / FOREIGN ADMISSIONS", link: "#nri" }
+            { text: "ADMISSIONS DETAILS", link: "#admissions-section" },
+            { text: "DSAT ADMISSIONS", link: "#admissions-section" },
+            { text: "DIRECT ADMISSIONS", link: "#admissions-section" },
+            { text: "COURSE ELIGIBILITY & FEE STRUCTURE", link: "#admissions-section" },
+            { text: "NRI / FOREIGN ADMISSIONS", link: "#admissions-section" }
         ]
     },
     international: {
         title: "international",
         items: [
-            { text: "INTERNATIONAL ADMISSIONS", link: "#intl-admissions" },
-            { text: "EXCHANGE PROGRAMS", link: "#exchange" },
-            { text: "GLOBAL PARTNERSHIPS", link: "#partnerships" }
+            { text: "INTERNATIONAL ADMISSIONS", link: "#international-section" },
+            { text: "EXCHANGE PROGRAMS", link: "#international-section" },
+            { text: "GLOBAL PARTNERSHIPS", link: "#international-section" }
         ]
     },
     research: {
         title: "research",
         items: [
-            { text: "RESEARCH CENTERS", link: "#research-centers" },
-            { text: "PUBLICATIONS", link: "#publications" },
-            { text: "RESEARCH PROJECTS", link: "#projects" }
+            { text: "RESEARCH CENTERS", link: "#research-section" },
+            { text: "PUBLICATIONS", link: "#research-section" },
+            { text: "RESEARCH PROJECTS", link: "#research-section" }
         ]
     },
     innovation: {
         title: "innovation",
         items: [
-            { text: "INNOVATION LABS", link: "#innovation-labs" },
-            { text: "STARTUPS", link: "#startups" },
-            { text: "INCUBATION", link: "#incubation" }
+            { text: "INNOVATION LABS", link: "#innovation-section" },
+            { text: "STARTUPS", link: "#innovation-section" },
+            { text: "INCUBATION", link: "#innovation-section" }
         ]
     },
     placement: {
         title: "placement",
         items: [
-            { text: "PLACEMENT STATISTICS", link: "#placement-stats" },
-            { text: "RECRUITERS", link: "#recruiters" },
-            { text: "CAREER SERVICES", link: "#career-services" }
+            { text: "PLACEMENT STATISTICS", link: "#placement-section" },
+            { text: "RECRUITERS", link: "#placement-section" },
+            { text: "CAREER SERVICES", link: "#placement-section" }
         ]
     },
     naac: {
@@ -86,22 +87,22 @@ const menuData = {
     library: {
         title: "library",
         items: [
-            { text: "LIBRARY RESOURCES", link: "#library-resources" },
-            { text: "DIGITAL LIBRARY", link: "#digital-library" }
+            { text: "LIBRARY RESOURCES", link: "#library-section" },
+            { text: "DIGITAL LIBRARY", link: "#library-section" }
         ]
     },
     hostel: {
         title: "hostel",
         items: [
-            { text: "HOSTEL FACILITIES", link: "#hostel-facilities" },
-            { text: "HOSTEL HANDBOOK", link: "#hostel-handbook" }
+            { text: "HOSTEL FACILITIES", link: "#hostel-section" },
+            { text: "HOSTEL HANDBOOK", link: "#hostel-section" }
         ]
     },
     disclosure: {
         title: "public self-disclosure",
         items: [
-            { text: "RTI ACT", link: "#rti" },
-            { text: "DISCLOSURES", link: "#disclosures" }
+            { text: "RTI ACT", link: "#disclosure-section" },
+            { text: "DISCLOSURES", link: "#disclosure-section" }
         ]
     },
     contact: {
@@ -130,7 +131,7 @@ function openSidebar(menuKey) {
 
     sidebarTitle.textContent = menu.title;
     sidebarMenu.innerHTML = '';
-    
+
     menu.items.forEach(item => {
         const menuItem = document.createElement('a');
         menuItem.href = item.link;
@@ -140,7 +141,13 @@ function openSidebar(menuKey) {
             e.preventDefault();
             closeSidebar();
             setActiveNav(menuKey);
-            handleNavigation(item.link, item.text);
+            
+            // Check if it's an external URL
+            if (item.link.startsWith('http://') || item.link.startsWith('https://')) {
+                window.location.href = item.link;
+            } else {
+                handleNavigation(item.link, item.text);
+            }
         });
         sidebarMenu.appendChild(menuItem);
     });
@@ -172,18 +179,18 @@ function setActiveNav(menuKey) {
 // Initialize Dropdown Menus
 function initDropdownMenus() {
     const dropdownMenus = document.querySelectorAll('.dropdown-menu');
-    
+
     dropdownMenus.forEach(dropdown => {
         const menuKey = dropdown.dataset.dropdown;
         const menu = menuData[menuKey];
-        
+
         if (menu && menu.items.length > 0) {
             // Create dropdown header
             const header = document.createElement('div');
             header.className = 'dropdown-header';
             header.textContent = menu.title;
             dropdown.appendChild(header);
-            
+
             // Create dropdown items
             menu.items.forEach(item => {
                 const menuItem = document.createElement('a');
@@ -207,12 +214,12 @@ initDropdownMenus();
 // Event listeners for nav links
 navLinks.forEach(link => {
     const navWrapper = link.closest('.nav-item-wrapper');
-    
+
     // Click handler for opening sidebar (for mobile/click users)
     link.addEventListener('click', (e) => {
         e.preventDefault();
         const menuKey = link.dataset.menu;
-        
+
         // Handle HOME separately - no sidebar
         if (menuKey === 'home') {
             setActiveNav('home');
@@ -221,12 +228,214 @@ navLinks.forEach(link => {
             showPageContent('Home', 'Welcome to Dayananda Sagar University');
             return;
         }
-        
+
         // Handle CONTACT separately
         if (menuKey === 'contact') {
             setActiveNav('contact');
             closeSidebar();
             showContactPage();
+            return;
+        }
+
+        // Handle LIBRARY separately - scroll to library section
+        if (menuKey === 'library') {
+            setActiveNav('library');
+            closeSidebar();
+            const librarySection = document.getElementById('library-section');
+            if (librarySection) {
+                librarySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                window.location.href = 'https://dsu.edu.in/library';
+            }
+            return;
+        }
+
+        // Handle UNIVERSITY separately - scroll to About DSU section
+        if (menuKey === 'university') {
+            setActiveNav('university');
+            closeSidebar();
+            const aboutSection = document.getElementById('about-dsu-section');
+            if (aboutSection) {
+                aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                // If section doesn't exist, show sidebar with menu items
+                if (window.innerWidth <= 1024) {
+                    openSidebar('university');
+                } else {
+                    const menu = menuData['university'];
+                    if (menu && menu.items.length > 0) {
+                        showPageContent(menu.items[0]?.text || menu.title, `Information about ${menu.title}`);
+                    }
+                }
+            }
+            return;
+        }
+
+        // Handle ACADEMICS separately - scroll to Engineering section
+        if (menuKey === 'academics') {
+            setActiveNav('academics');
+            closeSidebar();
+            const engineeringSection = document.getElementById('engineering-section');
+            if (engineeringSection) {
+                engineeringSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                // If section doesn't exist, show sidebar with menu items
+                if (window.innerWidth <= 1024) {
+                    openSidebar('academics');
+                } else {
+                    const menu = menuData['academics'];
+                    if (menu && menu.items.length > 0) {
+                        showPageContent(menu.items[0]?.text || menu.title, `Information about ${menu.title}`);
+                    }
+                }
+            }
+            return;
+        }
+
+        // Handle ADMISSIONS separately - scroll to Admissions section
+        if (menuKey === 'admissions') {
+            setActiveNav('admissions');
+            closeSidebar();
+            const admissionsSection = document.getElementById('admissions-section');
+            if (admissionsSection) {
+                admissionsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                // If section doesn't exist, show sidebar with menu items
+                if (window.innerWidth <= 1024) {
+                    openSidebar('admissions');
+                } else {
+                    const menu = menuData['admissions'];
+                    if (menu && menu.items.length > 0) {
+                        showPageContent(menu.items[0]?.text || menu.title, `Information about ${menu.title}`);
+                    }
+                }
+            }
+            return;
+        }
+
+        // Handle INTERNATIONAL separately - scroll to International section
+        if (menuKey === 'international') {
+            setActiveNav('international');
+            closeSidebar();
+            const internationalSection = document.getElementById('international-section');
+            if (internationalSection) {
+                internationalSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                // If section doesn't exist, show sidebar with menu items
+                if (window.innerWidth <= 1024) {
+                    openSidebar('international');
+                } else {
+                    const menu = menuData['international'];
+                    if (menu && menu.items.length > 0) {
+                        showPageContent(menu.items[0]?.text || menu.title, `Information about ${menu.title}`);
+                    }
+                }
+            }
+            return;
+        }
+
+        // Handle RESEARCH separately - scroll to Research section
+        if (menuKey === 'research') {
+            setActiveNav('research');
+            closeSidebar();
+            const researchSection = document.getElementById('research-section');
+            if (researchSection) {
+                researchSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                // If section doesn't exist, show sidebar with menu items
+                if (window.innerWidth <= 1024) {
+                    openSidebar('research');
+                } else {
+                    const menu = menuData['research'];
+                    if (menu && menu.items.length > 0) {
+                        showPageContent(menu.items[0]?.text || menu.title, `Information about ${menu.title}`);
+                    }
+                }
+            }
+            return;
+        }
+
+        // Handle INNOVATION separately - scroll to Innovation section
+        if (menuKey === 'innovation') {
+            setActiveNav('innovation');
+            closeSidebar();
+            const innovationSection = document.getElementById('innovation-section');
+            if (innovationSection) {
+                innovationSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                // If section doesn't exist, show sidebar with menu items
+                if (window.innerWidth <= 1024) {
+                    openSidebar('innovation');
+                } else {
+                    const menu = menuData['innovation'];
+                    if (menu && menu.items.length > 0) {
+                        showPageContent(menu.items[0]?.text || menu.title, `Information about ${menu.title}`);
+                    }
+                }
+            }
+            return;
+        }
+
+        // Handle PLACEMENT separately - scroll to Placement section
+        if (menuKey === 'placement') {
+            setActiveNav('placement');
+            closeSidebar();
+            const placementSection = document.getElementById('placement-section');
+            if (placementSection) {
+                placementSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                // If section doesn't exist, show sidebar with menu items
+                if (window.innerWidth <= 1024) {
+                    openSidebar('placement');
+                } else {
+                    const menu = menuData['placement'];
+                    if (menu && menu.items.length > 0) {
+                        showPageContent(menu.items[0]?.text || menu.title, `Information about ${menu.title}`);
+                    }
+                }
+            }
+            return;
+        }
+
+        // Handle HOSTEL separately - scroll to Hostel section
+        if (menuKey === 'hostel') {
+            setActiveNav('hostel');
+            closeSidebar();
+            const hostelSection = document.getElementById('hostel-section');
+            if (hostelSection) {
+                hostelSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                // If section doesn't exist, show sidebar with menu items
+                if (window.innerWidth <= 1024) {
+                    openSidebar('hostel');
+                } else {
+                    const menu = menuData['hostel'];
+                    if (menu && menu.items.length > 0) {
+                        showPageContent(menu.items[0]?.text || menu.title, `Information about ${menu.title}`);
+                    }
+                }
+            }
+            return;
+        }
+
+        // Handle DISCLOSURE separately - scroll to Disclosure section
+        if (menuKey === 'disclosure') {
+            setActiveNav('disclosure');
+            closeSidebar();
+            const disclosureSection = document.getElementById('disclosure-section');
+            if (disclosureSection) {
+                disclosureSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                // If section doesn't exist, show sidebar with menu items
+                if (window.innerWidth <= 1024) {
+                    openSidebar('disclosure');
+                } else {
+                    const menu = menuData['disclosure'];
+                    if (menu && menu.items.length > 0) {
+                        showPageContent(menu.items[0]?.text || menu.title, `Information about ${menu.title}`);
+                    }
+                }
+            }
             return;
         }
 
@@ -238,39 +447,138 @@ navLinks.forEach(link => {
                 openSidebar(menuKey);
                 setActiveNav(menuKey);
             }
-        } else {
-            // On desktop, show content directly
-            setActiveNav(menuKey);
-            if (menuKey !== 'home' && menuKey !== 'contact') {
-                const menu = menuData[menuKey];
-                if (menu && menu.items.length > 0) {
-                    // Show first item or main page content
-                    showPageContent(menu.items[0]?.text || menu.title, `Information about ${menu.title}`);
-                } else {
-                    showPageContent(menuKey.charAt(0).toUpperCase() + menuKey.slice(1), `Information about ${menuKey}`);
+            } else {
+                // On desktop, show content directly
+                setActiveNav(menuKey);
+                if (menuKey === 'university') {
+                    // Scroll to About DSU section
+                    const aboutSection = document.getElementById('about-dsu-section');
+                    if (aboutSection) {
+                        aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    } else {
+                        const menu = menuData[menuKey];
+                        if (menu && menu.items.length > 0) {
+                            showPageContent(menu.items[0]?.text || menu.title, `Information about ${menu.title}`);
+                        }
+                    }
+                } else if (menuKey === 'academics') {
+                    // Scroll to Engineering section
+                    const engineeringSection = document.getElementById('engineering-section');
+                    if (engineeringSection) {
+                        engineeringSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    } else {
+                        const menu = menuData[menuKey];
+                        if (menu && menu.items.length > 0) {
+                            showPageContent(menu.items[0]?.text || menu.title, `Information about ${menu.title}`);
+                        }
+                    }
+                } else if (menuKey === 'admissions') {
+                    // Scroll to Admissions section
+                    const admissionsSection = document.getElementById('admissions-section');
+                    if (admissionsSection) {
+                        admissionsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    } else {
+                        const menu = menuData[menuKey];
+                        if (menu && menu.items.length > 0) {
+                            showPageContent(menu.items[0]?.text || menu.title, `Information about ${menu.title}`);
+                        }
+                    }
+                } else if (menuKey === 'international') {
+                    // Scroll to International section
+                    const internationalSection = document.getElementById('international-section');
+                    if (internationalSection) {
+                        internationalSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    } else {
+                        const menu = menuData[menuKey];
+                        if (menu && menu.items.length > 0) {
+                            showPageContent(menu.items[0]?.text || menu.title, `Information about ${menu.title}`);
+                        }
+                    }
+                } else if (menuKey === 'research') {
+                    // Scroll to Research section
+                    const researchSection = document.getElementById('research-section');
+                    if (researchSection) {
+                        researchSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    } else {
+                        const menu = menuData[menuKey];
+                        if (menu && menu.items.length > 0) {
+                            showPageContent(menu.items[0]?.text || menu.title, `Information about ${menu.title}`);
+                        }
+                    }
+                } else if (menuKey === 'innovation') {
+                    // Scroll to Innovation section
+                    const innovationSection = document.getElementById('innovation-section');
+                    if (innovationSection) {
+                        innovationSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    } else {
+                        const menu = menuData[menuKey];
+                        if (menu && menu.items.length > 0) {
+                            showPageContent(menu.items[0]?.text || menu.title, `Information about ${menu.title}`);
+                        }
+                    }
+                } else if (menuKey === 'placement') {
+                    // Scroll to Placement section
+                    const placementSection = document.getElementById('placement-section');
+                    if (placementSection) {
+                        placementSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    } else {
+                        const menu = menuData[menuKey];
+                        if (menu && menu.items.length > 0) {
+                            showPageContent(menu.items[0]?.text || menu.title, `Information about ${menu.title}`);
+                        }
+                    }
+                } else if (menuKey === 'hostel') {
+                    // Scroll to Hostel section
+                    const hostelSection = document.getElementById('hostel-section');
+                    if (hostelSection) {
+                        hostelSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    } else {
+                        const menu = menuData[menuKey];
+                        if (menu && menu.items.length > 0) {
+                            showPageContent(menu.items[0]?.text || menu.title, `Information about ${menu.title}`);
+                        }
+                    }
+                } else if (menuKey === 'disclosure') {
+                    // Scroll to Disclosure section
+                    const disclosureSection = document.getElementById('disclosure-section');
+                    if (disclosureSection) {
+                        disclosureSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    } else {
+                        const menu = menuData[menuKey];
+                        if (menu && menu.items.length > 0) {
+                            showPageContent(menu.items[0]?.text || menu.title, `Information about ${menu.title}`);
+                        }
+                    }
+                } else if (menuKey !== 'home' && menuKey !== 'contact' && menuKey !== 'library') {
+                    const menu = menuData[menuKey];
+                    if (menu && menu.items.length > 0) {
+                        // Show first item or main page content
+                        showPageContent(menu.items[0]?.text || menu.title, `Information about ${menu.title}`);
+                    } else {
+                        showPageContent(menuKey.charAt(0).toUpperCase() + menuKey.slice(1), `Information about ${menuKey}`);
+                    }
                 }
             }
-        }
     });
-    
+
     // Hover handlers for dropdown menus
     if (navWrapper && navWrapper.classList.contains('has-dropdown')) {
         const dropdown = navWrapper.querySelector('.dropdown-menu');
-        
+
         navWrapper.addEventListener('mouseenter', () => {
             if (dropdown && dropdown.children.length > 0) {
                 dropdown.classList.add('active');
                 link.classList.add('hover');
             }
         });
-        
+
         navWrapper.addEventListener('mouseleave', () => {
             if (dropdown) {
                 dropdown.classList.remove('active');
                 link.classList.remove('hover');
             }
         });
-        
+
         // Also handle click on desktop for dropdown items
         if (dropdown && dropdown.children.length > 0) {
             dropdown.addEventListener('click', (e) => {
@@ -307,7 +615,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             e.preventDefault();
             return;
         }
-        
+
         const target = document.querySelector(href);
         if (target) {
             e.preventDefault();
@@ -357,7 +665,7 @@ function updateAnnouncementCarousel() {
             card.style.display = 'none';
         }
     });
-    
+
     // Ensure we don't go beyond available cards
     if (currentAnnouncementIndex >= announcementCards.length - 2) {
         currentAnnouncementIndex = 0;
@@ -375,7 +683,7 @@ diffItems.forEach(item => {
         diffItems.forEach(i => i.classList.remove('active'));
         // Add active class to clicked item
         item.classList.add('active');
-        
+
         // Scroll to item for better visibility
         item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });
@@ -412,11 +720,11 @@ function showNewsDetails(newsText) {
         </div>
     `;
     document.body.appendChild(modal);
-    
+
     modal.querySelector('.modal-close').addEventListener('click', () => {
         document.body.removeChild(modal);
     });
-    
+
     modal.addEventListener('click', (e) => {
         if (e.target === modal) {
             document.body.removeChild(modal);
@@ -467,16 +775,16 @@ const awardsContainer = document.querySelector('.awards-scroll-container');
 if (awardsContainer) {
     let scrollPosition = 0;
     const scrollSpeed = 1;
-    
+
     function autoScrollAwards() {
         scrollPosition += scrollSpeed;
         awardsContainer.scrollLeft = scrollPosition;
-        
+
         if (scrollPosition >= awardsContainer.scrollWidth - awardsContainer.clientWidth) {
             scrollPosition = 0;
         }
     }
-    
+
     // Uncomment to enable auto-scroll
     // setInterval(autoScrollAwards, 50);
 }
@@ -541,19 +849,19 @@ const secondaryNavLinks = document.querySelectorAll('.secondary-nav-link');
 secondaryNavLinks.forEach(link => {
     link.addEventListener('click', (e) => {
         e.preventDefault();
-        
+
         // Remove active class from all links
         secondaryNavLinks.forEach(l => l.classList.remove('active'));
-        
+
         // Add active class to clicked link
         link.classList.add('active');
-        
+
         // Get the page identifier
         const pageId = link.dataset.page;
-        
+
         // Update URL hash
         window.location.hash = link.getAttribute('href');
-        
+
         // Handle different page actions
         handleSecondaryNavClick(pageId);
     });
@@ -562,7 +870,7 @@ secondaryNavLinks.forEach(link => {
 // Function to handle secondary navigation clicks
 function handleSecondaryNavClick(pageId) {
     console.log('Navigating to:', pageId);
-    
+
     // Check if section exists on page
     const targetSection = document.getElementById(pageId);
     if (targetSection) {
@@ -572,18 +880,19 @@ function handleSecondaryNavClick(pageId) {
         });
         return;
     }
-    
+
     // Handle specific pages
-    switch(pageId) {
+    switch (pageId) {
         case 'careers':
             showPageContent('Careers', 'Explore exciting career opportunities at DSU.');
             break;
         case 'virtual-tour':
-            showPageContent('Virtual Tour', 'Take a virtual tour of our beautiful campus.');
-            // Could integrate with 360° tour or video
+            // Redirect to DSU virtual tour page
+            window.location.href = 'https://dsu.edu.in/virtual-tour/';
             break;
         case 'examination':
-            showPageContent('Examination', 'Information about examinations, schedules, and results.');
+            // Redirect to DSU examination page
+            window.location.href = 'https://dsu.edu.in/examination';
             break;
         case 'news-events':
             // Scroll to news section if it exists
@@ -620,13 +929,13 @@ function handleSecondaryNavClick(pageId) {
 function showPageContent(title, description) {
     // Create or show content section
     let contentSection = document.getElementById('dynamic-content');
-    
+
     if (!contentSection) {
         contentSection = document.createElement('section');
         contentSection.id = 'dynamic-content';
         contentSection.className = 'dynamic-content-section';
         contentSection.style.cssText = 'padding: 80px 0; background: var(--primary-black); min-height: 60vh;';
-        
+
         // Insert after hero section or at the beginning of main content
         const heroSection = document.querySelector('.hero-section');
         if (heroSection && heroSection.nextSibling) {
@@ -638,10 +947,10 @@ function showPageContent(title, description) {
             }
         }
     }
-    
+
     // Scroll to content
     contentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    
+
     // Update content based on title
     const contentData = getPageContent(title);
     contentSection.innerHTML = `
@@ -782,7 +1091,7 @@ function getPageContent(pageTitle) {
             ]
         }
     };
-    
+
     return contentMap[pageTitle] || {
         title: pageTitle,
         description: 'Explore this section',
@@ -802,14 +1111,96 @@ function handleNavigation(link, text) {
     // Check if it's a hash link
     if (link.startsWith('#')) {
         const targetId = link.substring(1);
-        const targetElement = document.getElementById(targetId);
         
+        // Handle about-dsu link
+        if (targetId === 'about-dsu') {
+            const aboutSection = document.getElementById('about-dsu-section');
+            if (aboutSection) {
+                aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                return;
+            }
+        }
+        
+        // Handle engineering-section link
+        if (targetId === 'engineering-section') {
+            const engineeringSection = document.getElementById('engineering-section');
+            if (engineeringSection) {
+                engineeringSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                return;
+            }
+        }
+        
+        // Handle admissions-section link
+        if (targetId === 'admissions-section') {
+            const admissionsSection = document.getElementById('admissions-section');
+            if (admissionsSection) {
+                admissionsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                return;
+            }
+        }
+        
+        // Handle international-section link
+        if (targetId === 'international-section') {
+            const internationalSection = document.getElementById('international-section');
+            if (internationalSection) {
+                internationalSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                return;
+            }
+        }
+        
+        // Handle research-section link
+        if (targetId === 'research-section') {
+            const researchSection = document.getElementById('research-section');
+            if (researchSection) {
+                researchSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                return;
+            }
+        }
+        
+        // Handle innovation-section link
+        if (targetId === 'innovation-section') {
+            const innovationSection = document.getElementById('innovation-section');
+            if (innovationSection) {
+                innovationSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                return;
+            }
+        }
+        
+        // Handle placement-section link
+        if (targetId === 'placement-section') {
+            const placementSection = document.getElementById('placement-section');
+            if (placementSection) {
+                placementSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                return;
+            }
+        }
+        
+        // Handle hostel-section link
+        if (targetId === 'hostel-section') {
+            const hostelSection = document.getElementById('hostel-section');
+            if (hostelSection) {
+                hostelSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                return;
+            }
+        }
+        
+        // Handle disclosure-section link
+        if (targetId === 'disclosure-section') {
+            const disclosureSection = document.getElementById('disclosure-section');
+            if (disclosureSection) {
+                disclosureSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                return;
+            }
+        }
+        
+        const targetElement = document.getElementById(targetId);
+
         if (targetElement) {
             targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
             return;
         }
     }
-    
+
     // Show page content based on text
     showPageContent(text, `Information about ${text}`);
 }
@@ -817,19 +1208,19 @@ function handleNavigation(link, text) {
 // Contact page function
 function showContactPage() {
     let contactSection = document.getElementById('contact-section');
-    
+
     if (!contactSection) {
         contactSection = document.createElement('section');
         contactSection.id = 'contact-section';
         contactSection.className = 'contact-section';
         contactSection.style.cssText = 'padding: 80px 0; background: var(--primary-black); min-height: 60vh;';
-        
+
         const mainContent = document.getElementById('mainContent');
         if (mainContent) {
             mainContent.appendChild(contactSection);
         }
     }
-    
+
     contactSection.innerHTML = `
         <div class="container">
             <div style="text-align: center; margin-bottom: 60px;">
@@ -893,7 +1284,7 @@ function showContactPage() {
             </div>
         </div>
     `;
-    
+
     contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
@@ -905,6 +1296,15 @@ function handleContactForm(event) {
 
 // Academic Details Function
 function showAcademicDetails(schoolName) {
+    // If Engineering is clicked, scroll to engineering section
+    if (schoolName === 'Engineering') {
+        const engineeringSection = document.getElementById('engineering-section');
+        if (engineeringSection) {
+            engineeringSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            return;
+        }
+    }
+    
     const academicData = {
         'Engineering': {
             programs: ['B.Tech Computer Science', 'B.Tech Electronics & Communication', 'B.Tech Mechanical', 'B.Tech Civil', 'B.Tech Electrical', 'M.Tech CSE', 'M.Tech ECE', 'M.Tech Mechanical'],
@@ -967,9 +1367,9 @@ function showAcademicDetails(schoolName) {
             placement: '100% Internship Placement'
         }
     };
-    
+
     const data = academicData[schoolName] || academicData['Engineering'];
-    
+
     const modal = document.createElement('div');
     modal.className = 'modal-overlay';
     modal.innerHTML = `
@@ -1003,11 +1403,11 @@ function showAcademicDetails(schoolName) {
         </div>
     `;
     document.body.appendChild(modal);
-    
+
     modal.querySelector('.modal-close').addEventListener('click', () => {
         document.body.removeChild(modal);
     });
-    
+
     modal.addEventListener('click', (e) => {
         if (e.target === modal) {
             document.body.removeChild(modal);
@@ -1045,14 +1445,14 @@ function updateLeaderDisplay(index) {
     const leaderTitle = document.getElementById('leaderTitle');
     const leaderDescription = document.getElementById('leaderDescription');
     const leaderImage = document.getElementById('leaderImage');
-    
+
     if (leaderName) leaderName.textContent = leader.name;
     if (leaderTitle) leaderTitle.textContent = leader.title;
     if (leaderDescription) leaderDescription.textContent = leader.description;
     if (leaderImage) {
         leaderImage.src = leader.image;
         leaderImage.alt = leader.name;
-        leaderImage.onerror = function() {
+        leaderImage.onerror = function () {
             this.src = 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'120\' height=\'120\'%3E%3Ccircle cx=\'60\' cy=\'60\' r=\'55\' fill=\'%23e0f2fe\'/%3E%3Ctext x=\'60\' y=\'70\' font-size=\'20\' fill=\'%23003366\' text-anchor=\'middle\'%3EL%3C/text%3E%3C/svg%3E';
         };
     }
@@ -1070,7 +1470,7 @@ function initLeadershipCarousel() {
                 updateLeaderDisplay(index);
             });
         });
-        
+
         // Auto-rotate leaders every 5 seconds
         setInterval(() => {
             currentLeaderIndex = (currentLeaderIndex + 1) % leadershipData.length;
@@ -1109,11 +1509,11 @@ function playVideo(videoTitle) {
         </div>
     `;
     document.body.appendChild(modal);
-    
+
     modal.querySelector('.modal-close').addEventListener('click', () => {
         document.body.removeChild(modal);
     });
-    
+
     modal.addEventListener('click', (e) => {
         if (e.target === modal) {
             document.body.removeChild(modal);
@@ -1143,17 +1543,17 @@ function showNewsletterModal() {
         </div>
     `;
     document.body.appendChild(modal);
-    
+
     modal.querySelector('.modal-close').addEventListener('click', () => {
         document.body.removeChild(modal);
     });
-    
+
     modal.addEventListener('click', (e) => {
         if (e.target === modal) {
             document.body.removeChild(modal);
         }
     });
-    
+
     modal.querySelector('.newsletter-form').addEventListener('submit', (e) => {
         e.preventDefault();
         alert('Thank you for subscribing!');
@@ -1183,11 +1583,11 @@ function showBrochureModal() {
         </div>
     `;
     document.body.appendChild(modal);
-    
+
     modal.querySelector('.modal-close').addEventListener('click', () => {
         document.body.removeChild(modal);
     });
-    
+
     modal.addEventListener('click', (e) => {
         if (e.target === modal) {
             document.body.removeChild(modal);
@@ -1249,18 +1649,18 @@ if ('IntersectionObserver' in window) {
 let lastScrollTop = 0;
 window.addEventListener('scroll', () => {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    
+
     campusCards.forEach((card, index) => {
         const rect = card.getBoundingClientRect();
         const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
-        
+
         if (isVisible) {
             const speed = 0.1 * (index % 2 === 0 ? 1 : -1);
             const yPos = -(scrollTop * speed);
             card.style.transform = `translateY(${yPos}px) scale(1)`;
         }
     });
-    
+
     lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
 }, { passive: true });
 
@@ -1270,16 +1670,16 @@ campusCards.forEach(card => {
         const rect = card.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-        
+
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
-        
+
         const rotateX = (y - centerY) / 20;
         const rotateY = (centerX - x) / 20;
-        
+
         card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-12px) scale(1.02)`;
     });
-    
+
     card.addEventListener('mouseleave', () => {
         card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)';
     });
@@ -1314,11 +1714,11 @@ function showCampusDetailsModal(campusName) {
         </div>
     `;
     document.body.appendChild(modal);
-    
+
     modal.querySelector('.modal-close').addEventListener('click', () => {
         document.body.removeChild(modal);
     });
-    
+
     modal.addEventListener('click', (e) => {
         if (e.target === modal) {
             document.body.removeChild(modal);
@@ -1329,11 +1729,11 @@ function showCampusDetailsModal(campusName) {
 // Image Lazy Loading with Blur Effect
 const campusImages = document.querySelectorAll('.campus-img');
 campusImages.forEach(img => {
-    img.addEventListener('load', function() {
+    img.addEventListener('load', function () {
         this.style.filter = 'brightness(0.7)';
         this.style.opacity = '1';
     });
-    
+
     // Add blur effect while loading
     if (!img.complete) {
         img.style.filter = 'blur(10px) brightness(0.5)';
@@ -1372,7 +1772,7 @@ setTimeout(() => {
 function updateNAACLogoSVG() {
     const naacImg = document.getElementById('naacLogoImg');
     if (!naacImg) return;
-    
+
     const currentTheme = body.getAttribute('data-theme') || 'dark';
     const fillColor = currentTheme === 'light' ? '%2360A5FA' : '%23FF6600';
     const svgData = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='60'%3E%3Ctext x='50' y='35' font-size='16' font-weight='bold' fill='${fillColor}' text-anchor='middle'%3ENAAC%3C/text%3E%3C/svg%3E`;
@@ -1381,7 +1781,7 @@ function updateNAACLogoSVG() {
 
 function toggleTheme() {
     const currentTheme = body.getAttribute('data-theme');
-    
+
     if (currentTheme === 'dark') {
         body.setAttribute('data-theme', 'light');
         themeIcon.classList.remove('fa-moon');
@@ -1393,7 +1793,7 @@ function toggleTheme() {
         themeIcon.classList.add('fa-moon');
         localStorage.setItem('theme', 'dark');
     }
-    
+
     // Update NAAC logo SVG if it's using the fallback
     updateNAACLogoSVG();
 }
@@ -1418,7 +1818,7 @@ if (searchBtn && searchInput) {
             searchInput.focus();
         }
     });
-    
+
     // Allow Enter key to trigger search
     searchInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
@@ -1480,6 +1880,172 @@ function showApplicationModal() {
         </div>
     `;
     document.body.appendChild(modal);
+
+    modal.querySelector('.modal-close').addEventListener('click', () => {
+        document.body.removeChild(modal);
+    });
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            document.body.removeChild(modal);
+        }
+    });
+}
+
+function handleApplicationSubmit(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData);
+
+    console.log('Application submitted:', data);
+    alert('Thank you for your application! We will contact you shortly.');
+
+    // Close modal
+    const modal = event.target.closest('.modal-overlay');
+    if (modal) {
+        document.body.removeChild(modal);
+    }
+
+    // In a real implementation, you would:
+    // 1. Send data to server via API
+    // 2. Show success message
+    // 3. Send confirmation email
+}
+
+// Apply Now Buttons Event Listeners - Using Event Delegation
+function initApplyNowButtons() {
+    // Use event delegation on document
+    document.addEventListener('click', function(e) {
+        const target = e.target.closest('.apply-btn-large, .announcement-btn');
+        if (target && !target.closest('.modal-overlay')) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Apply Now button clicked');
+            if (typeof showApplicationModal === 'function') {
+                showApplicationModal();
+            } else {
+                console.error('showApplicationModal is not defined');
+                alert('Application form will open shortly. Please refresh the page if this issue persists.');
+            }
+        }
+    });
+}
+
+// Exam Items Click Functionality
+let examItemsInitialized = false;
+
+function initExamItems() {
+    if (examItemsInitialized) {
+        console.log('Exam items already initialized, skipping...');
+        return;
+    }
+    
+    console.log('Initializing exam items...');
+    
+    // Try direct event listeners first
+    function attachExamListeners() {
+        const examItems = document.querySelectorAll('.exam-item');
+        console.log('Found', examItems.length, 'exam items to attach listeners');
+        
+        examItems.forEach((item, index) => {
+            // Remove any existing listeners
+            const newItem = item.cloneNode(true);
+            item.parentNode.replaceChild(newItem, item);
+            
+            newItem.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Exam item clicked directly:', this.querySelector('span')?.textContent);
+                
+                // Remove clicked class from all items
+                document.querySelectorAll('.exam-item').forEach(exam => exam.classList.remove('clicked'));
+                
+                // Add clicked class to current item
+                this.classList.add('clicked');
+                
+                // Get exam name
+                const examName = this.querySelector('span')?.textContent || 'Exam';
+                
+                // Show exam details modal
+                if (typeof showExamDetailsModal === 'function') {
+                    showExamDetailsModal(examName);
+                } else {
+                    console.error('showExamDetailsModal is not defined');
+                    alert(`${examName} - This exam is accepted for B.Tech Admissions 2026-27. Click Apply Now to proceed.`);
+                }
+                
+                // Remove clicked class after animation
+                setTimeout(() => {
+                    this.classList.remove('clicked');
+                }, 500);
+            });
+            
+            // Also add mousedown for better feedback
+            newItem.addEventListener('mousedown', function() {
+                this.style.transform = 'translateX(8px) scale(0.98)';
+            });
+            
+            newItem.addEventListener('mouseup', function() {
+                this.style.transform = '';
+            });
+        });
+    }
+    
+    // Try immediately
+    attachExamListeners();
+    
+    // Also use event delegation as backup
+    document.addEventListener('click', function examItemClickHandler(e) {
+        const target = e.target.closest('.exam-item');
+        if (target) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Exam item clicked via delegation:', target.querySelector('span')?.textContent);
+            
+            // Remove clicked class from all items
+            document.querySelectorAll('.exam-item').forEach(exam => exam.classList.remove('clicked'));
+            
+            // Add clicked class to current item
+            target.classList.add('clicked');
+            
+            // Get exam name
+            const examName = target.querySelector('span')?.textContent || 'Exam';
+            
+            // Show exam details modal
+            if (typeof showExamDetailsModal === 'function') {
+                showExamDetailsModal(examName);
+            } else {
+                alert(`${examName} - This exam is accepted for B.Tech Admissions 2026-27.`);
+            }
+            
+            // Remove clicked class after animation
+            setTimeout(() => {
+                target.classList.remove('clicked');
+            }, 500);
+        }
+    });
+    
+    examItemsInitialized = true;
+}
+
+// Show Exam Details Modal
+function showExamDetailsModal(examName) {
+    const modal = document.createElement('div');
+    modal.className = 'modal-overlay';
+    modal.innerHTML = `
+        <div class="modal-content" style="max-width: 500px;">
+            <button class="modal-close">&times;</button>
+            <h2>${examName} - Admission Details</h2>
+            <div style="margin-top: 24px;">
+                <p><strong>Exam:</strong> ${examName}</p>
+                <p><strong>Status:</strong> Accepted for B.Tech Admissions 2026-27</p>
+                <p style="margin-top: 16px;">Your ${examName} scores will be considered for admission to our B.Tech programs.</p>
+                <p style="margin-top: 12px;">For more information about admission requirements and eligibility, please contact our admissions office.</p>
+            </div>
+            <button class="apply-btn-large" style="width: 100%; margin-top: 24px;" onclick="showApplicationModal(); this.closest('.modal-overlay').remove();">Apply Now</button>
+        </div>
+    `;
+    document.body.appendChild(modal);
     
     modal.querySelector('.modal-close').addEventListener('click', () => {
         document.body.removeChild(modal);
@@ -1492,33 +2058,47 @@ function showApplicationModal() {
     });
 }
 
-function handleApplicationSubmit(event) {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
-    
-    console.log('Application submitted:', data);
-    alert('Thank you for your application! We will contact you shortly.');
-    
-    // Close modal
-    const modal = event.target.closest('.modal-overlay');
-    if (modal) {
-        document.body.removeChild(modal);
+// Initialize immediately - event delegation works even before DOM is ready
+initApplyNowButtons();
+
+// Initialize exam items when DOM is ready
+function initExamItemsWhenReady() {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(initExamItems, 100);
+        });
+    } else {
+        setTimeout(initExamItems, 100);
     }
-    
-    // In a real implementation, you would:
-    // 1. Send data to server via API
-    // 2. Show success message
-    // 3. Send confirmation email
 }
 
-// Apply Now Buttons Event Listeners
-document.querySelectorAll('.apply-btn-large, .announcement-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        showApplicationModal();
+initExamItemsWhenReady();
+
+// Also try after a delay to ensure elements exist
+setTimeout(initExamItems, 500);
+setTimeout(initExamItems, 1000);
+
+// Initialize hero carousel when DOM is ready
+function initHeroSectionInteractions() {
+    console.log('Initializing hero section interactions...');
+    
+    // Initialize hero carousel
+    if (typeof initHeroCarousel === 'function') {
+        initHeroCarousel();
+    }
+}
+
+// Initialize carousel when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM Content Loaded - initializing carousel');
+        initHeroSectionInteractions();
     });
-});
+} else {
+    // DOM is already ready
+    console.log('DOM already ready - initializing carousel');
+    initHeroSectionInteractions();
+}
 
 // NRI/FOREIGN ADMISSIONS Button
 const nriBtn = document.querySelector('.nri-btn');
@@ -1568,6 +2148,120 @@ function showNRIModal() {
         </div>
     `;
     document.body.appendChild(modal);
+
+    modal.querySelector('.modal-close').addEventListener('click', () => {
+        document.body.removeChild(modal);
+    });
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            document.body.removeChild(modal);
+        }
+    });
+}
+
+function handleNRISubmit(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData);
+
+    console.log('NRI Application submitted:', data);
+    alert('Thank you for your NRI/Foreign application! Our international admissions team will contact you shortly.');
+
+    const modal = event.target.closest('.modal-overlay');
+    if (modal) {
+        document.body.removeChild(modal);
+    }
+}
+
+// Carousel buttons are already handled above, no need to duplicate
+
+// Hero Background Image Carousel
+function initHeroCarousel() {
+    const slides = document.querySelectorAll('.carousel-slide');
+    if (slides.length === 0) {
+        console.log('Hero carousel: No slides found');
+        return;
+    }
+
+    console.log('Hero carousel: Initializing with', slides.length, 'slides');
+
+    let currentSlide = 0;
+    const totalSlides = slides.length;
+    const slideInterval = 4000; // 4 seconds between slides
+
+    function showNextSlide() {
+        // Remove active class from current slide
+        slides[currentSlide].classList.remove('active');
+        slides[currentSlide].classList.add('prev');
+
+        // Move to next slide
+        currentSlide = (currentSlide + 1) % totalSlides;
+
+        // Remove prev class and add active class to new slide
+        slides.forEach(slide => {
+            slide.classList.remove('prev');
+            slide.style.transform = 'translateX(100%)';
+            slide.style.opacity = '0';
+        });
+
+        // Set new slide to come from right
+        slides[currentSlide].style.transform = 'translateX(100%)';
+        slides[currentSlide].style.opacity = '0';
+
+        // Trigger reflow
+        void slides[currentSlide].offsetWidth;
+
+        // Animate new slide in from right
+        slides[currentSlide].classList.add('active');
+        slides[currentSlide].style.transform = 'translateX(0)';
+        slides[currentSlide].style.opacity = '0.5';
+
+        // Animate old slide out to left
+        const prevIndex = (currentSlide - 1 + totalSlides) % totalSlides;
+        slides[prevIndex].style.transform = 'translateX(-100%)';
+        slides[prevIndex].style.opacity = '0';
+    }
+
+    // Initialize first slide
+    slides[0].classList.add('active');
+    slides[0].style.opacity = '0.5';
+    slides[0].style.transform = 'translateX(0)';
+
+    // Start carousel
+    setInterval(showNextSlide, slideInterval);
+}
+
+// Carousel initialization is handled in initHeroSectionInteractions()
+
+// Library Functions
+function showLibraryContact() {
+    const modal = document.createElement('div');
+    modal.className = 'modal-overlay';
+    modal.innerHTML = `
+        <div class="modal-content" style="max-width: 600px;">
+            <button class="modal-close">&times;</button>
+            <h2>Library Contact Information</h2>
+            <div style="margin-top: 24px;">
+                <div style="margin-bottom: 20px;">
+                    <h3 style="color: var(--primary-orange); margin-bottom: 12px;">DSU Main Campus Library</h3>
+                    <p><strong>Location:</strong> Devarakaggalahalli, Harohalli, Kanakapura Road, Ramanagara Dt., Bengaluru – 562 112</p>
+                    <p><strong>Seating Capacity:</strong> 560 students</p>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <h3 style="color: var(--primary-orange); margin-bottom: 12px;">Library Services</h3>
+                    <p>Library is accessible to all Undergraduates, Postgraduates, Research Scholars & faculty members.</p>
+                    <p>Professional library staff members are always available to help users.</p>
+                </div>
+                <div>
+                    <h3 style="color: var(--primary-orange); margin-bottom: 12px;">E-Resources Access</h3>
+                    <p>Access E-books from your desktop inside the campus:</p>
+                    <a href="https://dsuunivopac.ltsinformatics.com/" target="_blank" style="color: var(--primary-orange); text-decoration: underline;">https://dsuunivopac.ltsinformatics.com/</a>
+                </div>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
     
     modal.querySelector('.modal-close').addEventListener('click', () => {
         document.body.removeChild(modal);
@@ -1580,20 +2274,610 @@ function showNRIModal() {
     });
 }
 
-function handleNRISubmit(event) {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
+function showLibraryRules() {
+    const modal = document.createElement('div');
+    modal.className = 'modal-overlay';
+    modal.innerHTML = `
+        <div class="modal-content" style="max-width: 700px; max-height: 80vh; overflow-y: auto;">
+            <button class="modal-close">&times;</button>
+            <h2>Library Rules & Regulations</h2>
+            <div style="margin-top: 24px;">
+                <div style="margin-bottom: 24px;">
+                    <h3 style="color: var(--primary-orange); margin-bottom: 12px;">General Rules</h3>
+                    <ul style="line-height: 1.8; color: var(--gray-light);">
+                        <li>Library is accessible to all Undergraduates, Postgraduates, Research Scholars & faculty members</li>
+                        <li>Maintain silence in the library premises</li>
+                        <li>No food or drinks allowed inside the library</li>
+                        <li>Mobile phones should be kept in silent mode</li>
+                        <li>Books should be handled with care</li>
+                    </ul>
+                </div>
+                <div style="margin-bottom: 24px;">
+                    <h3 style="color: var(--primary-orange); margin-bottom: 12px;">Borrowing Rules</h3>
+                    <ul style="line-height: 1.8; color: var(--gray-light);">
+                        <li>Present your ID card for borrowing books</li>
+                        <li>Books must be returned on or before the due date</li>
+                        <li>Late returns may incur fines</li>
+                        <li>Books can be renewed if not reserved by others</li>
+                    </ul>
+                </div>
+                <div style="margin-bottom: 24px;">
+                    <h3 style="color: var(--primary-orange); margin-bottom: 12px;">Digital Resources</h3>
+                    <ul style="line-height: 1.8; color: var(--gray-light);">
+                        <li>E-resources are available for on-campus access</li>
+                        <li>Use OPAC system to search for books and resources</li>
+                        <li>Follow copyright guidelines when using digital materials</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: var(--primary-orange); margin-bottom: 12px;">Contact</h3>
+                    <p style="color: var(--gray-light);">For detailed rules and regulations, please contact the library staff or visit the library office.</p>
+                </div>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
     
-    console.log('NRI Application submitted:', data);
-    alert('Thank you for your NRI/Foreign application! Our international admissions team will contact you shortly.');
-    
-    const modal = event.target.closest('.modal-overlay');
-    if (modal) {
+    modal.querySelector('.modal-close').addEventListener('click', () => {
         document.body.removeChild(modal);
-    }
+    });
+    
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            document.body.removeChild(modal);
+        }
+    });
 }
 
-// Carousel buttons are already handled above, no need to duplicate
+// Make functions globally available
+window.showLibraryContact = showLibraryContact;
+window.showLibraryRules = showLibraryRules;
+
+// AI Chatbot Section Functionality
+(function() {
+    // Main Chatbot Section - Get elements
+    let chatbotContainerMain, chatbotMinimizeMain, chatbotBodyMain, chatbotMessagesMain;
+    let chatbotInputMain, chatbotSendBtnMain, chatbotMicBtnMain, quickActionBtnsMain;
+
+    // Floating Chatbot Widget
+    let chatbotWidget, chatbotToggle, chatbotClose, chatbotMinimize;
+    let chatbotContainer, chatbotBody, chatbotMessages;
+    let chatbotInput, chatbotSendBtn, chatbotMicBtn;
+    let quickActionBtns;
+
+    let isRecording = false;
+    let recognition = null;
+
+    // Initialize Web Speech API if available
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        recognition = new SpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            if (chatbotInputMain) {
+                chatbotInputMain.value = transcript;
+                handleUserMessageMain(transcript);
+            }
+            if (chatbotInput) {
+                chatbotInput.value = transcript;
+                handleUserMessage(transcript);
+            }
+        };
+
+        recognition.onerror = function(event) {
+            console.error('Speech recognition error:', event.error);
+            if (chatbotMessagesMain) {
+                addBotMessageMain('Sorry, I couldn\'t understand that. Please try again or type your message.');
+            }
+            if (chatbotMessages) {
+                addBotMessage('Sorry, I couldn\'t understand that. Please try again or type your message.');
+            }
+            if (chatbotMicBtnMain) chatbotMicBtnMain.classList.remove('recording');
+            if (chatbotMicBtn) chatbotMicBtn.classList.remove('recording');
+            isRecording = false;
+        };
+
+        recognition.onend = function() {
+            if (chatbotMicBtnMain) chatbotMicBtnMain.classList.remove('recording');
+            if (chatbotMicBtn) chatbotMicBtn.classList.remove('recording');
+            isRecording = false;
+        };
+    }
+
+    // Main Chatbot Section Functions
+    function sendMessageMain() {
+        if (!chatbotInputMain) return;
+        const message = chatbotInputMain.value.trim();
+        if (message) {
+            handleUserMessageMain(message);
+            chatbotInputMain.value = '';
+        }
+    }
+
+    function handleUserMessageMain(message) {
+        if (!chatbotMessagesMain) return;
+        addUserMessageMain(message);
+        
+        setTimeout(() => {
+            const response = generateBotResponse(message);
+            addBotMessageMain(response);
+        }, 500);
+    }
+
+    function handleQuickActionMain(action) {
+        let message = '';
+        switch(action) {
+            case 'admissions':
+                message = 'Tell me about admissions';
+                break;
+            case 'courses':
+                message = 'What courses are available?';
+                break;
+            case 'facilities':
+                message = 'What facilities are available?';
+                break;
+            case 'contact':
+                message = 'How can I contact the university?';
+                break;
+            case 'placement':
+                message = 'Tell me about placements';
+                break;
+            case 'hostel':
+                message = 'Tell me about hostel facilities';
+                break;
+        }
+        if (message && chatbotInputMain) {
+            chatbotInputMain.value = message;
+            handleUserMessageMain(message);
+        }
+    }
+
+    function addUserMessageMain(message) {
+        if (!chatbotMessagesMain) return;
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'chatbot-message-main user-message-main';
+        messageDiv.innerHTML = `
+            <div class="message-avatar-main">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="message-content-main">
+                <p>${escapeHtml(message)}</p>
+            </div>
+        `;
+        chatbotMessagesMain.appendChild(messageDiv);
+        scrollToBottomMain();
+    }
+
+    function addBotMessageMain(message) {
+        if (!chatbotMessagesMain) return;
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'chatbot-message-main bot-message-main';
+        messageDiv.innerHTML = `
+            <div class="message-avatar-main">
+                <div class="chatbot-3d-face-tiny">
+                    <div class="face-container-tiny">
+                        <div class="face-sphere-tiny">
+                            <div class="face-eyes-tiny">
+                                <div class="face-eye-tiny left-eye-tiny">
+                                    <div class="eye-pupil-tiny"></div>
+                                </div>
+                                <div class="face-eye-tiny right-eye-tiny">
+                                    <div class="eye-pupil-tiny"></div>
+                                </div>
+                            </div>
+                            <div class="face-mouth-tiny">
+                                <div class="mouth-inner-tiny"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="message-content-main">
+                <p>${escapeHtml(message)}</p>
+            </div>
+        `;
+        chatbotMessagesMain.appendChild(messageDiv);
+        scrollToBottomMain();
+        
+        // Speak the message
+        if ('speechSynthesis' in window) {
+            const utterance = new SpeechSynthesisUtterance(message);
+            utterance.lang = 'en-US';
+            utterance.rate = 0.9;
+            utterance.pitch = 1;
+            utterance.volume = 0.8;
+            window.speechSynthesis.speak(utterance);
+        }
+    }
+
+    function scrollToBottomMain() {
+        if (chatbotMessagesMain) {
+            chatbotMessagesMain.scrollTop = chatbotMessagesMain.scrollHeight;
+        }
+    }
+
+    // Initialize chatbot event listeners
+    function initChatbotListeners() {
+        if (chatbotMinimizeMain && chatbotContainerMain) {
+            chatbotMinimizeMain.addEventListener('click', function() {
+                chatbotContainerMain.classList.toggle('minimized');
+            });
+        }
+
+        if (chatbotSendBtnMain) {
+            chatbotSendBtnMain.addEventListener('click', sendMessageMain);
+        }
+
+        if (chatbotInputMain) {
+            chatbotInputMain.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessageMain();
+                }
+            });
+        }
+
+        if (chatbotMicBtnMain) {
+            chatbotMicBtnMain.addEventListener('click', function() {
+                if (!recognition) {
+                    addBotMessageMain('Voice input is not supported in your browser. Please type your message.');
+                    return;
+                }
+
+                if (isRecording) {
+                    recognition.stop();
+                    chatbotMicBtnMain.classList.remove('recording');
+                    isRecording = false;
+                } else {
+                    recognition.start();
+                    chatbotMicBtnMain.classList.add('recording');
+                    isRecording = true;
+                    addBotMessageMain('🎤 Listening... Please speak now.');
+                }
+            });
+        }
+
+        if (quickActionBtnsMain && quickActionBtnsMain.length > 0) {
+            quickActionBtnsMain.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const action = this.dataset.action;
+                    handleQuickActionMain(action);
+                });
+            });
+        }
+    }
+
+
+    // Escape HTML
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML.replace(/\n/g, '<br>');
+    }
+
+    // Generate bot response function (shared)
+    function generateBotResponse(userMessage) {
+        const message = userMessage.toLowerCase();
+        
+        if (message.includes('admission') || message.includes('admit')) {
+            return 'For admissions, you can visit our Admissions section or contact our admissions helpline at 080 46461800. You can apply through DSAT, Comed-K, CET, or Direct Admissions. Would you like more specific information about any admission process?';
+        } else if (message.includes('course') || message.includes('program')) {
+            return 'Dayananda Sagar University offers a wide range of programs including B.Tech, M.Tech, MBA, MCA, BCA, Law, Pharmacy, and many more. Visit our Academics section to see all available programs. Which program are you interested in?';
+        } else if (message.includes('facilit') || message.includes('infrastructure')) {
+            return 'DSU has state-of-the-art facilities including modern labs, innovation centers, library, hostel facilities, sports complexes, and more. We have partnerships with companies like IBM, NVIDIA, VMware, and others. What specific facility would you like to know about?';
+        } else if (message.includes('contact') || message.includes('phone') || message.includes('email')) {
+            return 'You can contact us at:\n• Phone: 080 46461800 / +91 6366885507\n• Email: admissions@dsu.edu.in\n• Address: Devarakaggalahalli, Harohalli, Kanakapura Road, Bengaluru South Dt. – 562 112\nVisit our Contact section for more details.';
+        } else if (message.includes('fee') || message.includes('cost') || message.includes('price')) {
+            return 'Fee structure varies by program. Please visit our Admissions section for detailed fee information, or contact our admissions office at 080 46461800 for specific program fees.';
+        } else if (message.includes('placement') || message.includes('job')) {
+            return 'DSU has an excellent placement record with 500+ reputed organizations visiting our campus. We have a dedicated Training and Placement Cell. Visit our Placements section for more details.';
+        } else if (message.includes('hostel') || message.includes('accommodation')) {
+            return 'S\' Residences provides premium student accommodation near the campus with 24/7 security, Wi-Fi, mess facilities, gym, and many more amenities. Visit our Hostel section or contact +91-96063 06540 for more information.';
+        } else if (message.includes('library')) {
+            return 'Our library has a huge collection of books, CDs, DVDs, and access to online resources through the Digital Library. It has a seating capacity of 560 students. Visit our Library section for more details.';
+        } else if (message.includes('hello') || message.includes('hi') || message.includes('hey')) {
+            return 'Hello! I\'m here to help you with information about Dayananda Sagar University. What would you like to know?';
+        } else {
+            return 'Thank you for your question. For more detailed information, please visit the relevant section on our website or contact our helpline at 080 46461800. Is there anything specific I can help you with?';
+        }
+    }
+
+    // Initialize floating chatbot widget
+    function initFloatingChatbot() {
+        chatbotWidget = document.getElementById('chatbotWidget');
+        chatbotToggle = document.getElementById('chatbotToggle');
+        chatbotClose = document.getElementById('chatbotClose');
+        chatbotMinimize = document.getElementById('chatbotMinimize');
+        chatbotContainer = document.getElementById('chatbotContainer');
+        chatbotBody = document.getElementById('chatbotBody');
+        chatbotMessages = document.getElementById('chatbotMessages');
+        chatbotInput = document.getElementById('chatbotInput');
+        chatbotSendBtn = document.getElementById('chatbotSendBtn');
+        chatbotMicBtn = document.getElementById('chatbotMicBtn');
+        quickActionBtns = document.querySelectorAll('.quick-action-btn');
+
+        if (!chatbotWidget) {
+            console.warn('Chatbot widget not found');
+            return;
+        }
+
+        // Toggle chatbot
+        if (chatbotToggle) {
+            chatbotToggle.addEventListener('click', function() {
+                chatbotWidget.classList.toggle('active');
+                if (chatbotWidget.classList.contains('active') && chatbotInput) {
+                    chatbotInput.focus();
+                }
+            });
+        }
+
+        // Close chatbot
+        if (chatbotClose) {
+            chatbotClose.addEventListener('click', function() {
+                chatbotWidget.classList.remove('active');
+                chatbotWidget.classList.remove('minimized');
+            });
+        }
+
+        // Minimize chatbot
+        if (chatbotMinimize) {
+            chatbotMinimize.addEventListener('click', function() {
+                chatbotWidget.classList.toggle('minimized');
+            });
+        }
+
+        // Send message
+        function sendMessage() {
+            if (!chatbotInput) return;
+            const message = chatbotInput.value.trim();
+            if (message) {
+                handleUserMessage(message);
+                chatbotInput.value = '';
+            }
+        }
+
+        if (chatbotSendBtn) {
+            chatbotSendBtn.addEventListener('click', sendMessage);
+        }
+
+        if (chatbotInput) {
+            chatbotInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+        }
+
+        // Voice input
+        if (chatbotMicBtn) {
+            chatbotMicBtn.addEventListener('click', function() {
+                if (!recognition) {
+                    addBotMessage('Voice input is not supported in your browser. Please type your message.');
+                    return;
+                }
+
+                if (isRecording) {
+                    recognition.stop();
+                    chatbotMicBtn.classList.remove('recording');
+                    isRecording = false;
+                } else {
+                    recognition.start();
+                    chatbotMicBtn.classList.add('recording');
+                    isRecording = true;
+                    addBotMessage('🎤 Listening... Please speak now.');
+                }
+            });
+        }
+
+        // Quick actions
+        if (quickActionBtns && quickActionBtns.length > 0) {
+            quickActionBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const action = this.dataset.action;
+                    handleQuickAction(action);
+                });
+            });
+        }
+
+        // Handle user message
+        function handleUserMessage(message) {
+            addUserMessage(message);
+            
+            setTimeout(() => {
+                const response = generateBotResponse(message);
+                addBotMessage(response);
+            }, 500);
+        }
+
+        // Handle quick actions
+        function handleQuickAction(action) {
+            let message = '';
+            switch(action) {
+                case 'admissions':
+                    message = 'Tell me about admissions';
+                    break;
+                case 'courses':
+                    message = 'What courses are available?';
+                    break;
+                case 'facilities':
+                    message = 'What facilities are available?';
+                    break;
+                case 'contact':
+                    message = 'How can I contact the university?';
+                    break;
+            }
+            if (message && chatbotInput) {
+                chatbotInput.value = message;
+                handleUserMessage(message);
+            }
+        }
+
+        // Add user message
+        function addUserMessage(message) {
+            if (!chatbotMessages) return;
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'chatbot-message user-message';
+            messageDiv.innerHTML = `
+                <div class="message-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="message-content">
+                    <p>${escapeHtml(message)}</p>
+                </div>
+            `;
+            chatbotMessages.appendChild(messageDiv);
+            scrollToBottom();
+        }
+
+        // Add bot message with audio
+        function addBotMessage(message) {
+            if (!chatbotMessages) return;
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'chatbot-message bot-message';
+            messageDiv.innerHTML = `
+                <div class="message-avatar">
+                    <div class="chatbot-3d-face-tiny">
+                        <div class="face-container-tiny">
+                            <div class="face-sphere-tiny">
+                                <div class="face-eyes-tiny">
+                                    <div class="face-eye-tiny left-eye-tiny">
+                                        <div class="eye-pupil-tiny"></div>
+                                    </div>
+                                    <div class="face-eye-tiny right-eye-tiny">
+                                        <div class="eye-pupil-tiny"></div>
+                                    </div>
+                                </div>
+                                <div class="face-mouth-tiny">
+                                    <div class="mouth-inner-tiny"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="message-content">
+                    <p>${escapeHtml(message)}</p>
+                </div>
+            `;
+            chatbotMessages.appendChild(messageDiv);
+            scrollToBottom();
+            
+            // Speak the message with text-to-speech
+            speakMessage(message);
+        }
+
+        // Text-to-Speech Function
+        let currentUtterance = null;
+        
+        function speakMessage(text) {
+            if ('speechSynthesis' in window) {
+                // Stop any ongoing speech
+                window.speechSynthesis.cancel();
+                
+                // Show stop button
+                const stopBtn = document.getElementById('chatbotStopBtn');
+                if (stopBtn) stopBtn.style.display = 'flex';
+                
+                // Animate 3D face while speaking
+                const toggleFace = document.getElementById('chatbot3DFace');
+                const headerFace = document.getElementById('chatbot3DFaceSmall');
+                const avatar = document.querySelector('.chatbot-avatar');
+                
+                if (toggleFace) toggleFace.classList.add('speaking');
+                if (headerFace && avatar) avatar.classList.add('speaking');
+                
+                currentUtterance = new SpeechSynthesisUtterance(text);
+                currentUtterance.lang = 'en-US';
+                currentUtterance.rate = 0.9;
+                currentUtterance.pitch = 1;
+                currentUtterance.volume = 0.8;
+                
+                currentUtterance.onstart = function() {
+                    console.log('Speech started');
+                };
+                
+                currentUtterance.onend = function() {
+                    console.log('Speech ended');
+                    // Stop animation when speech ends
+                    if (toggleFace) toggleFace.classList.remove('speaking');
+                    if (headerFace && avatar) avatar.classList.remove('speaking');
+                    if (stopBtn) stopBtn.style.display = 'none';
+                    currentUtterance = null;
+                };
+                
+                currentUtterance.onerror = function(event) {
+                    console.error('Speech error:', event);
+                    if (toggleFace) toggleFace.classList.remove('speaking');
+                    if (headerFace && avatar) avatar.classList.remove('speaking');
+                    if (stopBtn) stopBtn.style.display = 'none';
+                    currentUtterance = null;
+                };
+                
+                window.speechSynthesis.speak(currentUtterance);
+            } else {
+                console.warn('Text-to-speech not supported in this browser');
+            }
+        }
+
+        // Stop speech function
+        function stopSpeech() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const toggleFace = document.getElementById('chatbot3DFace');
+                const headerFace = document.getElementById('chatbot3DFaceSmall');
+                const avatar = document.querySelector('.chatbot-avatar');
+                const stopBtn = document.getElementById('chatbotStopBtn');
+                
+                if (toggleFace) toggleFace.classList.remove('speaking');
+                if (headerFace && avatar) avatar.classList.remove('speaking');
+                if (stopBtn) stopBtn.style.display = 'none';
+                currentUtterance = null;
+            }
+        }
+
+        // Stop speech button
+        const chatbotStopBtn = document.getElementById('chatbotStopBtn');
+        if (chatbotStopBtn) {
+            chatbotStopBtn.addEventListener('click', stopSpeech);
+        }
+
+        // Scroll to bottom
+        function scrollToBottom() {
+            if (chatbotMessages) {
+                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+            }
+        }
+
+        // Speak initial welcome message
+        setTimeout(() => {
+            const welcomeMsg = "Hello! I'm DSU AI Assistant. How can I help you today? You can ask me about admissions, courses, facilities, or any other information about Dayananda Sagar University.";
+            speakMessage(welcomeMsg);
+        }, 500);
+
+        console.log('Floating Chatbot Widget initialized');
+    }
+
+    // Initialize chatbot on page load (for main section - but we removed it)
+    function initChatbot() {
+        // This function is kept for compatibility but the main section was removed
+        console.log('Chatbot initialization skipped - using floating widget only');
+    }
+
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            initChatbot();
+            initFloatingChatbot();
+        });
+    } else {
+        // DOM already loaded
+        setTimeout(function() {
+            initChatbot();
+            initFloatingChatbot();
+        }, 100);
+    }
+})();
 
 console.log('DSU Website Clone - Script loaded successfully!');

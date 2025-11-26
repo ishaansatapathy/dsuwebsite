@@ -604,7 +604,7 @@ function updateMarksTable(semester) {
             tfoot.innerHTML = `
                 <tr>
                     <td colspan="2"><strong>Total Credits: ${totalCredits}</strong></td>
-                    <td colspan="6"><strong>CGPA: 8.75</strong></td>
+                    <td colspan="6"><strong>CGPA: 9.33</strong></td>
                 </tr>
             `;
         }
@@ -615,7 +615,8 @@ function updateMarksTable(semester) {
 const browseBooksBtn = document.querySelector('#library-section .erp-action-btn');
 if (browseBooksBtn) {
     browseBooksBtn.addEventListener('click', () => {
-        showBrowseBooksModal();
+        // Redirect to DSU library page
+        window.open('https://dsu.edu.in/library', '_blank');
     });
 }
 
