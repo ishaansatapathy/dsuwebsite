@@ -4491,10 +4491,41 @@ body {
 }
 
 .message-content p {
-    margin: 0;
+    margin: 0 0 12px 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--white);
+}
+
+.message-content p:last-child {
+    margin-bottom: 0;
+}
+
+.message-content strong {
+    color: var(--primary-orange);
+    font-weight: 700;
+}
+
+.message-content ul {
+    margin: 12px 0;
+    padding-left: 20px;
+    list-style: none;
+}
+
+.message-content ul li {
+    margin-bottom: 8px;
+    padding-left: 20px;
+    position: relative;
     font-size: 14px;
     line-height: 1.5;
-    color: var(--white);
+}
+
+.message-content ul li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--primary-orange);
+    font-weight: bold;
 }
 
 .chatbot-input-area {
@@ -4561,6 +4592,20 @@ body {
 .chatbot-mic-btn.recording {
     background: #ef4444;
     animation: pulse-recording 1.5s infinite;
+    transform: scale(1.1);
+}
+
+.chatbot-mic-btn.recording i {
+    animation: mic-pulse 0.8s infinite;
+}
+
+@keyframes mic-pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
 }
 
 .chatbot-stop-btn {
@@ -5455,6 +5500,11 @@ body {
 .chatbot-mic-btn-main.recording {
     background: #ef4444;
     animation: pulse-recording 1.5s infinite;
+    transform: scale(1.1);
+}
+
+.chatbot-mic-btn-main.recording i {
+    animation: mic-pulse 0.8s infinite;
 }
 
 .chatbot-quick-actions-main {

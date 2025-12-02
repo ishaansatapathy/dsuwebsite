@@ -2348,44 +2348,265 @@ window.showLibraryRules = showLibraryRules;
     let isRecording = false;
     let recognition = null;
 
-    // Initialize Web Speech API if available
-    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+    // Check if speech recognition is available
+    const speechRecognitionAvailable = ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window);
+    
+    // Log browser compatibility
+    if (!speechRecognitionAvailable) {
+        console.warn('Speech recognition not available in this browser. Please use Chrome, Edge, or Safari.');
+    } else {
+        console.log('Speech recognition is available');
+    }
+    
+    // Create a new recognition instance (some browsers require a new instance each time)
+    function createRecognitionInstance(source) {
+        if (!speechRecognitionAvailable) {
+            return null;
+        }
+        
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        recognition = new SpeechRecognition();
-        recognition.continuous = false;
-        recognition.interimResults = false;
-        recognition.lang = 'en-US';
+        const newRecognition = new SpeechRecognition();
+        newRecognition.continuous = false;
+        newRecognition.interimResults = true;
+        newRecognition.lang = 'en-US';
+        newRecognition.maxAlternatives = 1;
 
-        recognition.onresult = function(event) {
-            const transcript = event.results[0][0].transcript;
-            if (chatbotInputMain) {
-                chatbotInputMain.value = transcript;
-                handleUserMessageMain(transcript);
-            }
-            if (chatbotInput) {
-                chatbotInput.value = transcript;
-                handleUserMessage(transcript);
+        newRecognition.onstart = function() {
+            console.log('Speech recognition started successfully for source:', source);
+            isRecording = true;
+            if (source === 'main' && chatbotMicBtnMain) {
+                chatbotMicBtnMain.classList.add('recording');
+            } else if (source === 'widget' && chatbotMicBtn) {
+                chatbotMicBtn.classList.add('recording');
             }
         };
 
-        recognition.onerror = function(event) {
+        newRecognition.onresult = function(event) {
+            let interimTranscript = '';
+            let finalTranscript = '';
+
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+                const transcript = event.results[i][0].transcript;
+                if (event.results[i].isFinal) {
+                    finalTranscript += transcript + ' ';
+                } else {
+                    interimTranscript += transcript;
+                }
+            }
+
+            // Update input field with interim results as user speaks
+            if (interimTranscript) {
+                if (source === 'widget' && chatbotInput) {
+                    chatbotInput.value = interimTranscript;
+                } else if (source === 'main' && chatbotInputMain) {
+                    chatbotInputMain.value = interimTranscript;
+                }
+            }
+
+            // When final transcript is ready, put it in the input field (don't auto-send)
+            if (finalTranscript) {
+                const transcript = finalTranscript.trim();
+                console.log('Speech recognized:', transcript);
+                
+                // Put the final transcript in the input field
+                if (source === 'widget' && chatbotInput) {
+                    chatbotInput.value = transcript;
+                    // Focus the input field so user can edit if needed
+                    chatbotInput.focus();
+                    // Move cursor to end
+                    chatbotInput.setSelectionRange(transcript.length, transcript.length);
+                } else if (source === 'main' && chatbotInputMain) {
+                    chatbotInputMain.value = transcript;
+                    // Focus the input field so user can edit if needed
+                    chatbotInputMain.focus();
+                    // Move cursor to end
+                    chatbotInputMain.setSelectionRange(transcript.length, transcript.length);
+                }
+                
+                // Show a message that text is ready to send
+                const readyMsg = '✅ Text ready! Review and click send when ready.';
+                if (source === 'widget') {
+                    addBotMessage(readyMsg);
+                } else if (source === 'main') {
+                    addBotMessageMain(readyMsg);
+                }
+            }
+        };
+
+        newRecognition.onerror = function(event) {
             console.error('Speech recognition error:', event.error);
-            if (chatbotMessagesMain) {
-                addBotMessageMain('Sorry, I couldn\'t understand that. Please try again or type your message.');
-            }
-            if (chatbotMessages) {
-                addBotMessage('Sorry, I couldn\'t understand that. Please try again or type your message.');
-            }
-            if (chatbotMicBtnMain) chatbotMicBtnMain.classList.remove('recording');
-            if (chatbotMicBtn) chatbotMicBtn.classList.remove('recording');
             isRecording = false;
+            
+            let errorMessage = 'Sorry, I couldn\'t understand that. ';
+            
+            switch(event.error) {
+                case 'no-speech':
+                    // Don't show error for no-speech if it just ended naturally
+                    // Only show if it's a real error
+                    console.log('No speech detected - this is normal if you didn\'t speak');
+                    // Don't show error message for no-speech, just log it
+                    return; // Exit early without showing error
+                case 'audio-capture':
+                    errorMessage = 'Microphone not found. Please check your microphone connection and try again.';
+                    break;
+                case 'not-allowed':
+                    errorMessage = 'Microphone permission denied. Please allow microphone access in your browser settings and refresh the page.';
+                    break;
+                case 'network':
+                    errorMessage = 'Network error. Please check your internet connection. Speech recognition requires an internet connection.';
+                    break;
+                case 'aborted':
+                    // Don't show error for aborted, it's usually intentional
+                    console.log('Recognition aborted');
+                    break;
+                case 'service-not-allowed':
+                    errorMessage = 'Speech recognition service not allowed. Please check your browser settings.';
+                    break;
+                default:
+                    errorMessage = `An error occurred (${event.error}). Please try again or type your message.`;
+            }
+            
+            if (event.error !== 'aborted') {
+                if (source === 'main' && chatbotMessagesMain) {
+                    addBotMessageMain(errorMessage);
+                } else if (source === 'widget' && chatbotMessages) {
+                    addBotMessage(errorMessage);
+                }
+            }
+            
+            if (source === 'main' && chatbotMicBtnMain) {
+                chatbotMicBtnMain.classList.remove('recording');
+            } else if (source === 'widget' && chatbotMicBtn) {
+                chatbotMicBtn.classList.remove('recording');
+            }
         };
 
-        recognition.onend = function() {
-            if (chatbotMicBtnMain) chatbotMicBtnMain.classList.remove('recording');
-            if (chatbotMicBtn) chatbotMicBtn.classList.remove('recording');
+        newRecognition.onend = function() {
+            console.log('Speech recognition ended');
             isRecording = false;
+            if (source === 'main' && chatbotMicBtnMain) {
+                chatbotMicBtnMain.classList.remove('recording');
+            } else if (source === 'widget' && chatbotMicBtn) {
+                chatbotMicBtn.classList.remove('recording');
+            }
         };
+
+        return newRecognition;
+    }
+
+
+    // Helper function to start voice recognition with permission check
+    async function startVoiceRecognition(source) {
+        if (!speechRecognitionAvailable) {
+            const errorMsg = 'Voice input is not supported in your browser. Please use Chrome, Edge, or another browser that supports speech recognition.';
+            if (source === 'main') {
+                addBotMessageMain(errorMsg);
+            } else {
+                addBotMessage(errorMsg);
+            }
+            return false;
+        }
+
+        // Stop any existing recognition
+        if (isRecording && recognition) {
+            try {
+                recognition.stop();
+                recognition = null;
+            } catch (e) {
+                console.error('Error stopping recognition:', e);
+            }
+            // Wait a bit before starting new recognition
+            await new Promise(resolve => setTimeout(resolve, 300));
+        }
+
+        // Create a new recognition instance
+        recognition = createRecognitionInstance(source);
+        if (!recognition) {
+            const errorMsg = 'Could not initialize speech recognition. Please try again.';
+            if (source === 'main') {
+                addBotMessageMain(errorMsg);
+            } else {
+                addBotMessage(errorMsg);
+            }
+            return false;
+        }
+
+        // Try to start recognition directly (Speech Recognition API will request permission)
+        try {
+            // Set recording state immediately for better UX
+            isRecording = true;
+            if (source === 'main' && chatbotMicBtnMain) {
+                chatbotMicBtnMain.classList.add('recording');
+            } else if (source === 'widget' && chatbotMicBtn) {
+                chatbotMicBtn.classList.add('recording');
+            }
+            
+            recognition.start();
+            const listeningMsg = '🎤 Listening... Please speak now. Your words will appear in the text box, then you can review and send.';
+            if (source === 'main') {
+                addBotMessageMain(listeningMsg);
+            } else {
+                addBotMessage(listeningMsg);
+            }
+            console.log('Recognition start() called successfully');
+            return true;
+        } catch (e) {
+            console.error('Error starting recognition:', e);
+            isRecording = false;
+            recognition = null;
+            
+            let errorMsg = '';
+            if (e.name === 'InvalidStateError') {
+                errorMsg = 'Please wait a moment and try again. The microphone might be in use.';
+            } else if (e.name === 'NotAllowedError' || e.name === 'PermissionDeniedError') {
+                // Try to request permission via getUserMedia as fallback
+                errorMsg = 'Microphone permission required. Requesting permission...';
+                if (source === 'main') {
+                    addBotMessageMain(errorMsg);
+                } else {
+                    addBotMessage(errorMsg);
+                }
+                
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    stream.getTracks().forEach(track => track.stop());
+                    
+                    // Retry after getting permission
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                    recognition = createRecognitionInstance(source);
+                    if (recognition) {
+                        isRecording = true;
+                        if (source === 'main' && chatbotMicBtnMain) {
+                            chatbotMicBtnMain.classList.add('recording');
+                        } else if (chatbotMicBtn) {
+                            chatbotMicBtn.classList.add('recording');
+                        }
+                        recognition.start();
+                        const listeningMsg = '🎤 Listening... Please speak now. Your words will appear in the text box, then you can review and send.';
+                        if (source === 'main') {
+                            addBotMessageMain(listeningMsg);
+                        } else {
+                            addBotMessage(listeningMsg);
+                        }
+                        return true;
+                    }
+                } catch (permError) {
+                    console.error('Permission request failed:', permError);
+                    errorMsg = 'Microphone permission denied. Please allow microphone access in your browser settings and refresh the page.';
+                }
+            } else {
+                errorMsg = 'Could not start voice recognition. Please check your microphone and try again.';
+            }
+            
+            if (source === 'main') {
+                addBotMessageMain(errorMsg);
+                if (chatbotMicBtnMain) chatbotMicBtnMain.classList.remove('recording');
+            } else {
+                addBotMessage(errorMsg);
+                if (chatbotMicBtn) chatbotMicBtn.classList.remove('recording');
+            }
+            return false;
+        }
     }
 
     // Main Chatbot Section Functions
@@ -2456,6 +2677,10 @@ window.showLibraryRules = showLibraryRules;
         if (!chatbotMessagesMain) return;
         const messageDiv = document.createElement('div');
         messageDiv.className = 'chatbot-message-main bot-message-main';
+        
+        // Format message for display
+        const formattedMessage = formatMessageForDisplayMain(message);
+        
         messageDiv.innerHTML = `
             <div class="message-avatar-main">
                 <div class="chatbot-3d-face-tiny">
@@ -2477,21 +2702,31 @@ window.showLibraryRules = showLibraryRules;
                 </div>
             </div>
             <div class="message-content-main">
-                <p>${escapeHtml(message)}</p>
+                ${formattedMessage}
             </div>
         `;
         chatbotMessagesMain.appendChild(messageDiv);
         scrollToBottomMain();
         
-        // Speak the message
+        // Speak the message (remove HTML for speech)
         if ('speechSynthesis' in window) {
-            const utterance = new SpeechSynthesisUtterance(message);
+            const textForSpeech = message.replace(/<[^>]*>/g, '').replace(/\n/g, ' ');
+            const utterance = new SpeechSynthesisUtterance(textForSpeech);
             utterance.lang = 'en-US';
             utterance.rate = 0.9;
             utterance.pitch = 1;
             utterance.volume = 0.8;
             window.speechSynthesis.speak(utterance);
         }
+    }
+
+    // Format message for display (main section)
+    function formatMessageForDisplayMain(text) {
+        let formatted = text.replace(/\n/g, '<br>');
+        if (!formatted.includes('<strong>') && !formatted.includes('<ul>')) {
+            formatted = `<p>${formatted}</p>`;
+        }
+        return formatted;
     }
 
     function scrollToBottomMain() {
@@ -2521,21 +2756,24 @@ window.showLibraryRules = showLibraryRules;
         }
 
         if (chatbotMicBtnMain) {
-            chatbotMicBtnMain.addEventListener('click', function() {
-                if (!recognition) {
-                    addBotMessageMain('Voice input is not supported in your browser. Please type your message.');
-                    return;
-                }
-
-                if (isRecording) {
-                    recognition.stop();
+            chatbotMicBtnMain.addEventListener('click', async function() {
+                console.log('Mic button clicked, isRecording:', isRecording);
+                if (isRecording && recognition) {
+                    // Stop recording
+                    try {
+                        console.log('Stopping recognition...');
+                        recognition.stop();
+                        recognition = null;
+                    } catch (e) {
+                        console.error('Error stopping recognition:', e);
+                    }
                     chatbotMicBtnMain.classList.remove('recording');
                     isRecording = false;
+                    addBotMessageMain('Recording stopped.');
                 } else {
-                    recognition.start();
-                    chatbotMicBtnMain.classList.add('recording');
-                    isRecording = true;
-                    addBotMessageMain('🎤 Listening... Please speak now.');
+                    // Start recording
+                    console.log('Starting voice recognition...');
+                    await startVoiceRecognition('main');
                 }
             });
         }
@@ -2558,31 +2796,335 @@ window.showLibraryRules = showLibraryRules;
         return div.innerHTML.replace(/\n/g, '<br>');
     }
 
+    // Comprehensive Knowledge Base
+    const knowledgeBase = {
+        engineering: {
+            courses: {
+                undergraduate: [
+                    'B.Tech Computer Science & Engineering',
+                    'B.Tech Computer Science & Engineering (Data Sciences)',
+                    'B.Tech Computer Science & Engineering (Cyber Security)',
+                    'B.Tech Computer Science & Engineering (Artificial Intelligence and Machine Learning)',
+                    'B.Tech Robotics & AI',
+                    'B.Tech Electronics & Communication Engineering',
+                    'B.Tech Mechanical Engineering',
+                    'B.Tech Computer Science & Technology',
+                    'B.Tech Aerospace Engineering',
+                    'B.Tech Computer Science & Engineering (AI & Data Science)',
+                    'B.Tech Computer Science & Engineering and Medical Engineering',
+                    'B Voc Mechatronics',
+                    'B Voc CSE (Data Analytics)',
+                    'B Voc Tool Engineering',
+                    'B Voc Pharmaceutical Manufacturing technologies',
+                    'B Voc CSE (Computer Engineering and IT Infrastructure)',
+                    'BCA - Bachelor of Computer Applications'
+                ],
+                postgraduate: [
+                    'M.Tech Computer Science & Engineering',
+                    'M.Tech Embedded System',
+                    'M.Tech Design Engineering',
+                    'MCA - Master of Computer Applications'
+                ]
+            },
+            description: 'The School of Engineering at DSU offers cutting-edge programs in Computer Science, Electronics, Mechanical, Aerospace, and emerging technologies like AI, ML, Data Science, and Cyber Security. Our programs are designed with industry partnerships and provide hands-on experience through state-of-the-art labs and innovation centers.'
+        },
+        hostel: {
+            name: 'S\' Residences',
+            location: 'Harohalli, Bangalore',
+            facilities: [
+                '24/7 Assistance and Security',
+                '24/7 Handyman and Resident Manager',
+                '24/7 Concierge Service',
+                'Monitored Student Entry/Exit',
+                'Face-recognition & Biometrics',
+                'CCTV Monitoring',
+                'Wi-Fi and Internet',
+                'RO Drinking Water',
+                'Vending Machines',
+                'Semi Furnished Spacious Rooms',
+                'Well Furnished Mess Halls',
+                'Activity Studios',
+                'Business Center',
+                'Resident Warden',
+                'Break-out Zones',
+                'Visitor\'s Lounge',
+                'Quiet Study Zones',
+                'Discussion Rooms',
+                'F&B Partners',
+                'Indian & Continental Food',
+                'Retail Cafeteria',
+                'Hot Water',
+                'Laundry Service',
+                'Parcel Service',
+                'Gym Room',
+                'Yoga Room',
+                'Meditation Room',
+                'Music Room',
+                'Movie Screening Theatre',
+                'TV Lounge',
+                'Video Game Room',
+                'Indoor Game Rooms',
+                'Outdoor Sports Facilities',
+                'Access to Health Clinic & Counsellors',
+                'Men\'s Salon',
+                'Parking'
+            ],
+            dining: {
+                kitchenettes: [
+                    'N Kitchenette - North Indian Vegetarian Cuisine',
+                    'S Kitchenette - South Indian Vegetarian Cuisine',
+                    'E Kitchenette - Non-Vegetarian Cuisine',
+                    'W Kitchenette - International Cuisine'
+                ],
+                cafeterias: [
+                    'SSquare Mess Halls - Indian vegetarian and non-vegetarian cuisine',
+                    'Grains & Gossip - International fast food cafeteria'
+                ]
+            },
+            contact: {
+                phone: '+91-96063 06540',
+                email_registration: 'admission@poshtell.com',
+                email_support: 'support@poshtell.com',
+                address: '#515/528, Devarakaggalahalli Village, Kanakapura Taluk, Harohalli Hobli, Ramanagara Distt. – 562112'
+            }
+        },
+        admissions: {
+            methods: [
+                'DSAT (Dayananda Sagar Admission Test)',
+                'Comed-K (Code: E182)',
+                'Uni-Guage (Code: Uni-010)',
+                'CET (Code: DSU-E240)',
+                'Direct Admissions - 2026 (Non DSAT)',
+                'PGCET (M.Tech: T970, MBA: B365MB, MCA: C520MC)'
+            ],
+            contact: {
+                phone_main: '080 46461800',
+                phone_helpline: '+91 6366885507',
+                email: 'admissions@dsu.edu.in',
+                nri_phone: '+91 9606022152 / +91 9606022150 / +91 9606022149'
+            },
+            campuses: {
+                main: {
+                    location: 'Devarakaggalahalli, Harohalli, Kanakapura Road, Bengaluru South Dt. – 562 112',
+                    email: 'admissions@dsu.edu.in'
+                },
+                city_innovation: {
+                    location: 'Administrative & Main Admission office, Kudlu Gate, Hosur Road, Bengaluru - 560 114',
+                    phone: '080 46461800 / 080 49092800 / +91 7760964277 / 8296316737 / 6366885507',
+                    email: 'admissions@dsu.edu.in | dsat@dsu.edu.in'
+                },
+                city_admissions: {
+                    location: 'Gate 2, 6th Floor, University Building, Dental Block, Kumaraswamy Layout, Bengaluru - 560111',
+                    phone: '080 46461800 / 080 49092800',
+                    email: 'enquiry@dsu.edu.in / admissions@dsu.edu.in'
+                }
+            }
+        },
+        facilities: {
+            innovation_labs: [
+                'ETAS: Automotive System Labs',
+                'Autodesk: Design & Innovation Centre',
+                'Vmware IT Academy',
+                'BOSCH Rexroth: Automation Technologies',
+                'IBM Software Lab for Emerging Technologies',
+                'NVIDIA: Boston Innovation Lab',
+                'GE Advanced Healthcare Lab',
+                'Dassault Systems - AE Lab (Aerospace Engineering)',
+                'IBM Centre of Excellence'
+            ],
+            infrastructure: [
+                '25,000+ sq.ft Innovation Labs',
+                'Modern Lecture Theatres',
+                'State-of-the-art Laboratories',
+                'Excellent Library with Digital Resources',
+                'Computer Networking Facilities',
+                'Sports Complexes',
+                'Hostel Facilities',
+                'Cafeteria and Dining Halls'
+            ]
+        },
+        library: {
+            capacity: '560 students seating capacity',
+            resources: [
+                'Huge collection of books',
+                'CDs and DVDs',
+                'Latest periodicals',
+                'Online resources through Digital Library',
+                'E-books access from desktop',
+                'Access to advanced anti-plagiarism tools'
+            ],
+            access: 'Available to all Undergraduates, Postgraduates, Research Scholars & faculty members'
+        },
+        placements: {
+            organizations: '500+ reputed organizations',
+            programs: 'Campus interviews for BE/B.Tech/M.Tech/B.Sc/M.Sc/MBA/BCA/MCA/BAJMC students',
+            focus: 'Improving quality of placements in terms of job opportunities, companies of relevance, highest and average salaries',
+            mission: 'Enable and empower every student to acquire necessary skills, knowledge, and industry exposure to secure meaningful and successful careers'
+        },
+        research: {
+            phd_programs: [
+                'Faculty of Engineering (CSE, ECE, Mechanical, Aerospace, Mathematics, Chemistry, Physics)',
+                'Faculty of Commerce & Management Studies',
+                'Faculty of Basic & Applied Sciences (Life Sciences)',
+                'Faculty of Health Sciences (Pharmaceutical Sciences, Physiotherapy, Nursing)',
+                'Faculty of School of Law',
+                'Faculty of School of Arts, Design and Humanities',
+                'School Of Computer Applications',
+                'Faculty of Journalism and Mass Communication'
+            ],
+            contact: {
+                phone: '080 4909 2912',
+                email: 'research@dsu.edu.in'
+            }
+        }
+    };
+
     // Generate bot response function (shared)
     function generateBotResponse(userMessage) {
         const message = userMessage.toLowerCase();
         
-        if (message.includes('admission') || message.includes('admit')) {
-            return 'For admissions, you can visit our Admissions section or contact our admissions helpline at 080 46461800. You can apply through DSAT, Comed-K, CET, or Direct Admissions. Would you like more specific information about any admission process?';
-        } else if (message.includes('course') || message.includes('program')) {
-            return 'Dayananda Sagar University offers a wide range of programs including B.Tech, M.Tech, MBA, MCA, BCA, Law, Pharmacy, and many more. Visit our Academics section to see all available programs. Which program are you interested in?';
-        } else if (message.includes('facilit') || message.includes('infrastructure')) {
-            return 'DSU has state-of-the-art facilities including modern labs, innovation centers, library, hostel facilities, sports complexes, and more. We have partnerships with companies like IBM, NVIDIA, VMware, and others. What specific facility would you like to know about?';
-        } else if (message.includes('contact') || message.includes('phone') || message.includes('email')) {
-            return 'You can contact us at:\n• Phone: 080 46461800 / +91 6366885507\n• Email: admissions@dsu.edu.in\n• Address: Devarakaggalahalli, Harohalli, Kanakapura Road, Bengaluru South Dt. – 562 112\nVisit our Contact section for more details.';
-        } else if (message.includes('fee') || message.includes('cost') || message.includes('price')) {
-            return 'Fee structure varies by program. Please visit our Admissions section for detailed fee information, or contact our admissions office at 080 46461800 for specific program fees.';
-        } else if (message.includes('placement') || message.includes('job')) {
-            return 'DSU has an excellent placement record with 500+ reputed organizations visiting our campus. We have a dedicated Training and Placement Cell. Visit our Placements section for more details.';
-        } else if (message.includes('hostel') || message.includes('accommodation')) {
-            return 'S\' Residences provides premium student accommodation near the campus with 24/7 security, Wi-Fi, mess facilities, gym, and many more amenities. Visit our Hostel section or contact +91-96063 06540 for more information.';
-        } else if (message.includes('library')) {
-            return 'Our library has a huge collection of books, CDs, DVDs, and access to online resources through the Digital Library. It has a seating capacity of 560 students. Visit our Library section for more details.';
-        } else if (message.includes('hello') || message.includes('hi') || message.includes('hey')) {
-            return 'Hello! I\'m here to help you with information about Dayananda Sagar University. What would you like to know?';
-        } else {
-            return 'Thank you for your question. For more detailed information, please visit the relevant section on our website or contact our helpline at 080 46461800. Is there anything specific I can help you with?';
+        // Engineering Courses
+        if (message.includes('engineering') && (message.includes('course') || message.includes('program') || message.includes('b.tech') || message.includes('m.tech'))) {
+            let response = '🎓 <strong>School of Engineering - Programs Offered:</strong>\n\n';
+            response += '<strong>Undergraduate Programs (B.Tech):</strong>\n';
+            knowledgeBase.engineering.courses.undergraduate.forEach(course => {
+                response += `• ${course}\n`;
+            });
+            response += '\n<strong>Postgraduate Programs (M.Tech):</strong>\n';
+            knowledgeBase.engineering.courses.postgraduate.forEach(course => {
+                response += `• ${course}\n`;
+            });
+            response += '\n' + knowledgeBase.engineering.description;
+            response += '\n\nFor more details, visit our Engineering section or contact: 080 4909 2986 / 32 / 33';
+            return response;
         }
+        
+        // Hostel Facilities
+        if (message.includes('hostel') || message.includes('accommodation') || message.includes('residence') || message.includes('s\' residence')) {
+            let response = '🏠 <strong>S\' Residences - Premium Student Accommodation</strong>\n\n';
+            response += '<strong>Location:</strong> ' + knowledgeBase.hostel.location + '\n\n';
+            response += '<strong>Complete Facilities (38+ amenities):</strong>\n';
+            knowledgeBase.hostel.facilities.forEach(facility => {
+                response += `✓ ${facility}\n`;
+            });
+            response += '\n<strong>Dining Options:</strong>\n';
+            response += '<strong>Kitchenettes:</strong>\n';
+            knowledgeBase.hostel.dining.kitchenettes.forEach(kitchen => {
+                response += `• ${kitchen}\n`;
+            });
+            response += '\n<strong>Cafeterias:</strong>\n';
+            knowledgeBase.hostel.dining.cafeterias.forEach(cafe => {
+                response += `• ${cafe}\n`;
+            });
+            response += '\n<strong>Contact:</strong>\n';
+            response += `Phone: ${knowledgeBase.hostel.contact.phone}\n`;
+            response += `Registration: ${knowledgeBase.hostel.contact.email_registration}\n`;
+            response += `Support: ${knowledgeBase.hostel.contact.email_support}\n`;
+            response += `Address: ${knowledgeBase.hostel.contact.address}`;
+            return response;
+        }
+        
+        // Admissions
+        if (message.includes('admission') || message.includes('admit') || message.includes('apply') || message.includes('dsat') || message.includes('comed-k')) {
+            let response = '📝 <strong>DSU Admissions Information</strong>\n\n';
+            response += '<strong>Admission Methods:</strong>\n';
+            knowledgeBase.admissions.methods.forEach(method => {
+                response += `• ${method}\n`;
+            });
+            response += '\n<strong>Contact Information:</strong>\n';
+            response += `Main Helpline: ${knowledgeBase.admissions.contact.phone_main} / ${knowledgeBase.admissions.contact.phone_helpline}\n`;
+            response += `Email: ${knowledgeBase.admissions.contact.email}\n`;
+            response += `NRI/Foreign: ${knowledgeBase.admissions.contact.nri_phone}\n\n`;
+            response += '<strong>Campus Locations:</strong>\n';
+            response += `Main Campus: ${knowledgeBase.admissions.campuses.main.location}\n`;
+            response += `City Innovation Campus: ${knowledgeBase.admissions.campuses.city_innovation.location}\n`;
+            response += `City Admissions Office: ${knowledgeBase.admissions.campuses.city_admissions.location}`;
+            return response;
+        }
+        
+        // Facilities
+        if (message.includes('facilit') || message.includes('infrastructure') || message.includes('lab') || message.includes('innovation')) {
+            let response = '🏢 <strong>DSU Facilities & Infrastructure</strong>\n\n';
+            response += '<strong>Innovation Labs (9 Industry Partnerships):</strong>\n';
+            knowledgeBase.facilities.innovation_labs.forEach(lab => {
+                response += `• ${lab}\n`;
+            });
+            response += '\n<strong>Infrastructure:</strong>\n';
+            knowledgeBase.facilities.infrastructure.forEach(infra => {
+                response += `• ${infra}\n`;
+            });
+            response += '\nOur innovation labs span over 25,000 sq.ft with industry-quality facilities.';
+            return response;
+        }
+        
+        // Library
+        if (message.includes('library') || message.includes('book') || message.includes('resource')) {
+            let response = '📚 <strong>DSU Library</strong>\n\n';
+            response += `Seating Capacity: ${knowledgeBase.library.capacity}\n\n`;
+            response += '<strong>Resources Available:</strong>\n';
+            knowledgeBase.library.resources.forEach(resource => {
+                response += `• ${resource}\n`;
+            });
+            response += `\n${knowledgeBase.library.access}`;
+            return response;
+        }
+        
+        // Placements
+        if (message.includes('placement') || message.includes('job') || message.includes('career') || message.includes('recruiter')) {
+            let response = '💼 <strong>Training and Placement Cell</strong>\n\n';
+            response += `<strong>Organizations:</strong> ${knowledgeBase.placements.organizations} visit our campus\n\n`;
+            response += `<strong>Programs Covered:</strong> ${knowledgeBase.placements.programs}\n\n`;
+            response += `<strong>Focus:</strong> ${knowledgeBase.placements.focus}\n\n`;
+            response += `<strong>Mission:</strong> ${knowledgeBase.placements.mission}`;
+            return response;
+        }
+        
+        // Research
+        if (message.includes('research') || message.includes('phd') || message.includes('ph.d')) {
+            let response = '🔬 <strong>Research at DSU</strong>\n\n';
+            response += '<strong>Ph.D Programs Available:</strong>\n';
+            knowledgeBase.research.phd_programs.forEach(program => {
+                response += `• ${program}\n`;
+            });
+            response += `\n<strong>Research Cell Contact:</strong>\n`;
+            response += `Phone: ${knowledgeBase.research.contact.phone}\n`;
+            response += `Email: ${knowledgeBase.research.contact.email}`;
+            return response;
+        }
+        
+        // Contact
+        if (message.includes('contact') || message.includes('phone') || message.includes('email') || message.includes('address')) {
+            let response = '📞 <strong>Contact Information</strong>\n\n';
+            response += '<strong>Admissions:</strong>\n';
+            response += `Phone: ${knowledgeBase.admissions.contact.phone_main} / ${knowledgeBase.admissions.contact.phone_helpline}\n`;
+            response += `Email: ${knowledgeBase.admissions.contact.email}\n\n`;
+            response += '<strong>Main Campus:</strong>\n';
+            response += `${knowledgeBase.admissions.campuses.main.location}\n`;
+            response += `Email: ${knowledgeBase.admissions.campuses.main.email}\n\n`;
+            response += '<strong>City Innovation Campus:</strong>\n';
+            response += `${knowledgeBase.admissions.campuses.city_innovation.location}\n`;
+            response += `Phone: ${knowledgeBase.admissions.campuses.city_innovation.phone}\n`;
+            response += `Email: ${knowledgeBase.admissions.campuses.city_innovation.email}`;
+            return response;
+        }
+        
+        // Fee
+        if (message.includes('fee') || message.includes('cost') || message.includes('price') || message.includes('tuition')) {
+            return '💰 <strong>Fee Structure</strong>\n\nFee structure varies by program. For detailed fee information:\n• Visit our Admissions section\n• Contact admissions office at 080 46461800\n• Email: admissions@dsu.edu.in\n\nFee details are also available for:\n• Hostel accommodation\n• Mess facilities\n• Various programs (B.Tech, M.Tech, MBA, etc.)';
+        }
+        
+        // Courses (General)
+        if (message.includes('course') || message.includes('program')) {
+            return '🎓 <strong>Programs at DSU</strong>\n\n<strong>Engineering:</strong> B.Tech (11+ programs), M.Tech (3 programs)\n<strong>Computer Applications:</strong> BCA, MCA\n<strong>Management:</strong> BBA, MBA\n<strong>Law:</strong> BA LLB, BBA LLB, LLB, LLM\n<strong>Sciences:</strong> B.Sc, M.Sc (Biological Sciences, Data Science)\n<strong>Health Sciences:</strong> B.Pharm, M.Pharm, B.Sc Nursing, M.Sc Nursing, BPT, MPT\n<strong>Design:</strong> B.Design\n<strong>Commerce:</strong> B.Com, M.Com\n\nFor specific program details, ask about "engineering courses", "law programs", etc.';
+        }
+        
+        // Greetings
+        if (message.includes('hello') || message.includes('hi') || message.includes('hey') || message.includes('good morning') || message.includes('good afternoon') || message.includes('good evening')) {
+            return '👋 Hello! I\'m DSU AI Assistant, your intelligent guide to Dayananda Sagar University. I can help you with detailed information about:\n\n• Engineering courses and programs\n• Hostel facilities and accommodation\n• Admissions process and requirements\n• Campus facilities and infrastructure\n• Library resources\n• Placement opportunities\n• Research programs\n• Contact information\n\nWhat would you like to know?';
+        }
+        
+        // Default response
+        return 'Thank you for your question! I can provide detailed information about:\n\n• Engineering courses (B.Tech, M.Tech programs)\n• Hostel facilities (S\' Residences with 38+ amenities)\n• Admissions (DSAT, Comed-K, CET, Direct)\n• Campus facilities and innovation labs\n• Library resources\n• Placement opportunities\n• Research programs\n\nPlease ask a specific question, for example: "engineering courses", "hostel facilities", "admissions process", etc.';
     }
 
     // Initialize floating chatbot widget
@@ -2653,21 +3195,24 @@ window.showLibraryRules = showLibraryRules;
 
         // Voice input
         if (chatbotMicBtn) {
-            chatbotMicBtn.addEventListener('click', function() {
-                if (!recognition) {
-                    addBotMessage('Voice input is not supported in your browser. Please type your message.');
-                    return;
-                }
-
-                if (isRecording) {
-                    recognition.stop();
+            chatbotMicBtn.addEventListener('click', async function() {
+                console.log('Mic button clicked (widget), isRecording:', isRecording);
+                if (isRecording && recognition) {
+                    // Stop recording
+                    try {
+                        console.log('Stopping recognition...');
+                        recognition.stop();
+                        recognition = null;
+                    } catch (e) {
+                        console.error('Error stopping recognition:', e);
+                    }
                     chatbotMicBtn.classList.remove('recording');
                     isRecording = false;
+                    addBotMessage('Recording stopped.');
                 } else {
-                    recognition.start();
-                    chatbotMicBtn.classList.add('recording');
-                    isRecording = true;
-                    addBotMessage('🎤 Listening... Please speak now.');
+                    // Start recording
+                    console.log('Starting voice recognition (widget)...');
+                    await startVoiceRecognition('widget');
                 }
             });
         }
@@ -2737,6 +3282,10 @@ window.showLibraryRules = showLibraryRules;
             if (!chatbotMessages) return;
             const messageDiv = document.createElement('div');
             messageDiv.className = 'chatbot-message bot-message';
+            
+            // Convert newlines and format text for display
+            const formattedMessage = formatMessageForDisplay(message);
+            
             messageDiv.innerHTML = `
                 <div class="message-avatar">
                     <div class="chatbot-3d-face-tiny">
@@ -2758,14 +3307,26 @@ window.showLibraryRules = showLibraryRules;
                     </div>
                 </div>
                 <div class="message-content">
-                    <p>${escapeHtml(message)}</p>
+                    ${formattedMessage}
                 </div>
             `;
             chatbotMessages.appendChild(messageDiv);
             scrollToBottom();
             
-            // Speak the message with text-to-speech
-            speakMessage(message);
+            // Speak the message with text-to-speech (remove HTML tags for speech)
+            const textForSpeech = message.replace(/<[^>]*>/g, '').replace(/\n/g, ' ');
+            speakMessage(textForSpeech);
+        }
+
+        // Format message for display (allows safe HTML)
+        function formatMessageForDisplay(text) {
+            // Convert newlines to <br>
+            let formatted = text.replace(/\n/g, '<br>');
+            // Wrap in paragraph if not already HTML
+            if (!formatted.includes('<strong>') && !formatted.includes('<ul>')) {
+                formatted = `<p>${formatted}</p>`;
+            }
+            return formatted;
         }
 
         // Text-to-Speech Function
@@ -2852,7 +3413,7 @@ window.showLibraryRules = showLibraryRules;
 
         // Speak initial welcome message
         setTimeout(() => {
-            const welcomeMsg = "Hello! I'm DSU AI Assistant. How can I help you today? You can ask me about admissions, courses, facilities, or any other information about Dayananda Sagar University.";
+            const welcomeMsg = "Hello! I'm DSU AI Assistant. I have comprehensive information about engineering courses, hostel facilities, admissions, and all aspects of Dayananda Sagar University. Just ask me anything!";
             speakMessage(welcomeMsg);
         }, 500);
 
