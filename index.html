@@ -14,6 +14,54 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <!-- Registration Form Overlay -->
+    <div id="registrationOverlay" class="registration-overlay">
+        <div class="registration-container">
+            <div class="registration-header">
+                <img src="images/Screenshot%202025-11-16%20050340.png" alt="DSU Logo" class="registration-logo">
+                <h1>Welcome to Dayananda Sagar University</h1>
+                <p>Please register to continue</p>
+            </div>
+            <form id="registrationForm" class="registration-form">
+                <div class="form-group">
+                    <label for="fullName">
+                        <i class="fas fa-user"></i> Full Name
+                    </label>
+                    <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">
+                        <i class="fas fa-envelope"></i> Email Address
+                    </label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">
+                        <i class="fas fa-phone"></i> Phone Number
+                    </label>
+                    <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">
+                        <i class="fas fa-lock"></i> Password
+                    </label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">
+                        <i class="fas fa-lock"></i> Confirm Password
+                    </label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+                </div>
+                <button type="submit" class="registration-submit-btn">
+                    <i class="fas fa-arrow-right"></i> Register & Continue
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Website Content (hidden initially) -->
+    <div id="mainContent" class="main-content" style="display: none;">
     <!-- Top Header Bar -->
     <div class="top-header">
         <div class="container">
@@ -3162,6 +3210,7 @@
             <span class="chatbot-pulse"></span>
         </button>
     </div>
+    </div> <!-- End of main-content -->
 
     <script src="script.js"></script>
 </body>

@@ -1,3 +1,121 @@
+// Registration Form Handler
+document.addEventListener('DOMContentLoaded', function() {
+    const registrationOverlay = document.getElementById('registrationOverlay');
+    const registrationForm = document.getElementById('registrationForm');
+    const mainContent = document.getElementById('mainContent');
+
+    // Check if user has already registered (using sessionStorage)
+    if (sessionStorage.getItem('registered') === 'true') {
+        // User already registered, hide overlay and show main content
+        if (registrationOverlay) registrationOverlay.classList.add('hidden');
+        if (mainContent) mainContent.style.display = 'block';
+    } else {
+        // Show registration form
+        if (registrationOverlay) registrationOverlay.classList.remove('hidden');
+        if (mainContent) mainContent.style.display = 'none';
+    }
+
+    // Handle form submission
+    if (registrationForm) {
+        registrationForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const formData = {
+                fullName: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                password: document.getElementById('password').value
+            };
+
+            // Get submit button and show loading state
+            const submitBtn = registrationForm.querySelector('.registration-submit-btn');
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Registering...';
+
+            // Function to show main website
+            function showMainWebsite() {
+                // Mark as registered in sessionStorage
+                sessionStorage.setItem('registered', 'true');
+                sessionStorage.setItem('userEmail', formData.email);
+                sessionStorage.setItem('userName', formData.fullName);
+
+                // Hide overlay and show main content with animation
+                if (registrationOverlay) {
+                    registrationOverlay.style.opacity = '0';
+                    registrationOverlay.style.transition = 'opacity 0.5s ease-out';
+                    
+                    setTimeout(function() {
+                        registrationOverlay.classList.add('hidden');
+                        if (mainContent) {
+                            mainContent.style.display = 'block';
+                            mainContent.style.opacity = '0';
+                            mainContent.style.transition = 'opacity 0.5s ease-in';
+                            
+                            // Trigger reflow
+                            mainContent.offsetHeight;
+                            
+                            mainContent.style.opacity = '1';
+                        }
+                    }, 500);
+                }
+            }
+
+            try {
+                // API endpoint - adjust the URL if your backend is on a different port/domain
+                const API_URL = 'http://localhost:5000/api/register';
+                
+                // Send registration data to backend (with timeout)
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+                
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                    signal: controller.signal
+                });
+
+                clearTimeout(timeoutId);
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    // Registration successful
+                    console.log('Registration successful:', data);
+                    
+                    // Show success message briefly
+                    submitBtn.innerHTML = '<i class="fas fa-check"></i> Success!';
+                    submitBtn.style.background = 'linear-gradient(135deg, #28a745 0%, #20c997 100%)';
+
+                    // Show main website after success
+                    setTimeout(showMainWebsite, 1000);
+                } else {
+                    // Registration failed but still allow access
+                    console.warn('Backend registration failed, but allowing access:', data.message);
+                    submitBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Saved Locally';
+                    submitBtn.style.background = 'linear-gradient(135deg, #ffc107 0%, #ff9800 100%)';
+                    
+                    // Still show main website
+                    setTimeout(showMainWebsite, 1000);
+                }
+            } catch (error) {
+                // Network error or timeout - still allow access
+                console.warn('Backend not available, allowing local access:', error.message);
+                
+                // Show info message
+                submitBtn.innerHTML = '<i class="fas fa-info-circle"></i> Saved Locally';
+                submitBtn.style.background = 'linear-gradient(135deg, #17a2b8 0%, #138496 100%)';
+                
+                // Show main website even if API fails
+                setTimeout(showMainWebsite, 1000);
+            }
+        });
+    }
+});
+
 // Navigation Menu Data
 const menuData = {
     home: {
