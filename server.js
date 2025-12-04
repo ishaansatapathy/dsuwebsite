@@ -47,21 +47,40 @@ app.get('/', (req, res) => {
 // Registration endpoint
 app.post('/api/register', async (req, res) => {
     try {
+        // Check if MongoDB is connected
+        if (mongoose.connection.readyState !== 1) {
+            console.error('❌ MongoDB not connected. ReadyState:', mongoose.connection.readyState);
+            return res.status(503).json({
+                success: false,
+                message: 'Database connection unavailable. Please try again later.'
+            });
+        }
+
         console.log('📥 Registration request received:', {
             fullName: req.body.fullName,
             email: req.body.email,
             phone: req.body.phone ? 'provided' : 'not provided',
+            password: req.body.password ? 'provided' : 'not provided',
             timestamp: new Date().toISOString()
         });
 
         const { fullName, email, phone, password } = req.body;
 
         // Basic validation
-        if (!fullName || !email) {
+        if (!fullName || !email || !password) {
             console.log('❌ Validation failed: Missing required fields');
             return res.status(400).json({
                 success: false,
-                message: 'Full name and email are required'
+                message: 'Full name, email, and password are required'
+            });
+        }
+
+        // Validate password length
+        if (password.length < 6) {
+            console.log('❌ Validation failed: Password too short');
+            return res.status(400).json({
+                success: false,
+                message: 'Password must be at least 6 characters long'
             });
         }
 
@@ -82,7 +101,7 @@ app.post('/api/register', async (req, res) => {
             fullName: fullName.trim(),
             email: email.toLowerCase().trim(),
             phone: phone ? phone.trim() : '',
-            password: password || '', // Storing as plain text for now (you can hash it later)
+            password: password.trim(), // Storing as plain text for now (you can hash it later)
             registeredAt: new Date()
         });
 
@@ -110,6 +129,84 @@ app.post('/api/register', async (req, res) => {
 
     } catch (error) {
         console.error('❌ Registration error:', error);
+        console.error('Error details:', {
+            name: error.name,
+            message: error.message,
+            stack: error.stack
+        });
+        res.status(500).json({
+            success: false,
+            message: 'Server error. Please try again later.',
+            error: error.message
+        });
+    }
+});
+
+// Login endpoint
+app.post('/api/login', async (req, res) => {
+    try {
+        console.log('📥 Login request received:', {
+            username: req.body.username,
+            timestamp: new Date().toISOString()
+        });
+
+        const { username, password } = req.body;
+
+        // Basic validation
+        if (!username || !password) {
+            console.log('❌ Validation failed: Missing username or password');
+            return res.status(400).json({
+                success: false,
+                message: 'Username and password are required'
+            });
+        }
+
+        // Find user by email (username) or by fullName
+        console.log('🔍 Searching for user...');
+        const user = await User.findOne({
+            $or: [
+                { email: username.toLowerCase().trim() },
+                { fullName: { $regex: new RegExp(username, 'i') } }
+            ]
+        });
+
+        if (!user) {
+            console.log('⚠️ User not found:', username);
+            return res.status(401).json({
+                success: false,
+                message: 'Invalid username or password'
+            });
+        }
+
+        // Check password (plain text comparison for now)
+        if (user.password !== password) {
+            console.log('⚠️ Invalid password for user:', username);
+            return res.status(401).json({
+                success: false,
+                message: 'Invalid username or password'
+            });
+        }
+
+        console.log('✅ Login successful:', {
+            id: user._id,
+            email: user.email,
+            fullName: user.fullName
+        });
+
+        // Return success response (don't send password back)
+        res.json({
+            success: true,
+            message: 'Login successful!',
+            user: {
+                id: user._id,
+                fullName: user.fullName,
+                email: user.email,
+                phone: user.phone
+            }
+        });
+
+    } catch (error) {
+        console.error('❌ Login error:', error);
         console.error('Error details:', {
             name: error.name,
             message: error.message,
