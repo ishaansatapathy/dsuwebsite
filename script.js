@@ -143,8 +143,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             try {
-                // API endpoint - adjust the URL if your backend is on a different port/domain
-                const API_URL = 'http://localhost:5000/api/register';
+                // API endpoint - use the current page host and the API port so the request
+                // works whether the page is served from `localhost` or `127.0.0.1`.
+                const API_BASE = `${location.protocol}//${location.hostname}:5000`;
+                const API_URL = `${API_BASE}/api/register`;
                 
                 console.log('📤 Sending registration data to server...', formData);
                 

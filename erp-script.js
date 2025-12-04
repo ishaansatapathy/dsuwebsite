@@ -80,8 +80,10 @@ if (erpLoginForm) {
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
         
         try {
-            // API endpoint
-            const API_URL = 'http://localhost:5000/api/login';
+            // API endpoint - use the current page host and the API port so the request
+            // works whether the page is served from `localhost` or `127.0.0.1`.
+            const API_BASE = `${location.protocol}//${location.hostname}:5000`;
+            const API_URL = `${API_BASE}/api/login`;
             
             // Send login request to backend
             const response = await fetch(API_URL, {
