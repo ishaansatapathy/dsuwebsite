@@ -67,22 +67,74 @@ if (passwordToggle) {
 }
 
 if (erpLoginForm) {
-    erpLoginForm.addEventListener('submit', (e) => {
+    erpLoginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
+        const submitBtn = erpLoginForm.querySelector('.erp-login-btn');
+        const originalBtnContent = submitBtn.innerHTML;
         
-        // Demo credentials check
-        if (username === 'student123' && password === 'demo123') {
-            // Store login state
-            localStorage.setItem('erpLoggedIn', 'true');
-            localStorage.setItem('erpUsername', username);
+        // Show loading state
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+        
+        try {
+            // API endpoint
+            const API_URL = 'http://localhost:5000/api/login';
             
-            // Redirect to dashboard
-            window.location.href = 'erp-dashboard.html';
-        } else {
-            alert('Invalid credentials! Please use:\nUsername: student123\nPassword: demo123');
+            // Send login request to backend
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password })
+            });
+            
+            const data = await response.json();
+            
+            if (response.ok && data.success) {
+                // Login successful
+                console.log('Login successful:', data);
+                
+                // Store login state
+                localStorage.setItem('erpLoggedIn', 'true');
+                localStorage.setItem('erpUsername', data.user.fullName || username);
+                localStorage.setItem('erpUserEmail', data.user.email);
+                localStorage.setItem('erpUserId', data.user.id);
+                
+                // Show success message
+                submitBtn.innerHTML = '<i class="fas fa-check"></i> Success!';
+                submitBtn.style.background = 'linear-gradient(135deg, #28a745 0%, #20c997 100%)';
+                
+                // Redirect to dashboard after short delay
+                setTimeout(() => {
+                    window.location.href = 'erp-dashboard.html';
+                }, 500);
+            } else {
+                // Login failed
+                console.warn('Login failed:', data.message);
+                alert(data.message || 'Invalid credentials! Please check your username and password.');
+                
+                // Reset button
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnContent;
+            }
+        } catch (error) {
+            // Network error or server unavailable
+            console.error('Login error:', error);
+            
+            // Fallback: Check for demo credentials if server is unavailable
+            if (username === 'student123' && password === 'demo123') {
+                localStorage.setItem('erpLoggedIn', 'true');
+                localStorage.setItem('erpUsername', username);
+                window.location.href = 'erp-dashboard.html';
+            } else {
+                alert('Unable to connect to server. Please check your connection or try again later.\n\nFor demo access, use:\nUsername: student123\nPassword: demo123');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnContent;
+            }
         }
     });
 }
@@ -143,8 +195,8 @@ if (window.location.pathname.includes('erp-dashboard.html')) {
         const username = localStorage.getItem('erpUsername');
         const studentName = document.getElementById('studentName');
         if (studentName && username) {
-            // You can customize this based on username
-            studentName.textContent = username === 'student123' ? 'John Doe' : username;
+            // Use the stored username (full name from registration)
+            studentName.textContent = username;
         }
     }
 }

@@ -11,8 +11,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true,
         lowercase: true,
-        trim: true,
-        match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email address']
+        trim: true
     },
     phone: {
         type: String,
@@ -21,20 +20,17 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        default: ''
+        required: true,
+        trim: true
     },
     registeredAt: {
         type: Date,
         default: Date.now
     }
 }, {
-    timestamps: true // This adds createdAt and updatedAt automatically
+    timestamps: true
 });
 
-// Create index on email for faster queries
-userSchema.index({ email: 1 });
+module.exports = mongoose.model('User', userSchema);
 
-const User = mongoose.model('User', userSchema);
-
-module.exports = User;
 

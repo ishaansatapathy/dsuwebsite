@@ -21,18 +21,55 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             
             // Get form values
-            const formData = {
-                fullName: document.getElementById('fullName').value,
-                email: document.getElementById('email').value,
-                phone: document.getElementById('phone').value,
-                password: document.getElementById('password').value
-            };
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
 
             // Get submit button and show loading state
             const submitBtn = registrationForm.querySelector('.registration-submit-btn');
             const originalBtnText = submitBtn.innerHTML;
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Registering...';
+
+            // Clear previous error messages
+            const existingError = registrationForm.querySelector('.error-message');
+            if (existingError) {
+                existingError.remove();
+            }
+
+            // Validate password confirmation
+            if (password !== confirmPassword) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnText;
+                showError('Passwords do not match! Please try again.');
+                return;
+            }
+
+            // Validate password length
+            if (password.length < 6) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnText;
+                showError('Password must be at least 6 characters long!');
+                return;
+            }
+
+            // Validate required fields
+            if (!fullName || !email || !phone || !password) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnText;
+                showError('Please fill in all required fields!');
+                return;
+            }
+
+            // Prepare form data
+            const formData = {
+                fullName: fullName,
+                email: email,
+                phone: phone,
+                password: password
+            };
 
             // Function to show main website
             function showMainWebsite() {
@@ -41,34 +78,79 @@ document.addEventListener('DOMContentLoaded', function() {
                 sessionStorage.setItem('userEmail', formData.email);
                 sessionStorage.setItem('userName', formData.fullName);
 
+                console.log('🌐 Showing main website...');
+                
+                // Get elements again to ensure they exist
+                const overlay = document.getElementById('registrationOverlay');
+                const content = document.getElementById('mainContent');
+
                 // Hide overlay and show main content with animation
-                if (registrationOverlay) {
-                    registrationOverlay.style.opacity = '0';
-                    registrationOverlay.style.transition = 'opacity 0.5s ease-out';
+                if (overlay) {
+                    overlay.style.opacity = '0';
+                    overlay.style.transition = 'opacity 0.5s ease-out';
                     
                     setTimeout(function() {
-                        registrationOverlay.classList.add('hidden');
-                        if (mainContent) {
-                            mainContent.style.display = 'block';
-                            mainContent.style.opacity = '0';
-                            mainContent.style.transition = 'opacity 0.5s ease-in';
+                        // Completely hide overlay
+                        overlay.classList.add('hidden');
+                        overlay.style.display = 'none';
+                        overlay.style.visibility = 'hidden';
+                        overlay.style.opacity = '0';
+                        overlay.style.pointerEvents = 'none';
+                        overlay.style.zIndex = '-1';
+                        
+                        // Show main content
+                        if (content) {
+                            content.style.display = 'block';
+                            content.style.visibility = 'visible';
+                            content.style.opacity = '0';
+                            content.style.transition = 'opacity 0.5s ease-in';
+                            content.style.zIndex = '1';
                             
-                            // Trigger reflow
-                            mainContent.offsetHeight;
+                            // Force a reflow to ensure display change takes effect
+                            void content.offsetHeight;
                             
-                            mainContent.style.opacity = '1';
+                            // Show with fade-in animation
+                            requestAnimationFrame(function() {
+                                content.style.opacity = '1';
+                            });
+                        } else {
+                            console.error('❌ mainContent element not found!');
+                            // If mainContent not found, reload page to show website
+                            alert('Registration successful! Reloading page...');
+                            window.location.reload();
                         }
-                    }, 500);
+                    }, 300);
+                } else {
+                    console.error('❌ registrationOverlay element not found!');
+                    // If overlay not found, just show the content
+                    if (content) {
+                        content.style.display = 'block';
+                        content.style.visibility = 'visible';
+                    } else {
+                        // Last resort: reload the page
+                        window.location.reload();
+                    }
                 }
+            }
+
+            // Function to show error message
+            function showError(message) {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'error-message';
+                errorDiv.style.cssText = 'background: #f8d7da; color: #721c24; padding: 12px; border-radius: 8px; margin-bottom: 16px; border: 1px solid #f5c6cb;';
+                errorDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+                registrationForm.insertBefore(errorDiv, registrationForm.firstChild);
             }
 
             try {
                 // API endpoint - adjust the URL if your backend is on a different port/domain
                 const API_URL = 'http://localhost:5000/api/register';
                 
+                console.log('📤 Sending registration data to server...', formData);
+                
                 // Send registration data to backend (with timeout)
                 const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+                const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
                 
                 const response = await fetch(API_URL, {
                     method: 'POST',
@@ -82,35 +164,46 @@ document.addEventListener('DOMContentLoaded', function() {
                 clearTimeout(timeoutId);
                 const data = await response.json();
 
+                console.log('📥 Server response:', data);
+
                 if (response.ok && data.success) {
                     // Registration successful
-                    console.log('Registration successful:', data);
+                    console.log('✅ Registration successful!', data);
+                    console.log('💾 Data saved to MongoDB:', data.user);
                     
                     // Show success message briefly
-                    submitBtn.innerHTML = '<i class="fas fa-check"></i> Success!';
+                    submitBtn.innerHTML = '<i class="fas fa-check"></i> Success! Registered in MongoDB';
                     submitBtn.style.background = 'linear-gradient(135deg, #28a745 0%, #20c997 100%)';
 
-                    // Show main website after success
-                    setTimeout(showMainWebsite, 1000);
+                    // Show main website immediately after success (reduced delay)
+                    setTimeout(showMainWebsite, 800);
                 } else {
-                    // Registration failed but still allow access
-                    console.warn('Backend registration failed, but allowing access:', data.message);
-                    submitBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Saved Locally';
-                    submitBtn.style.background = 'linear-gradient(135deg, #ffc107 0%, #ff9800 100%)';
-                    
-                    // Still show main website
-                    setTimeout(showMainWebsite, 1000);
+                    // Registration failed - show error and don't allow access
+                    console.error('❌ Registration failed:', data.message);
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalBtnText;
+                    showError(data.message || 'Registration failed! Please try again.');
                 }
             } catch (error) {
-                // Network error or timeout - still allow access
-                console.warn('Backend not available, allowing local access:', error.message);
+                // Network error or timeout - show error and don't allow access
+                console.error('❌ Registration error:', error);
                 
-                // Show info message
-                submitBtn.innerHTML = '<i class="fas fa-info-circle"></i> Saved Locally';
-                submitBtn.style.background = 'linear-gradient(135deg, #17a2b8 0%, #138496 100%)';
+                let errorMessage = 'Unable to connect to server. ';
                 
-                // Show main website even if API fails
-                setTimeout(showMainWebsite, 1000);
+                if (error.name === 'AbortError') {
+                    errorMessage += 'Request timed out. ';
+                } else {
+                    errorMessage += error.message + '. ';
+                }
+                
+                errorMessage += 'Please make sure:\n1. Server is running (node server.js)\n2. MongoDB is connected\n3. Try again later.';
+                
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnText;
+                showError(errorMessage);
+                
+                // Don't allow access if registration fails
+                alert('Registration failed!\n\n' + errorMessage + '\n\nPlease register again once the server is running.');
             }
         });
     }
@@ -1534,24 +1627,27 @@ function showAcademicDetails(schoolName) {
 }
 
 // Leadership Carousel Functionality
+// Placeholder SVG for missing images
+const placeholderImage = 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'240\' height=\'240\'%3E%3Crect width=\'240\' height=\'240\' fill=\'%23222\'/%3E%3Ccircle cx=\'120\' cy=\'100\' r=\'40\' fill=\'%23FF6600\'/%3E%3Cpath d=\'M 120 150 L 100 180 L 140 180 Z\' fill=\'%23FF6600\'/%3E%3Ctext x=\'120\' y=\'215\' font-size=\'14\' fill=\'%23fff\' text-anchor=\'middle\'%3ELeader%3C/text%3E%3C/svg%3E';
+
 const leadershipData = [
     {
         name: 'LATE SHRI R DAYANANDA SAGAR',
         title: 'Founding Father',
         description: 'Our founding father, late Sri R Dayananda Sagar, was a graduate in Arts & Commerce from India & a barrister-at-law from England. He established the institution with a vision to provide quality education to all.',
-        image: 'images/founding-father.jpg'
+        image: placeholderImage // Use placeholder directly - no 404 errors
     },
     {
         name: 'DR. PREMCHANDRAN',
         title: 'Vice Chancellor',
         description: 'Dr. Premchandran brings over 30 years of academic and administrative experience. He has been instrumental in establishing international collaborations and research initiatives.',
-        image: 'images/vc.jpg'
+        image: placeholderImage // Use placeholder directly - no 404 errors
     },
     {
         name: 'DR. SURESH NAGARAJU',
         title: 'Pro Vice Chancellor',
         description: 'Dr. Suresh Nagaraju is a renowned academician with expertise in engineering education. He has published extensively and led several research projects.',
-        image: 'images/pro-vc.jpg'
+        image: placeholderImage // Use placeholder directly - no 404 errors
     }
 ];
 
@@ -1568,11 +1664,9 @@ function updateLeaderDisplay(index) {
     if (leaderTitle) leaderTitle.textContent = leader.title;
     if (leaderDescription) leaderDescription.textContent = leader.description;
     if (leaderImage) {
-        leaderImage.src = leader.image;
         leaderImage.alt = leader.name;
-        leaderImage.onerror = function () {
-            this.src = 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'120\' height=\'120\'%3E%3Ccircle cx=\'60\' cy=\'60\' r=\'55\' fill=\'%23e0f2fe\'/%3E%3Ctext x=\'60\' y=\'70\' font-size=\'20\' fill=\'%23003366\' text-anchor=\'middle\'%3EL%3C/text%3E%3C/svg%3E';
-        };
+        // Use placeholder directly - no attempts to load missing images = zero 404 errors
+        leaderImage.src = leader.image; // Already set to placeholderImage in data array
     }
 }
 
